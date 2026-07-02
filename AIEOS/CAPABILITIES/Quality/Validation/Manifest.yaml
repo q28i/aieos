@@ -1,0 +1,12 @@
+name: Quality Validation Capability
+category: Quality
+version: 1.0.0-beta
+maturity: Production
+extends: Capability_BaseCognitive
+dependencies:
+  - Constitution_Quality
+cognitive_effects:
+  - validation.compliance +5
+  - validation.release_certification +4
+related_capabilities:
+  - Capability_Review

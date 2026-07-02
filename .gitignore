@@ -1,0 +1,21 @@
+# Databases and telemetry
+memory/aieos_local.db
+logs/
+benchmarks/
+packages/Capability_FuzzyLogic
+packages/Capability_Research
+packages/Capability_Testing
+test_workspace/
+demo/
+
+# Node/NPM files
+node_modules/
+package-lock.json
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.qodo/

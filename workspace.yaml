@@ -1,0 +1,7 @@
+active_profile: StartupFounder
+active_capabilities:
+  - Capability_BaseCognitive
+  - Capability_Decision
+adapters:
+  - generic
+  - claude

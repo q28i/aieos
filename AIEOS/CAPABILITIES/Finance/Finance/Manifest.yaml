@@ -1,0 +1,12 @@
+name: Financial Modeling Capability
+category: Finance
+version: 1.0.0-beta
+maturity: Validated
+extends: Capability_BaseCognitive
+dependencies:
+  - Constitution_Research
+cognitive_effects:
+  - finance.economic_modeling +4
+  - finance.capital_efficiency +3
+related_capabilities:
+  - Capability_Decision

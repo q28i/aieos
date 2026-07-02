@@ -1,0 +1,12 @@
+name: Reflection & Learning Loop
+category: Cognitive
+version: 1.0.0-beta
+maturity: Production
+extends: Capability_BaseCognitive
+dependencies:
+  - None
+cognitive_effects:
+  - reflection.calibration +5
+  - learning.velocity +4
+related_capabilities:
+  - Capability_Decision

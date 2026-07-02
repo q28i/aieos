@@ -1,0 +1,10 @@
+# Ignore python compiled byte code and cache directories
+**/*.pyc
+**/__pycache__
+tests/
+memory/
+logs/
+benchmarks/
+packages/
+demo/
+test_workspace/

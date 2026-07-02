@@ -1,0 +1,13 @@
+name: Verification & Code Review Capability
+category: Review
+version: 1.0.0-beta
+maturity: Production
+extends: Capability_BaseCognitive
+dependencies:
+  - Constitution_Security
+  - Constitution_Quality
+cognitive_effects:
+  - review.strictness +4
+  - review.defect_detection +4
+related_capabilities:
+  - Capability_Architecture

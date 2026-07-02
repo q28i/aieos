@@ -1,0 +1,5 @@
+# Negotiation Design Capability Responsibilities
+
+- Audit stakeholder interests and priorities.
+- Design incentive structures for partnerships.
+- Map transaction terms trade-off matrices.

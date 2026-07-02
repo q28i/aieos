@@ -1,0 +1,32 @@
+{
+  "name": "@q28i/aieos",
+  "version": "1.0.0-beta",
+  "description": "Human Intelligence Amplification Runtime",
+  "main": "doc_system/cli.py",
+  "bin": {
+    "aieos": "bin/cli.js"
+  },
+  "scripts": {
+    "test": "python -m unittest discover -s tests"
+  },
+  "keywords": [
+    "aieos",
+    "ai-collaboration",
+    "decision-quality",
+    "socratic-inquiry",
+    "intelligence-amplification"
+  ],
+  "author": "AIEOS Open Source Maintainers",
+  "license": "MIT",
+  "files": [
+    "bin",
+    "doc_system",
+    "AIEOS",
+    "aieos.py",
+    "aieos_runtime.py",
+    "doc_manager.py",
+    "Feeling-Down.md",
+    "README.md",
+    "LICENSE"
+  ]
+}

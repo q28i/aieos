@@ -1,0 +1,12 @@
+name: Business Strategy Capability
+category: Business
+version: 1.0.0-beta
+maturity: Validated
+extends: Capability_BaseCognitive
+dependencies:
+  - Constitution_Documentation
+cognitive_effects:
+  - business.market_fit +4
+  - business.value_estimation +3
+related_capabilities:
+  - Capability_Planning

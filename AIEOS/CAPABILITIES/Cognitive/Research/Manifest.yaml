@@ -1,0 +1,13 @@
+name: General Research Capability
+category: Cognitive
+version: 1.0.0-beta
+maturity: Validated
+extends: Capability_BaseCognitive
+dependencies:
+  - None
+cognitive_effects:
+  - research.coverage +5
+  - research.factual_accuracy +4
+  - confidence.calibration +3
+related_capabilities:
+  - Capability_Planning

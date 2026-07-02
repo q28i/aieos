@@ -1,0 +1,9 @@
+{
+  "name": "aieos",
+  "version": "1.0.0-beta",
+  "profiles_dir": "profiles",
+  "packages_dir": "packages",
+  "registries": [
+    "https://registry.loftyrux.in"
+  ]
+}

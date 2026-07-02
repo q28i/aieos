@@ -1,0 +1,12 @@
+name: Evidence Verification Capability
+category: Research
+version: 1.0.0-beta
+maturity: Validated
+extends: Capability_BaseCognitive
+dependencies:
+  - Constitution_Research
+cognitive_effects:
+  - evidence.sufficiency +4
+  - evidence.contradiction_detection +4
+related_capabilities:
+  - Capability_Research

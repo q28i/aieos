@@ -1,0 +1,13 @@
+name: Quality Testing Capability
+category: Testing
+version: 1.0.0-beta
+maturity: Production
+extends: Capability_BaseCognitive
+dependencies:
+  - Constitution_Quality
+cognitive_effects:
+  - testing.coverage +4
+  - testing.regression_prevention +5
+related_capabilities:
+  - Capability_Implementation
+  - Capability_Review

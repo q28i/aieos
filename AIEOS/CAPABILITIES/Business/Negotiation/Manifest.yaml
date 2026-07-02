@@ -1,0 +1,12 @@
+name: Negotiation Design Capability
+category: Business
+version: 1.0.0-beta
+maturity: Validated
+extends: Capability_BaseCognitive
+dependencies:
+  - Constitution_Quality
+cognitive_effects:
+  - negotiation.incentive_balance +4
+  - negotiation.tradeoff_resolution +3
+related_capabilities:
+  - Capability_Decision

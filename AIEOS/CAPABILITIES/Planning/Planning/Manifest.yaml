@@ -1,0 +1,13 @@
+name: Implementation Planning Capability
+category: Planning
+version: 2.2.0
+maturity: Production
+extends: Capability_BaseCognitive
+dependencies:
+  - Constitution_Architecture
+cognitive_effects:
+  - planning.decoupling +4
+  - planning.milestone_accuracy +3
+  - reasoning.depth +1
+related_capabilities:
+  - Capability_Architecture

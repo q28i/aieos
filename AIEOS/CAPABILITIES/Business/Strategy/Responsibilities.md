@@ -1,0 +1,5 @@
+# Operational Strategy Capability Responsibilities
+
+- Establish quarterly operational milestones.
+- Analyze competitive landscapes and positioning.
+- Monitor team execution metrics.

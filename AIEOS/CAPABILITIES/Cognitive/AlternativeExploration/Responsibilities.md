@@ -1,0 +1,5 @@
+# Alternative Exploration Capability Responsibilities
+
+- Explore gold, silver, and titanium tradeoffs for requirements.
+- Propose simpler, low-cost alternatives before implementing complex specs.
+- Track future lock-in risks of chosen solutions.

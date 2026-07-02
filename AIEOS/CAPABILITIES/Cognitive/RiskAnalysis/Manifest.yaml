@@ -1,0 +1,12 @@
+name: Cognitive Risk Analysis
+category: Cognitive
+version: 1.0.0-beta
+maturity: Production
+extends: Capability_BaseCognitive
+dependencies:
+  - None
+cognitive_effects:
+  - risk.identification +5
+  - risk.exposure_reduction +4
+related_capabilities:
+  - Capability_Prediction
