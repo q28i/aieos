@@ -1,6 +1,6 @@
 {
   "name": "@q28i/aieos",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Human Intelligence Amplification Runtime",
   "main": "doc_system/cli.py",
   "bin": {
@@ -24,7 +24,6 @@
     "aieos.py",
     "aieos_runtime.py",
     "doc_manager.py",
-    "Feeling-Down.md",
     "README.md",
     "LICENSE"
   ]

@@ -1,6 +1,6 @@
 name: Experiment Design Capability
 category: Research
-version: 1.0.0-beta.1
+version: 1.0.0-beta.2
 maturity: Validated
 extends: Capability_BaseCognitive
 dependencies:

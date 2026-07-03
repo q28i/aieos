@@ -1,8 +1,11 @@
 # AIEOS Release Roadmap
 
-## v1.0.0-beta.1 (Current - Distribution Prep)
-- Package size optimization and files whitelist pruning.
+## v1.0.0-beta.2 (Current - Distribution Prep)
+- Clean up unused legacy file assets (`Feeling-Down.md`).
 - Multi-OS GitHub actions pipeline configured for matrix checks.
+
+## v1.0.0-beta.1 (Distribution Prep)
+- Package size optimization and files whitelist pruning.
 
 ## v1.0.0-beta (Distribution Prep)
 - Production-ready workspace environment initialization.

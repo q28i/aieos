@@ -2,6 +2,11 @@
 
 All notable changes to AIEOS will be documented in this file.
 
+## [1.0.0-beta.2] - 2026-07-03
+
+### Removed
+- **Unused Files Purged**: Removed legacy `Feeling-Down.md` file from the package whitelist and workspace to keep target installations clean.
+
 ## [1.0.0-beta.1] - 2026-07-03
 
 ### Changed
