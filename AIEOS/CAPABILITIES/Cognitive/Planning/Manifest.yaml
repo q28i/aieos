@@ -1,6 +1,6 @@
 name: General Objective Planning
 category: Cognitive
-version: 1.0.0-beta.2
+version: 1.0.0
 maturity: Production
 extends: Capability_BaseCognitive
 dependencies:

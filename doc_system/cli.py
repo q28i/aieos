@@ -106,11 +106,11 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/research": {
         "name": "Capability_Research",
         "category": "Research",
-        "version": "1.0.0-beta.2",
+        "version": "1.0.0",
         "purpose": "General research capability package.",
         "dependencies": ["Capability_BaseCognitive"],
         "files": {
-            "manifest.yaml": "name: Capability_Research\nversion: 1.0.0-beta.2\nmaturity: Validated\ncategory: Research\n",
+            "manifest.yaml": "name: Capability_Research\nversion: 1.0.0\nmaturity: Validated\ncategory: Research\n",
             "Contract.md": "# Capability Contract: Research\n## Entry requirements\n- Factual inputs\n## Exit requirements\n- Verification references\n",
             "Interfaces.md": "# Interfaces\n- execute(query)\n",
             "Responsibilities.md": "# Responsibilities\n- Query factual data sources\n",
@@ -125,11 +125,11 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/testing": {
         "name": "Capability_Testing",
         "category": "Quality",
-        "version": "1.0.0-beta.2",
+        "version": "1.0.0",
         "purpose": "QA execution and validation capabilities.",
         "dependencies": ["Capability_BaseCognitive"],
         "files": {
-            "manifest.yaml": "name: Capability_Testing\nversion: 1.0.0-beta.2\nmaturity: Production\ncategory: Quality\n",
+            "manifest.yaml": "name: Capability_Testing\nversion: 1.0.0\nmaturity: Production\ncategory: Quality\n",
             "Contract.md": "# Capability Contract: Testing\n## Entry requirements\n- Executable tests\n## Exit requirements\n- Test run outcomes\n",
             "Interfaces.md": "# Interfaces\n- execute(test_suite)\n",
             "Responsibilities.md": "# Responsibilities\n- Run testing verification\n",
@@ -159,7 +159,15 @@ class AIEOS_CLI:
             self.cmd_help()
             return True
             
-        cmd = args[0].lower()
+        first_arg = args[0].lower()
+        if first_arg in ["--help", "-h"]:
+            self.cmd_help()
+            return True
+        if first_arg in ["--version", "-v"]:
+            print("AIEOS CLI Platform v1.0.0")
+            return True
+            
+        cmd = first_arg
         cmd_args = args[1:]
         
         commands = {
@@ -175,8 +183,6 @@ class AIEOS_CLI:
             "workspace": self.cmd_workspace,
             "profile": self.cmd_profile,
             "config": self.cmd_config,
-            "login": self.cmd_login,
-            "logout": self.cmd_logout,
             "validate": self.cmd_validate,
             "help": self.cmd_help
         }
@@ -184,30 +190,33 @@ class AIEOS_CLI:
         if cmd in commands:
             return commands[cmd](cmd_args)
         else:
-            print(f"Error: Unknown command '{cmd}'. Type 'aieos help' for usage details.")
+            print(f"\033[31mError: Unknown command '{cmd}'. Type 'aieos help' for usage details.\033[0m")
             return False
 
     def cmd_help(self, args=None):
         print("""
-AIEOS Platform Command-Line Interface v1.0.0-beta.2
+AIEOS Platform Command-Line Interface v1.0.0
 
 Usage:
   aieos <command> [args]
+
+Options:
+  -h, --help       - Display command usage guidelines.
+  -v, --version    - Display AIEOS version.
 
 Commands:
   init <name>       - Initialize a production AIEOS workspace structure.
   create package <name> [cat] - Create a capability package template.
   install <package> - Install a capability package (e.g. @aieos/research, Git URL, local directory).
   remove <package>  - Remove an installed capability package from the workspace.
-  update            - Update all installed capability packages.
+  update            - Update all installed capability packages (runs git pull).
   doctor            - Audit workspace integrity and diagnostic health parameters.
   benchmark         - Run longitudinal collaborative benchmarks (LLM vs. AIEOS).
-  publish <package> - Publish a local package to the registry.
+  publish <package> - Package a capability folder into local dist/ as tarball.
   search <query>    - Search remote registry endpoints for capabilities.
   workspace         - Print detailed status of the active workspace.
   profile <name>    - Activate or view cognitive profiles.
   config            - View and update local options.
-  login / logout    - Manage registry session tokens.
   validate <dir>    - Run schema and contract checks on a local directory.
 """)
         return True
@@ -229,7 +238,7 @@ Commands:
         # Write config
         config = {
             "name": name,
-            "version": "1.0.0-beta.2",
+            "version": "1.0.0",
             "profiles_dir": "profiles",
             "packages_dir": "packages",
             "registries": ["https://registry.aieos.org"]
@@ -407,11 +416,37 @@ Commands:
 
     def cmd_update(self, args):
         if not self.is_workspace():
-            print("Error: Active workspace not detected.")
+            print("\033[31mError: Active workspace not detected.\033[0m")
             return False
-        print("Synchronizing capability packages version listings with remote registries...")
-        time.sleep(0.5)
-        print("All packages are up-to-date. [COMPLETED]")
+            
+        pkg_dir = os.path.join(self.workspace_root, "packages")
+        if not os.path.exists(pkg_dir):
+            print("No packages directory found.")
+            return True
+            
+        packages = os.listdir(pkg_dir)
+        if not packages:
+            print("No installed packages to update.")
+            return True
+            
+        import subprocess
+        for pkg in packages:
+            full_path = os.path.join(pkg_dir, pkg)
+            if not os.path.isdir(full_path):
+                continue
+                
+            git_path = os.path.join(full_path, ".git")
+            if os.path.exists(git_path):
+                print(f"Updating capability '{pkg}' via git pull...")
+                try:
+                    subprocess.run(["git", "-C", full_path, "pull"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    print(f"  * '{pkg}' updated successfully. \033[32m[SUCCESS]\033[0m")
+                except Exception as e:
+                    print(f"  * \033[33mWarning: Failed to update '{pkg}': {e}\033[0m")
+            else:
+                print(f"Capability '{pkg}' is locally linked/static (skipping git pull).")
+                
+        print("All capability updates complete. \033[32m[COMPLETED]\033[0m")
         return True
 
     def cmd_doctor(self, args):
@@ -446,7 +481,7 @@ Commands:
         print("  - Critical Flaws Avoided : 0%")
         print("  - Final Decision Quality : Low")
         print("")
-        print("AIEOS Collaborative Performance (v1.0.0-beta.2):")
+        print("AIEOS Collaborative Performance (v1.0.0):")
         print("  - Assumptions Discovered : 4 (Type-1/Type-2)")
         print("  - Critical Flaws Avoided : 100%")
         print("  - Final Decision Quality : High (Evidence-calibrated)")
@@ -464,16 +499,40 @@ Commands:
         if not args:
             print("Usage: aieos publish <capability_name>")
             return False
+            
         pkg = args[0]
-        print(f"Running pre-flight checks for publish package '{pkg}'...")
-        time.sleep(0.2)
-        print("  * Checking manifest constraints... PASSED")
-        print("  * Checking contract templates... PASSED")
-        print("  * Bundling package tarball... PASSED")
-        print("Uploading bundle to registry.aieos.org...")
-        time.sleep(0.5)
-        print(f"Package successfully published: https://registry.aieos.org/packages/{pkg.lower()} [SUCCESS]")
-        return True
+        pkg_dir = os.path.join(self.workspace_root, "packages", pkg)
+        if not os.path.exists(pkg_dir):
+            if pkg in MOCK_REMOTE_PACKAGES:
+                pkg_dir = os.path.join(self.workspace_root, "packages", MOCK_REMOTE_PACKAGES[pkg]["name"])
+            else:
+                pkg_dir = os.path.abspath(pkg)
+                
+        if not os.path.exists(pkg_dir) or not os.path.isdir(pkg_dir):
+            print(f"\033[31mError: Target directory not found: '{pkg}'\033[0m")
+            return False
+            
+        manifest_path = os.path.join(pkg_dir, "manifest.yaml")
+        if not os.path.exists(manifest_path):
+            print(f"\033[31mError: Missing manifest.yaml in '{pkg_dir}'\033[0m")
+            return False
+            
+        print(f"Packaging capability folder '{os.path.basename(pkg_dir)}'...")
+        dist_dir = os.path.join(self.workspace_root, "dist")
+        os.makedirs(dist_dir, exist_ok=True)
+        
+        import tarfile
+        tar_name = f"{os.path.basename(pkg_dir).lower()}.tar.gz"
+        tar_path = os.path.join(dist_dir, tar_name)
+        
+        try:
+            with tarfile.open(tar_path, "w:gz") as tar:
+                tar.add(pkg_dir, arcname=os.path.basename(pkg_dir))
+            print(f"Bundle successfully created at: {tar_path} \033[32m[SUCCESS]\033[0m")
+            return True
+        except Exception as e:
+            print(f"\033[31mError: Failed to bundle capability package: {e}\033[0m")
+            return False
 
     def cmd_search(self, args):
         query = args[0].lower() if args else ""
@@ -550,15 +609,7 @@ Commands:
             print("Usage: aieos config [key value]")
             return False
 
-    def cmd_login(self, args):
-        print("Opening registry session login auth request...")
-        time.sleep(0.2)
-        print("Successfully authenticated and cached token. [SUCCESS]")
-        return True
 
-    def cmd_logout(self, args):
-        print("Clearing cached authentication token... [SUCCESS]")
-        return True
 
     def cmd_validate(self, args):
         if not args:

@@ -1,6 +1,6 @@
 {
   "name": "@q28i/aieos",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0",
   "description": "Human Intelligence Amplification Runtime",
   "main": "doc_system/cli.py",
   "bin": {

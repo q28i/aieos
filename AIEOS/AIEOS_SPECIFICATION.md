@@ -1,4 +1,4 @@
-# AIEOS Specification v1.0.0-beta.2-beta.2.2-beta.2.2-beta.1.1-beta.1-beta (RFC Standards Document)
+# AIEOS Specification v1.0.0.2.2-beta.2.2-beta.1.1-beta.1-beta (RFC Standards Document)
 
 ## Status of this Memo
 This document specifies an industry-grade, model-independent Human Intelligence Amplification Runtime (AIEOS) for coordinating collaborative human-AI judgment workflows. Distribution of this memo is unlimited.

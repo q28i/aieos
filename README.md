@@ -85,17 +85,31 @@ aieos benchmark
 
 ---
 
-## 🧠 Core Architecture Stack
+## 📋 System Requirements
 
-AIEOS shifts the execution paradigm from raw task processing to a values-aligned decision pipeline:
+* **Node.js**: `18.0.0` or higher
+* **Python**: `3.11` or higher
+* **Git**: Required for remote capability package installation
 
-```text
-Knowledge ──> Understanding ──> Reasoning ──> Judgment ──> Values ──> Decision ──> Action
-```
+---
 
-* **Services** (`AIEOS/SERVICES/`): Operational infrastructure (`Kernel`, `EventBus`, `Memory`, `CapabilityRegistry`, `Evolution`).
-* **Protocols** (`AIEOS/PROTOCOLS/`): Cognitive loops (`RealityCheck`, `Curiosity`, `KnowledgeExpansion`, `FutureSimulation`, `DecisionReadiness`, `Wisdom`, `Judgment`).
-* **Policies** (`AIEOS/POLICIES/`): Learning trackers (`UserModel`, `LearningProgress`, `KnowledgeROI`, `Mentor`, `CognitiveBias`).
+## ❓ FAQ
+
+### 1. What makes AIEOS different from normal LLM prompt frameworks?
+Unlike standard wrapper platforms, AIEOS enforces formal boundaries regarding cognitive bias, reality testing, and user agency constraints. It structures recommendations into auditable, parameter-controlled decision records.
+
+### 2. Can I use AIEOS without Python?
+No, the CLI wrapper requires a local Python 3.11+ installation. It will automatically check your environment path variables and exit gracefully if missing or outdated.
+
+---
+
+## 🛠️ Troubleshooting
+
+### Command wrapper complains about missing Python
+If you see the error `Error: Python 3.11+ is required` during startup, ensure that `python`, `python3`, or `py` is registered in your system environment path variable (`PATH`) and points to a version `>= 3.11`.
+
+### Permission issues when running global install
+If you encounter write permission issues during `npm install -g @q28i/aieos`, run with root privileges (`sudo` on Unix) or use a Node Version Manager (nvm) to install without global administrator overrides.
 
 ---
 
