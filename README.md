@@ -22,14 +22,14 @@
 
 <br />
 
-**[⚡ Install](#-install)** &nbsp;·&nbsp; **[🗂 Domains](#-the-4-domains)** &nbsp;·&nbsp; **[🛠️ CLI Reference](#️-cli-reference)** &nbsp;·&nbsp; **[▶️ Usage](#️-using-aieos)** &nbsp;·&nbsp; **[❓ FAQ](#-faq)**
+**[⚡ Install](#-install---choose-your-target)** &nbsp;·&nbsp; **[🗂 Domains](#-the-4-domains)** &nbsp;·&nbsp; **[📦 Bundles](#-themed-bundles)** &nbsp;·&nbsp; **[▶️ Usage](#️-using-aieos)** &nbsp;·&nbsp; **[❓ FAQ](#-faq)**
 
 </div>
 
 <br />
 
 ```bash
-npx @q28i/aieos init my_workspace
+npx @q28i/aieos --claude
 ```
 
 <br />
@@ -38,7 +38,7 @@ npx @q28i/aieos init my_workspace
 
 ## ✨ What is AIEOS
 
-> **One runtime for intelligence amplification.** Instead of treating AI as a simple question-answering tool or code generator, AIEOS structures collaboration around Socratic inquiry, preference discovery, and opportunity cost reviews—creating reusable, auditable Decision Contracts.
+> **One command, then forget it exists.** Instead of treating AI as a simple question-answering tool or code generator, AIEOS structures collaboration around Socratic inquiry, preference discovery, and opportunity cost reviews—creating reusable, auditable Decision Contracts.
 
 AIEOS is a model-independent **Human Intelligence Amplification Runtime** (a Decision OS) designed to increase decision quality under uncertainty while improving the user's independent reasoning. It operates with stable database-backed capability registers, running locally with zero external network overhead or dependency lock-in.
 
@@ -53,15 +53,52 @@ AIEOS is a model-independent **Human Intelligence Amplification Runtime** (a Dec
 
 ---
 
-## ⚡ Install
+## ⚡ Install — choose your target
 
-Install the package globally, or scaffold workspaces on-demand:
+One command installs AIEOS specifications, constitutions, and policies directly into your agent's customization directory:
 
-| Method | Command | Use Case |
+| Target Platform | Command | Destination Path / File |
 | --- | --- | --- |
-| **On-demand Setup** | `npx @q28i/aieos init <name>` | Initialize a workspace structure without permanent installation |
-| **Global Install** | `npm install -g @q28i/aieos` | Install stable CLI runner onto your system binary path |
-| **Local Development** | `git clone https://github.com/q28i/aieos.git`<br>`cd aieos`<br>`npm install && npm install -g .` | Contribute to the AIEOS core modules |
+| **Claude Code** | `npx @q28i/aieos --claude` | `~/.claude/skills/` |
+| **Cursor IDE** | `npx @q28i/aieos --cursor` | Creates `.cursorrules` in project directory |
+| **Gemini CLI** | `npx @q28i/aieos --gemini` | `~/.gemini/skills/` |
+| **Codex CLI** | `npx @q28i/aieos --codex` | `~/.codex/skills/` |
+| **Antigravity IDE** | `npx @q28i/aieos --antigravity` | `~/.gemini/config/skills/` |
+| **OpenCode** | `npx @q28i/aieos --opencode` | `~/.opencode/skills/` |
+| **Kiro CLI** | `npx @q28i/aieos --kiro` | `~/.kiro/skills/` |
+| **All platforms** | `npx @q28i/aieos --all` | Deploys to all of the above |
+
+### Local Project Workspaces
+
+If you want to configure a standalone workspace for project-specific vibe coding, run it against directory paths:
+
+```bash
+npx @q28i/aieos                 # install in current directory
+npx @q28i/aieos .               # install in current directory
+npx @q28i/aieos ../MyProject    # install in a specific project folder
+```
+
+This scaffolds a local `.aieos` environment containing:
+```text
+.aieos/          # core constitutions, protocols, and policies
+skills/          # local capability package registry
+contracts/       # generated decision quality contracts
+memory/          # local SQLite database tracking assumptions & lessons
+profiles/        # cognitive profile configurations (e.g. SoftwareEngineer)
+aieos.json       # registry settings
+```
+
+---
+
+## 📦 Themed Bundles
+
+Optionally filter which capabilities get installed onto your agent platform:
+
+```bash
+npx @q28i/aieos --claude --bundle research     # only research & statistics capabilities
+npx @q28i/aieos --cursor --bundle security     # only security capabilities
+npx @q28i/aieos --bundle full                  # install everything (default)
+```
 
 ---
 
@@ -71,117 +108,80 @@ AIEOS shifts the execution paradigm from raw task processing to a values-aligned
 
 <div align="center">
 
-| Domain | Files | Purpose |
-| --- | --: | --- |
-| 📜 **Constitutions** | `AIEOS/CONSTITUTION/` | Core user agency, quality, engineering, and architectural constraints |
-| 🔌 **Services** | `AIEOS/SERVICES/` | Operational systems (`Kernel`, `EventBus`, `Memory`, `CapabilityRegistry`, `Evolution`) |
-| 🧠 **Protocols** | `AIEOS/PROTOCOLS/` | Cognitive loops (`RealityCheck`, `Curiosity`, `KnowledgeExpansion`, `FutureSimulation`, `Wisdom`) |
-| ⚙️ **Policies** | `AIEOS/POLICIES/` | Learning trackers (`UserModel`, `LearningProgress`, `KnowledgeROI`, `Mentor`, `CognitiveBias`) |
+| Domain | Scope | Key Abstractions |
+| --- | --- | --- |
+| 📜 **Constitutions** | `CONSTITUTION/` | User Agency, Engineering Quality, Security Constraints |
+| 🔌 **Services** | `SERVICES/` | Kernel Orchestration, SQLite Memory, EventBus, Evolution |
+| 🧠 **Protocols** | `PROTOCOLS/` | RealityCheck, Curiosity, Wisdom, Judgment Loops |
+| ⚙️ **Policies** | `POLICIES/` | CognitiveBias Filters, LearningProgress, KnowledgeROI |
 
 </div>
 
 ---
 
-## 🛠️ CLI Reference
-
-Once installed, use the `aieos` command line tool inside your terminal:
-
-```bash
-# Initialize a workspace directory
-aieos init my_workspace
-
-# Create a new capability package template
-aieos create package Capability_FuzzyLogic Research
-
-# Install a remote package from GitHub directly
-aieos install github:LoftyRux/research-pack
-
-# Validate capability manifests and contracts
-aieos validate packages/Capability_Research
-
-# Run workspace diagnostic audits
-aieos doctor
-
-# Execute longitudinal collaboration benchmarks
-aieos benchmark
-```
-
----
-
 ## 📁 Repository Layout
 
-```
+```text
 aieos/
-├─ 📂 AIEOS/                    # Dynamic system specifications & schemas
-├─ 📂 bin/                      # Node.js binary wrappers & environment gates
-├─ 📂 doc_system/               # Core Python modules & engines
-│   ├─ cli.py                   # CLI commands & route manager
-│   ├─ doctor.py                # Workspace integrity diagnostics
-│   ├─ generator.py             # Package scaffolding generator
-│   └─ registry.py              # Capability database mappings
-├─ 📂 tests/                    # Core integration unit tests
+├─ 📂 AIEOS/                     # Dynamic system specifications & schemas
+├─ 📂 bin/                       # Node.js binary wrappers & environment gates
+├─ 📂 doc_system/                # Core Python modules & engines
+│   ├─ cli.py                    # CLI installer & route manager
+│   ├─ doctor.py                 # Workspace integrity diagnostics
+│   ├─ generator.py              # Package scaffolding generator
+│   └─ registry.py               # Capability database mappings
+├─ 📂 tests/                     # Core integration unit tests
 ├─ 🗂️ aieos.json                 # Project registry settings
-├─ 📜 LICENSE                   # MIT License
+├─ 📜 LICENSE                    # MIT License
 └─ 📖 README.md
 ```
 
 ---
 
-## 📋 System Requirements
+## ▶️ Using AIEOS
 
-* **Node.js**: `18.0.0` or higher
-* **Python**: `3.11` or higher
-* **Git**: Required for remote capability package installation
+1. **Prompt Socratic Decisions**: Once AIEOS rules are active in your agent, prompt it:
+   > *"I want to choose between Serverless SQL and standard Postgres for our analytics workload. Run an AIEOS Decision Protocol."*
+2. **Contract Output**: The agent will challenge your assumptions, simulate trade-offs, identify evidence gaps, and emit a structured Decision Contract in your workspace.
+
+---
+
+## 📋 System Requirements
+- **Node.js**: `18.0.0` or higher
+- **Python**: `3.11` or higher (automatically verified on startup)
+- **Git**: Required for remote capability package operations
 
 ---
 
 ## ❓ FAQ
 
 <details>
-<summary><b>How does AIEOS check Python dependencies?</b></summary>
+<summary><b>Why does AIEOS require Python?</b></summary>
 <br/>
-On startup, the Node wrapper scans for <code>python</code>, <code>python3</code>, or <code>py</code> binaries. If no matching runtime version &gt;= 3.11 is found, it terminates cleanly with explicit download guides, avoiding unhandled trace logs.
+AIEOS uses lightweight, dependency-free Python modules to execute local schema validation, SQLite transactions, and mathematical benchmark computations locally.
 </details>
 
 <details>
-<summary><b>Is the SQLite registry network-dependent?</b></summary>
+<summary><b>How does Cursor integration work?</b></summary>
 <br/>
-No. The SQLite database (<code>memory/aieos_local.db</code>) initialized during workspace setups runs entirely in your local folder to track logs and installed capability indices.
+The installer appends AIEOS agency and honesty rules directly to your <code>.cursorrules</code> file, ensuring the LLM is primed on decision-quality abstractions during chat or composer prompts.
 </details>
-
----
-
-## 🛠️ Troubleshooting
-
-### Command wrapper complains about missing Python
-If you see the error `AIEOS requires Python 3.11 or newer` during execution:
-1. Ensure Python is installed from [python.org](https://www.python.org/downloads/).
-2. Verify that Python is added to your environment `PATH` variables.
-
-### Permission issues when running global install
-If you run into permission blocks, execute npm using path-level user configurations or run:
-```bash
-npm install -g @q28i/aieos --unsafe-perm
-```
 
 ---
 
 ## 🤝 Contributing
 
-PRs are welcome! Good first contributions:
-* ➕ Adding new capability adapters under `doc_system/adapter.py`
-* 🛡️ Expanding the `doctor` audits for configuration mismatches
-* 📚 Improving markdown specifications inside the protocols compiler
+PRs are welcome! Feel free to file issues or submit pull requests to extend agent target support or refine cognitive protocols.
 
 ---
 
 ## 📜 License
 
-Distributed under the MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 <div align="center">
 <br/>
-<sub>Built as one unified catalog. No dependencies. No lock-in.</sub>
+<sub>Built to empower human agency. Zero lock-in.</sub>
 <br/><br/>
 
 **[⬆ back to top](#top)**
