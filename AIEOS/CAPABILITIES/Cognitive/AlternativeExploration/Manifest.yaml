@@ -1,6 +1,6 @@
 name: Alternative Exploration Capability
 category: Cognitive
-version: 1.0.1
+version: 1.0.2
 maturity: Production
 extends: Capability_BaseCognitive
 dependencies:

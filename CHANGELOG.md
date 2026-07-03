@@ -2,6 +2,11 @@
 
 All notable changes to AIEOS will be documented in this file.
 
+## [1.0.2] - 2026-07-03
+
+### Changed
+- **Documentation Enhancements**: Overhauled the core `README.md` to implement a high-impact, professional-grade open-source documentation layout, adding badge panels, architecture matrices, domain tables, system requirement specifications, and FAQ blocks.
+
 ## [1.0.1] - 2026-07-03
 
 ### Changed
@@ -14,8 +19,3 @@ All notable changes to AIEOS will be documented in this file.
 - **Python 3.11+ Version Gate**: Added runtime and binary checks enforcing python version bounds.
 - **CLI Flags**: Standardized flags for `--help`, `--version`, and `--debug` to prevent Python trace logs on standard console exceptions.
 - **CI Workflows**: Added multi-OS GitHub Actions CI pipeline testing setups on Windows, Linux, and macOS.
-
-## [1.0.0-beta.2] - 2026-07-03
-
-### Removed
-- **Unused Files Purged**: Removed legacy `Feeling-Down.md` file from the package whitelist and workspace to keep target installations clean.

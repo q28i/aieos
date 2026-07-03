@@ -1,6 +1,6 @@
 name: Verification & Code Review Capability
 category: Review
-version: 1.0.1
+version: 1.0.2
 maturity: Production
 extends: Capability_BaseCognitive
 dependencies:

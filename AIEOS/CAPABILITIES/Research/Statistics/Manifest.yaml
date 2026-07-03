@@ -1,6 +1,6 @@
 name: Statistical Modeling Capability
 category: Research
-version: 1.0.1
+version: 1.0.2
 maturity: Validated
 extends: Capability_BaseCognitive
 dependencies:

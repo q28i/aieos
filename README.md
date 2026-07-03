@@ -1,71 +1,94 @@
-# AIEOS: Human Intelligence Amplification Runtime
+<a name="top"></a>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![NPM version](https://img.shields.io/npm/v/@q28i/aieos.svg)](https://www.npmjs.com/package/@q28i/aieos)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/aieos/aieos/ci.yml)](https://github.com/aieos/aieos/actions)
+<div align="center">
 
-AIEOS is a model-independent **Human Intelligence Amplification Runtime** (a Decision OS) designed to increase decision quality under uncertainty while improving the user's independent reasoning. 
+<br />
 
-Rather than treating AI as a simple question-answering tool or code generator, AIEOS structures collaboration around Socratic inquiry, preference discovery, and opportunity cost reviews—creating reusable Decision Contracts that move human-AI collaboration beyond static prompting.
+<img src="https://img.shields.io/badge/%F0%9F%A7%A0_AIEOS-f97316?style=for-the-badge&labelColor=0a0a0f" alt="AIEOS" height="52" />
 
----
+<h1>AIEOS</h1>
 
-## 🌐 The Ecosystem Architecture
+<h3>The model-independent <b>Human Intelligence Amplification Runtime</b> &amp; Decision OS.</h3>
 
-AIEOS scales as a unified open-source platform mapped across dedicated domain zones:
+<p><i>25 capabilities · 7 cognitive protocols · one SQLite database registry · zero dependencies</i></p>
 
-```text
-loftyrux.in
-│
-├── aieos.loftyrux.in       # Documentation and home base
-├── registry.loftyrux.in    # Public package registry index
-├── api.loftyrux.in         # Registry and package verification API
-├── docs.loftyrux.in        # Contributor references
-└── playground.loftyrux.in  # Interactive cognitive simulations
-```
+<br />
 
----
+[![CI](https://github.com/q28i/aieos/actions/workflows/ci.yml/badge.svg)](https://github.com/q28i/aieos/actions)
+[![Release](https://img.shields.io/github/v/release/q28i/aieos?style=flat-square&color=f97316)](https://github.com/q28i/aieos/releases)
+[![npm](https://img.shields.io/npm/v/@q28i/aieos?style=flat-square&color=cb3837&logo=npm)](https://www.npmjs.com/package/@q28i/aieos)
+[![License](https://img.shields.io/badge/license-MIT-22c55e?style=flat-square)](#-license)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-ec4899?style=flat-square)](#-contributing)
 
-## 🚀 Key Features
+<br />
 
-* **Dialogue Orchestration**: Decoupled dialogue manager governing conversation pacing, question strategies, and Socratic reflection overlays.
-* **Decision Contracts**: Encapsulates objectives, constraints, values, evidence, assumptions, tradeoffs, and reversibility parameters into auditable records.
-* **Disagreement Protocol**: Formalizes rules for when the runtime should constructively disagree with user assumptions.
-* **Split Confidence Scoring**: Separates confidence metrics across Evidence, Reasoning, Prediction, and Execution.
-* **Real GitHub Installer**: Directly download, clone, and validate remote capabilities from GitHub repositories.
+**[⚡ Install](#-install)** &nbsp;·&nbsp; **[🗂 Domains](#-the-4-domains)** &nbsp;·&nbsp; **[🛠️ CLI Reference](#️-cli-reference)** &nbsp;·&nbsp; **[▶️ Usage](#️-using-aieos)** &nbsp;·&nbsp; **[❓ FAQ](#-faq)**
 
----
+</div>
 
-## 📦 Installation
+<br />
 
-### Global Installation
-```bash
-npm install -g @q28i/aieos
-```
-
-### Local Dev Project Installation
-```bash
-# Clone the repository
-git clone https://github.com/loftyrux/aieos.git
-cd aieos
-
-# Install dependencies and link local CLI globally
-npm install
-npm install -g .
-```
-
-### On-Demand Workspace Setup
 ```bash
 npx @q28i/aieos init my_workspace
 ```
+
+<br />
+
+---
+
+## ✨ What is AIEOS
+
+> **One runtime for intelligence amplification.** Instead of treating AI as a simple question-answering tool or code generator, AIEOS structures collaboration around Socratic inquiry, preference discovery, and opportunity cost reviews—creating reusable, auditable Decision Contracts.
+
+AIEOS is a model-independent **Human Intelligence Amplification Runtime** (a Decision OS) designed to increase decision quality under uncertainty while improving the user's independent reasoning. It operates with stable database-backed capability registers, running locally with zero external network overhead or dependency lock-in.
+
+<table>
+<tr>
+<td align="center"><b>25</b><br/><sub>capabilities</sub></td>
+<td align="center"><b>7</b><br/><sub>cognitive loops</sub></td>
+<td align="center"><b>5</b><br/><sub>core services</sub></td>
+<td align="center"><b>0</b><br/><sub>dependencies</sub></td>
+</tr>
+</table>
+
+---
+
+## ⚡ Install
+
+Install the package globally, or scaffold workspaces on-demand:
+
+| Method | Command | Use Case |
+| --- | --- | --- |
+| **On-demand Setup** | `npx @q28i/aieos init <name>` | Initialize a workspace structure without permanent installation |
+| **Global Install** | `npm install -g @q28i/aieos` | Install stable CLI runner onto your system binary path |
+| **Local Development** | `git clone https://github.com/q28i/aieos.git`<br>`cd aieos`<br>`npm install && npm install -g .` | Contribute to the AIEOS core modules |
+
+---
+
+## 🗂 The 4 Domains
+
+AIEOS shifts the execution paradigm from raw task processing to a values-aligned decision pipeline:
+
+<div align="center">
+
+| Domain | Files | Purpose |
+| --- | --: | --- |
+| 📜 **Constitutions** | `AIEOS/CONSTITUTION/` | Core user agency, quality, engineering, and architectural constraints |
+| 🔌 **Services** | `AIEOS/SERVICES/` | Operational systems (`Kernel`, `EventBus`, `Memory`, `CapabilityRegistry`, `Evolution`) |
+| 🧠 **Protocols** | `AIEOS/PROTOCOLS/` | Cognitive loops (`RealityCheck`, `Curiosity`, `KnowledgeExpansion`, `FutureSimulation`, `Wisdom`) |
+| ⚙️ **Policies** | `AIEOS/POLICIES/` | Learning trackers (`UserModel`, `LearningProgress`, `KnowledgeROI`, `Mentor`, `CognitiveBias`) |
+
+</div>
 
 ---
 
 ## 🛠️ CLI Reference
 
+Once installed, use the `aieos` command line tool inside your terminal:
+
 ```bash
 # Initialize a workspace directory
-aieos init
+aieos init my_workspace
 
 # Create a new capability package template
 aieos create package Capability_FuzzyLogic Research
@@ -85,6 +108,25 @@ aieos benchmark
 
 ---
 
+## 📁 Repository Layout
+
+```
+aieos/
+├─ 📂 AIEOS/                    # Dynamic system specifications & schemas
+├─ 📂 bin/                      # Node.js binary wrappers & environment gates
+├─ 📂 doc_system/               # Core Python modules & engines
+│   ├─ cli.py                   # CLI commands & route manager
+│   ├─ doctor.py                # Workspace integrity diagnostics
+│   ├─ generator.py             # Package scaffolding generator
+│   └─ registry.py              # Capability database mappings
+├─ 📂 tests/                    # Core integration unit tests
+├─ 🗂️ aieos.json                 # Project registry settings
+├─ 📜 LICENSE                   # MIT License
+└─ 📖 README.md
+```
+
+---
+
 ## 📋 System Requirements
 
 * **Node.js**: `18.0.0` or higher
@@ -95,24 +137,53 @@ aieos benchmark
 
 ## ❓ FAQ
 
-### 1. What makes AIEOS different from normal LLM prompt frameworks?
-Unlike standard wrapper platforms, AIEOS enforces formal boundaries regarding cognitive bias, reality testing, and user agency constraints. It structures recommendations into auditable, parameter-controlled decision records.
+<details>
+<summary><b>How does AIEOS check Python dependencies?</b></summary>
+<br/>
+On startup, the Node wrapper scans for <code>python</code>, <code>python3</code>, or <code>py</code> binaries. If no matching runtime version &gt;= 3.11 is found, it terminates cleanly with explicit download guides, avoiding unhandled trace logs.
+</details>
 
-### 2. Can I use AIEOS without Python?
-No, the CLI wrapper requires a local Python 3.11+ installation. It will automatically check your environment path variables and exit gracefully if missing or outdated.
+<details>
+<summary><b>Is the SQLite registry network-dependent?</b></summary>
+<br/>
+No. The SQLite database (<code>memory/aieos_local.db</code>) initialized during workspace setups runs entirely in your local folder to track logs and installed capability indices.
+</details>
 
 ---
 
 ## 🛠️ Troubleshooting
 
 ### Command wrapper complains about missing Python
-If you see the error `Error: Python 3.11+ is required` during startup, ensure that `python`, `python3`, or `py` is registered in your system environment path variable (`PATH`) and points to a version `>= 3.11`.
+If you see the error `AIEOS requires Python 3.11 or newer` during execution:
+1. Ensure Python is installed from [python.org](https://www.python.org/downloads/).
+2. Verify that Python is added to your environment `PATH` variables.
 
 ### Permission issues when running global install
-If you encounter write permission issues during `npm install -g @q28i/aieos`, run with root privileges (`sudo` on Unix) or use a Node Version Manager (nvm) to install without global administrator overrides.
+If you run into permission blocks, execute npm using path-level user configurations or run:
+```bash
+npm install -g @q28i/aieos --unsafe-perm
+```
 
 ---
 
-## 📄 License
+## 🤝 Contributing
 
-Distributed under the MIT License. See [LICENSE](file:///LICENSE) for details.
+PRs are welcome! Good first contributions:
+* ➕ Adding new capability adapters under `doc_system/adapter.py`
+* 🛡️ Expanding the `doctor` audits for configuration mismatches
+* 📚 Improving markdown specifications inside the protocols compiler
+
+---
+
+## 📜 License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for details.
+
+<div align="center">
+<br/>
+<sub>Built as one unified catalog. No dependencies. No lock-in.</sub>
+<br/><br/>
+
+**[⬆ back to top](#top)**
+
+</div>
