@@ -2,6 +2,14 @@
 
 All notable changes to AIEOS will be documented in this file.
 
+## [1.3.0] - 2026-07-03
+
+### Added
+- **Clean Non-Polluting Layout**: Scaffolds all workspace resources inside the `.aieos/` folder (`system/`, `project/`, `config/`, `skills/`, `state/`) to keep the root directory completely clean.
+- **Global vs Local Runtime Split**: Separated AIEOS runtime capabilities and global specifications (`~/.aieos/`) from local project-specific decision memory, contracts, and SQLite DBs.
+- **Clean Uninstall**: Added `uninstall` route and menu option to remove AI agent integrations while leaving project memory, decisions, and contracts intact.
+- **Project Template Selects**: Introduced SaaS, Trading Bot, Backend, Library, and AI Agent templates in the interactive installation wizard.
+
 ## [1.2.0] - 2026-07-03
 
 ### Added

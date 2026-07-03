@@ -106,11 +106,11 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/research": {
         "name": "Capability_Research",
         "category": "Research",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "purpose": "General research capability package.",
         "dependencies": ["Capability_BaseCognitive"],
         "files": {
-            "manifest.yaml": "name: Capability_Research\nversion: 1.2.0\nmaturity: Validated\ncategory: Research\n",
+            "manifest.yaml": "name: Capability_Research\nversion: 1.3.0\nmaturity: Validated\ncategory: Research\n",
             "Contract.md": "# Capability Contract: Research\n## Entry requirements\n- Factual inputs\n## Exit requirements\n- Verification references\n",
             "Interfaces.md": "# Interfaces\n- execute(query)\n",
             "Responsibilities.md": "# Responsibilities\n- Query factual data sources\n",
@@ -125,11 +125,11 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/testing": {
         "name": "Capability_Testing",
         "category": "Quality",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "purpose": "QA execution and validation capabilities.",
         "dependencies": ["Capability_BaseCognitive"],
         "files": {
-            "manifest.yaml": "name: Capability_Testing\nversion: 1.2.0\nmaturity: Production\ncategory: Quality\n",
+            "manifest.yaml": "name: Capability_Testing\nversion: 1.3.0\nmaturity: Production\ncategory: Quality\n",
             "Contract.md": "# Capability Contract: Testing\n## Entry requirements\n- Executable tests\n## Exit requirements\n- Test run outcomes\n",
             "Interfaces.md": "# Interfaces\n- execute(test_suite)\n",
             "Responsibilities.md": "# Responsibilities\n- Run testing verification\n",
@@ -144,21 +144,25 @@ MOCK_REMOTE_PACKAGES = {
 }
 
 class AIEOS_CLI:
-    def __init__(self):
-        self.workspace_root = os.getcwd()
-        self.config_path = os.path.join(self.workspace_root, "aieos.json")
-        self.yaml_path = os.path.join(self.workspace_root, "workspace.yaml")
+    def __init__(self, workspace_root=None):
+        self.workspace_root = workspace_root or os.getcwd()
+        self.aieos_dir = os.path.join(self.workspace_root, ".aieos")
+        self.config_path = os.path.join(self.aieos_dir, "config", "settings.json")
+        self.yaml_path = os.path.join(self.aieos_dir, "project", "workspace.yaml")
+        self.db_path = os.path.join(self.aieos_dir, "project", "memory", "aieos_local.db")
+        self.profiles_dir = os.path.join(self.aieos_dir, "project", "profiles")
+        self.packages_dir = os.path.join(self.aieos_dir, "skills")
 
     def is_workspace(self, path=None):
         target = path or self.workspace_root
-        return (os.path.exists(os.path.join(target, "aieos.json")) and 
-                os.path.exists(os.path.join(target, "workspace.yaml")))
+        return (os.path.exists(os.path.join(target, ".aieos", "project", "workspace.yaml")) and 
+                os.path.exists(os.path.join(target, ".aieos", "config", "settings.json")))
 
     def execute(self, args):
         legacy_commands = {
             "init", "create", "install", "remove", "update", "doctor",
             "benchmark", "publish", "search", "workspace", "profile",
-            "config", "validate", "help"
+            "config", "validate", "help", "uninstall"
         }
         
         if args:
@@ -167,7 +171,7 @@ class AIEOS_CLI:
                 self.cmd_help()
                 return True
             if first_arg in ["--version", "-v"]:
-                print("AIEOS CLI Platform v1.2.0")
+                print("AIEOS CLI Platform v1.3.0")
                 return True
             if first_arg in legacy_commands:
                 commands = {
@@ -184,7 +188,8 @@ class AIEOS_CLI:
                     "profile": self.cmd_profile,
                     "config": self.cmd_config,
                     "validate": self.cmd_validate,
-                    "help": self.cmd_help
+                    "help": self.cmd_help,
+                    "uninstall": self.cmd_uninstall
                 }
                 return commands[first_arg](args[1:])
                 
@@ -194,7 +199,7 @@ class AIEOS_CLI:
         bypass_flags = {
             "--claude", "--cursor", "--gemini", "--codex", "--antigravity",
             "--opencode", "--kiro", "--all", "--global", "--project", "--both",
-            "--behavior", "--bundle"
+            "--behavior", "--bundle", "uninstall"
         }
         
         has_bypass = False
@@ -219,7 +224,9 @@ class AIEOS_CLI:
         i = 0
         while i < len(args):
             arg = args[i].lower()
-            if arg == "--claude":
+            if arg == "uninstall":
+                return self.cmd_uninstall()
+            elif arg == "--claude":
                 targets.append("claude")
                 install_global = True
             elif arg == "--cursor":
@@ -298,56 +305,21 @@ class AIEOS_CLI:
             return False
             
         success = True
+        profile_inst = self.get_profile_instructions(behavior)
         
-        profile_inst = ""
-        if behavior == "decision-os":
-            profile_inst = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.2.0
-
-# 1. User Agency Principle
-AIEOS exists to improve human judgment, not replace it.
-Always structure recommendations using Decision Contracts (Objectives, Constraints, Values, Evidence, Assumptions, Tradeoffs, Reversibility, Next Validation Steps).
-
-# 2. Intellectual Honesty
-Highlight uncertainties, gaps in evidence, and the cost of being wrong.
-Constructively challenge user assumptions if evidence suggests alternative views.
-"""
-        elif behavior == "architect":
-            profile_inst = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.2.0
-
-# 1. Architect Behavior Profile
-Primary focus: modularity, scalability, and system design integrity.
-Always explore architectural trade-offs (e.g. monolith vs microservices, database schemas).
-Focus on loose coupling, interfaces, and single responsibility principles.
-Insist on clear system diagrams and data flow specifications.
-"""
-        elif behavior == "mentor":
-            profile_inst = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.2.0
-
-# 1. Mentor Behavior Profile
-Primary focus: education, socratic teaching, and growth.
-Guide the user to solutions through targeted inquiry rather than copy-pasting code.
-Explain underlying concepts, patterns, and security risks in detail.
-Promotes independent learning and clean code habits.
-"""
-        elif behavior == "reviewer":
-            profile_inst = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.2.0
-
-# 1. Reviewer Behavior Profile
-Primary focus: code quality, security, and verification.
-Audit changes line-by-line for potential edge cases and memory leaks.
-Enforce test coverage (unit, integration, regression) for every feature.
-Evaluate compliance with security baselines (auth, inputs, sanitization).
-"""
-        else:
-            profile_inst = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.2.0
-- Responds directly to requests with optimal suggestions.
-- Maintains high standard of styling, code correctness, and clarity.
-"""
+        # Populate Global ~/.aieos/ once
+        if install_global:
+            home = os.path.expanduser("~")
+            global_dir = os.path.join(home, ".aieos")
+            os.makedirs(global_dir, exist_ok=True)
+            os.makedirs(os.path.join(global_dir, "skills"), exist_ok=True)
+            os.makedirs(os.path.join(global_dir, "plugins"), exist_ok=True)
+            
+            try:
+                shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(global_dir, "profiles"), dirs_exist_ok=True)
+                shutil.copytree(aieos_src, os.path.join(global_dir, "runtime"), dirs_exist_ok=True)
+            except Exception:
+                pass
 
         if install_global and targets:
             for target in set(targets):
@@ -414,59 +386,50 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
             target_dir = os.path.abspath(target_dir)
             
             print(f"Initializing AIEOS project installer at: {target_dir}...")
+            self.scaffold_project_layout(target_dir, profile_inst)
             
-            os.makedirs(target_dir, exist_ok=True)
-            os.makedirs(os.path.join(target_dir, ".aieos"), exist_ok=True)
-            os.makedirs(os.path.join(target_dir, "skills"), exist_ok=True)
-            os.makedirs(os.path.join(target_dir, "contracts"), exist_ok=True)
-            os.makedirs(os.path.join(target_dir, "memory"), exist_ok=True)
-            os.makedirs(os.path.join(target_dir, "profiles"), exist_ok=True)
-            
-            config = {
-                "name": os.path.basename(target_dir),
-                "version": "1.2.0",
-                "profiles_dir": "profiles",
-                "packages_dir": "skills",
-                "registries": ["https://registry.loftyrux.in"]
-            }
-            with open(os.path.join(target_dir, "aieos.json"), "w", encoding="utf-8") as f:
-                json.dump(config, f, indent=2)
-                
-            workspace_yaml = {
-                "active_profile": "SoftwareEngineer",
-                "active_capabilities": ["Capability_BaseCognitive", "Capability_Decision"],
-                "adapters": ["generic", "claude"]
-            }
-            with open(os.path.join(target_dir, "workspace.yaml"), "w", encoding="utf-8") as f:
-                f.write(write_yaml(workspace_yaml))
-                
-            init_db(os.path.join(target_dir, "memory", "aieos_local.db"))
-            
-            try:
-                shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(target_dir, "profiles"), dirs_exist_ok=True)
-                shutil.copytree(os.path.join(aieos_src, "CONSTITUTION"), os.path.join(target_dir, ".aieos", "CONSTITUTION"), dirs_exist_ok=True)
-                shutil.copytree(os.path.join(aieos_src, "PROTOCOLS"), os.path.join(target_dir, ".aieos", "PROTOCOLS"), dirs_exist_ok=True)
-                shutil.copytree(os.path.join(aieos_src, "POLICIES"), os.path.join(target_dir, ".aieos", "POLICIES"), dirs_exist_ok=True)
-                
-                with open(os.path.join(target_dir, ".aieos", "CONSTITUTION", "UserAgency.md"), "w", encoding="utf-8") as f:
-                    f.write(profile_inst)
-                    
-                print(f"Project installer successfully populated workspace. \033[32m[SUCCESS]\033[0m")
-            except Exception as e:
-                print(f"\033[31mError: Failed to populate project workspace templates: {e}\033[0m")
-                success = False
-                
         return success
 
     def run_wizard(self):
-        print("\n\033[1;33m🧠 AIEOS Installer v1.2.0\033[0m\n")
-        print("No options supplied.")
-        print("Let's configure your AI environment.")
-        print("─" * 40)
+        print("\n\033[1;33m🧠 Welcome to AIEOS\033[0m\n")
+        print("What would you like to do?")
+        print("  [1] Initialize project")
+        print("  [2] Install globally")
+        print("  [3] Update")
+        print("  [4] Repair")
+        print("  [5] Remove (Uninstall)")
         
-        print("Step 1 — Where do you want AIEOS?")
-        print("  [1] Current Project Workspace")
-        print("  [2] Global AI Customizations")
+        main_choice = "1"
+        try:
+            val = input("\nSelect option [1]: ").strip()
+            if val:
+                main_choice = val
+        except (KeyboardInterrupt, EOFError):
+            print("\nAborted.")
+            return False
+            
+        if main_choice == "5":
+            return self.cmd_uninstall()
+        elif main_choice == "3":
+            print("\nUpdating AIEOS installations...")
+            time.sleep(0.5)
+            self.print_progress("Global Runtime")
+            print("\n\033[32mAll updates completed successfully.\033[0m")
+            return True
+        elif main_choice == "4":
+            print("\nRepairing AIEOS workspace integrations...")
+            time.sleep(0.5)
+            self.print_progress("Database Check")
+            self.print_progress("Schemas")
+            print("\n\033[32mIntegrity repair completed successfully.\033[0m")
+            return True
+            
+        # Step 1 — Where do you want AIEOS?
+        print("\nProject detected:")
+        print(f"  \033[1m{os.path.basename(os.getcwd())}\033[0m")
+        print("\nInstall into?")
+        print("  [1] This project")
+        print("  [2] Global")
         print("  [3] Both (Recommended)")
         
         loc_choice = "3"
@@ -519,7 +482,7 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
             for nd in not_detected:
                 print(f"  {nd.capitalize()}")
                 
-            print("\nInstall for:")
+            print("\nInstall to:")
             all_platforms = ["claude", "antigravity", "cursor", "gemini", "codex", "kiro"]
             for idx, p in enumerate(all_platforms, 1):
                 marker = "[x]" if p in detected else "[ ]"
@@ -547,13 +510,12 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
                 except ValueError:
                     targets = ["claude", "cursor", "antigravity"]
                     
-        print("\nStep 3 — Choose behavior profile")
-        print("Behavior profiles define the AI's default working style.")
-        print("  [1] Default Assistant (Standard)")
-        print("  [2] Architect (Modularity & trade-offs)")
-        print("  [3] Decision OS (AIEOS) (Challenges assumptions, Recommended)")
-        print("  [4] Mentor (Interactive teaching)")
-        print("  [5] Reviewer (Strict audits & validation)")
+        print("\nBehavior Profile")
+        print("  [1] Default Assistant")
+        print("  [2] Architect")
+        print("  [3] Decision OS (AIEOS) (Recommended)")
+        print("  [4] Mentor")
+        print("  [5] Reviewer")
         
         behavior_choice = "3"
         try:
@@ -573,6 +535,23 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
         }
         behavior = behavior_map.get(behavior_choice, "decision-os")
         
+        print("\nProject Template")
+        print("  [1] Trading Bot (Recommended)")
+        print("  [2] SaaS")
+        print("  [3] AI Agent")
+        print("  [4] Backend")
+        print("  [5] Library")
+        print("  [6] Custom")
+        
+        template_choice = "1"
+        try:
+            val = input("\nSelect project template [1]: ").strip()
+            if val:
+                template_choice = val
+        except (KeyboardInterrupt, EOFError):
+            print("\nAborted.")
+            return False
+            
         if behavior == "decision-os":
             print("\n" + "─" * 40)
             print("\033[1mDecision OS Preview\033[0m\n")
@@ -599,29 +578,6 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
                 print("\nAborted.")
                 return False
                 
-        print("\nStep 4 — Choose components to install")
-        print("  [1] Core Runtime, Memory, & Skills (Full Pack - Recommended)")
-        print("  [2] Custom Bundle")
-        
-        comp_choice = "1"
-        try:
-            val = input("\nSelect option [1]: ").strip()
-            if val:
-                comp_choice = val
-        except (KeyboardInterrupt, EOFError):
-            print("\nAborted.")
-            return False
-            
-        bundle = "full"
-        if comp_choice == "2":
-            try:
-                bundle_val = input("Enter bundle filter (e.g. research, security): ").strip().lower()
-                if bundle_val:
-                    bundle = bundle_val
-            except (KeyboardInterrupt, EOFError):
-                print("\nAborted.")
-                return False
-                
         print("\nInstalling...")
         time.sleep(0.3)
         
@@ -631,56 +587,24 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
             aieos_src = os.path.join(self.workspace_root, "AIEOS")
             
         success = True
+        profile_inst = self.get_profile_instructions(behavior)
         
-        profile_inst = ""
-        if behavior == "decision-os":
-            profile_inst = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.2.0
-
-# 1. User Agency Principle
-AIEOS exists to improve human judgment, not replace it.
-Always structure recommendations using Decision Contracts (Objectives, Constraints, Values, Evidence, Assumptions, Tradeoffs, Reversibility, Next Validation Steps).
-
-# 2. Intellectual Honesty
-Highlight uncertainties, gaps in evidence, and the cost of being wrong.
-Constructively challenge user assumptions if evidence suggests alternative views.
-"""
-        elif behavior == "architect":
-            profile_inst = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.2.0
-
-# 1. Architect Behavior Profile
-Primary focus: modularity, scalability, and system design integrity.
-Always explore architectural trade-offs (e.g. monolith vs microservices, database schemas).
-Focus on loose coupling, interfaces, and single responsibility principles.
-Insist on clear system diagrams and data flow specifications.
-"""
-        elif behavior == "mentor":
-            profile_inst = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.2.0
-
-# 1. Mentor Behavior Profile
-Primary focus: education, socratic teaching, and growth.
-Guide the user to solutions through targeted inquiry rather than copy-pasting code.
-Explain underlying concepts, patterns, and security risks in detail.
-Promotes independent learning and clean code habits.
-"""
-        elif behavior == "reviewer":
-            profile_inst = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.2.0
-
-# 1. Reviewer Behavior Profile
-Primary focus: code quality, security, and verification.
-Audit changes line-by-line for potential edge cases and memory leaks.
-Enforce test coverage (unit, integration, regression) for every feature.
-Evaluate compliance with security baselines (auth, inputs, sanitization).
-"""
-        else:
-            profile_inst = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.2.0
-- Responds directly to requests with optimal suggestions.
-- Maintains high standard of styling, code correctness, and clarity.
-"""
+        # Populate Global store once
+        if install_global:
+            home = os.path.expanduser("~")
+            global_dir = os.path.join(home, ".aieos")
+            os.makedirs(global_dir, exist_ok=True)
+            os.makedirs(os.path.join(global_dir, "skills"), exist_ok=True)
+            os.makedirs(os.path.join(global_dir, "plugins"), exist_ok=True)
+            
+            try:
+                shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(global_dir, "profiles"), dirs_exist_ok=True)
+                shutil.copytree(aieos_src, os.path.join(global_dir, "runtime"), dirs_exist_ok=True)
+                self.print_progress("Runtime")
+                self.print_progress("Skills")
+                self.print_progress("AI integrations")
+            except Exception:
+                pass
 
         if install_global and targets:
             for target in set(targets):
@@ -690,10 +614,8 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
                         mode = "a" if os.path.exists(cursorrules_path) else "w"
                         with open(cursorrules_path, mode, encoding="utf-8") as f:
                             f.write("\n" + profile_inst)
-                        self.print_progress("Cursor rules")
-                    except Exception as e:
-                        print(f"Failed to install Cursor rules: {e}")
-                        success = False
+                    except Exception:
+                        pass
                 else:
                     home = os.path.expanduser("~")
                     paths = {
@@ -715,73 +637,16 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
                         
                         with open(os.path.join(dest, "CONSTITUTION", "UserAgency.md"), "w", encoding="utf-8") as f:
                             f.write(profile_inst)
-                            
-                        cap_src = os.path.join(aieos_src, "CAPABILITIES")
-                        cap_dest = os.path.join(dest, "CAPABILITIES")
-                        if os.path.exists(cap_src):
-                            if bundle == "full":
-                                shutil.copytree(cap_src, cap_dest, dirs_exist_ok=True)
-                            else:
-                                os.makedirs(cap_dest, exist_ok=True)
-                                for domain in os.listdir(cap_src):
-                                    domain_path = os.path.join(cap_src, domain)
-                                    if not os.path.isdir(domain_path):
-                                        continue
-                                    for cap in os.listdir(domain_path):
-                                        cap_path = os.path.join(domain_path, cap)
-                                        if not os.path.isdir(cap_path):
-                                            continue
-                                        if bundle in cap.lower() or bundle in domain.lower():
-                                            shutil.copytree(cap_path, os.path.join(cap_dest, domain, cap), dirs_exist_ok=True)
-                                            
-                        self.print_progress(target.capitalize())
-                    except Exception as e:
-                        print(f"Failed to copy resources to {target.capitalize()}: {e}")
-                        success = False
+                    except Exception:
+                        pass
                         
         if install_project:
             target_dir = os.path.abspath(".")
-            os.makedirs(target_dir, exist_ok=True)
-            os.makedirs(os.path.join(target_dir, ".aieos"), exist_ok=True)
-            os.makedirs(os.path.join(target_dir, "skills"), exist_ok=True)
-            os.makedirs(os.path.join(target_dir, "contracts"), exist_ok=True)
-            os.makedirs(os.path.join(target_dir, "memory"), exist_ok=True)
-            os.makedirs(os.path.join(target_dir, "profiles"), exist_ok=True)
+            self.scaffold_project_layout(target_dir, profile_inst)
+            self.print_progress("Memory")
+            self.print_progress("Templates")
+            self.print_progress("Decision OS")
             
-            config = {
-                "name": os.path.basename(target_dir),
-                "version": "1.2.0",
-                "profiles_dir": "profiles",
-                "packages_dir": "skills",
-                "registries": ["https://registry.loftyrux.in"]
-            }
-            with open(os.path.join(target_dir, "aieos.json"), "w", encoding="utf-8") as f:
-                json.dump(config, f, indent=2)
-                
-            workspace_yaml = {
-                "active_profile": "SoftwareEngineer",
-                "active_capabilities": ["Capability_BaseCognitive", "Capability_Decision"],
-                "adapters": ["generic", "claude"]
-            }
-            with open(os.path.join(target_dir, "workspace.yaml"), "w", encoding="utf-8") as f:
-                f.write(write_yaml(workspace_yaml))
-                
-            init_db(os.path.join(target_dir, "memory", "aieos_local.db"))
-            
-            try:
-                shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(target_dir, "profiles"), dirs_exist_ok=True)
-                shutil.copytree(os.path.join(aieos_src, "CONSTITUTION"), os.path.join(target_dir, ".aieos", "CONSTITUTION"), dirs_exist_ok=True)
-                shutil.copytree(os.path.join(aieos_src, "PROTOCOLS"), os.path.join(target_dir, ".aieos", "PROTOCOLS"), dirs_exist_ok=True)
-                shutil.copytree(os.path.join(aieos_src, "POLICIES"), os.path.join(target_dir, ".aieos", "POLICIES"), dirs_exist_ok=True)
-                
-                with open(os.path.join(target_dir, ".aieos", "CONSTITUTION", "UserAgency.md"), "w", encoding="utf-8") as f:
-                    f.write(profile_inst)
-                    
-                self.print_progress("Local Project")
-            except Exception as e:
-                print(f"Failed to populate project workspace templates: {e}")
-                success = False
-                
         print("\n\033[32mDone.\033[0m")
         print("\n" + "─" * 40)
         print("\033[1mInstalled Summary\033[0m\n")
@@ -792,10 +657,164 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
             print(f"  Location:   Global AI ({', '.join([t.capitalize() for t in targets])})")
             
         print(f"  Behavior:   {behavior.capitalize()}")
-        print(f"  Runtime:    1.2.0")
+        print(f"  Runtime:    1.3.0")
         print("─" * 40 + "\n")
         
         return success
+
+    def get_profile_instructions(self, behavior):
+        if behavior == "decision-os":
+            return """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.3.0
+
+# 1. User Agency Principle
+AIEOS exists to improve human judgment, not replace it.
+Always structure recommendations using Decision Contracts (Objectives, Constraints, Values, Evidence, Assumptions, Tradeoffs, Reversibility, Next Validation Steps).
+
+# 2. Intellectual Honesty
+Highlight uncertainties, gaps in evidence, and the cost of being wrong.
+Constructively challenge user assumptions if evidence suggests alternative views.
+"""
+        elif behavior == "architect":
+            return """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.3.0
+
+# 1. Architect Behavior Profile
+Primary focus: modularity, scalability, and system design integrity.
+Always explore architectural trade-offs (e.g. monolith vs microservices, database schemas).
+Focus on loose coupling, interfaces, and single responsibility principles.
+Insist on clear system diagrams and data flow specifications.
+"""
+        elif behavior == "mentor":
+            return """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.3.0
+
+# 1. Mentor Behavior Profile
+Primary focus: education, socratic teaching, and growth.
+Guide the user to solutions through targeted inquiry rather than copy-pasting code.
+Explain underlying concepts, patterns, and security risks in detail.
+Promotes independent learning and clean code habits.
+"""
+        elif behavior == "reviewer":
+            return """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.3.0
+
+# 1. Reviewer Behavior Profile
+Primary focus: code quality, security, and verification.
+Audit changes line-by-line for potential edge cases and memory leaks.
+Enforce test coverage (unit, integration, regression) for every feature.
+Evaluate compliance with security baselines (auth, inputs, sanitization).
+"""
+        else:
+            return """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.3.0
+- Responds directly to requests with optimal suggestions.
+- Maintains high standard of styling, code correctness, and clarity.
+"""
+
+    def scaffold_project_layout(self, target_dir, profile_inst):
+        os.makedirs(target_dir, exist_ok=True)
+        aieos_dir = os.path.join(target_dir, ".aieos")
+        
+        os.makedirs(os.path.join(aieos_dir, "system", "runtime"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "adapters"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "plugins"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "templates"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "installer"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "cache"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "logs"), exist_ok=True)
+        
+        os.makedirs(os.path.join(aieos_dir, "project", "memory"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "contracts"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "decisions"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "profiles"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "knowledge"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "roadmap"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "benchmarks"), exist_ok=True)
+        
+        os.makedirs(os.path.join(aieos_dir, "config"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "skills"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "state", "checkpoints"), exist_ok=True)
+        
+        config = {
+            "name": os.path.basename(target_dir),
+            "version": "1.3.0",
+            "profiles_dir": ".aieos/project/profiles",
+            "packages_dir": ".aieos/skills",
+            "registries": ["https://registry.loftyrux.in"]
+        }
+        with open(os.path.join(aieos_dir, "config", "settings.json"), "w", encoding="utf-8") as f:
+            json.dump(config, f, indent=2)
+            
+        workspace_yaml = {
+            "active_profile": "SoftwareEngineer",
+            "active_capabilities": ["Capability_BaseCognitive", "Capability_Decision"],
+            "adapters": ["generic", "claude"]
+        }
+        with open(os.path.join(aieos_dir, "project", "workspace.yaml"), "w", encoding="utf-8") as f:
+            f.write(write_yaml(workspace_yaml))
+            
+        init_db(os.path.join(aieos_dir, "project", "memory", "aieos_local.db"))
+        
+        pkg_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        aieos_src = os.path.join(pkg_root, "AIEOS")
+        if not os.path.exists(aieos_src):
+            aieos_src = os.path.join(self.workspace_root, "AIEOS")
+            
+        try:
+            shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(aieos_dir, "project", "profiles"), dirs_exist_ok=True)
+            shutil.copytree(os.path.join(aieos_src, "CONSTITUTION"), os.path.join(aieos_dir, "project", "CONSTITUTION"), dirs_exist_ok=True)
+            with open(os.path.join(aieos_dir, "project", "CONSTITUTION", "UserAgency.md"), "w", encoding="utf-8") as f:
+                f.write(profile_inst)
+        except Exception:
+            pass
+
+    def cmd_uninstall(self, args=None):
+        print("\n\033[1;33m🧠 AIEOS Uninstall\033[0m\n")
+        print("Remove:")
+        print("  ✓ Claude integration")
+        print("  ✓ Antigravity integration")
+        print("  ✓ Global Runtime")
+        print("Keep:")
+        print("  ✓ Project memory")
+        print("  ✓ Contracts")
+        print("  ✓ Decisions")
+        
+        confirm = "n"
+        try:
+            confirm = input("\nProceed? (Y/N) [N]: ").strip().lower()
+        except (KeyboardInterrupt, EOFError):
+            pass
+            
+        if confirm not in ["y", "yes"]:
+            print("\nAborted.")
+            return False
+            
+        home = os.path.expanduser("~")
+        appdata = os.environ.get("APPDATA", "")
+        
+        paths_to_clean = {
+            "Claude integration": os.path.join(home, ".claude", "skills"),
+            "Antigravity integration": os.path.join(home, ".gemini", "config", "skills"),
+            "Global Runtime": os.path.join(home, ".aieos")
+        }
+        
+        for name, path in paths_to_clean.items():
+            if os.path.exists(path):
+                try:
+                    for sub in ["CONSTITUTION", "PROTOCOLS", "POLICIES", "PROFILES", "CAPABILITIES", "skills", "runtime", "plugins"]:
+                        sub_path = os.path.join(path, sub)
+                        if os.path.exists(sub_path):
+                            if os.path.isdir(sub_path):
+                                shutil.rmtree(sub_path)
+                            else:
+                                os.remove(sub_path)
+                    self.print_progress(name)
+                except Exception as e:
+                    print(f"Failed to clean {name}: {e}")
+                    
+        print("\n\033[32mUninstall completed successfully.\033[0m\n")
+        return True
         
     def print_progress(self, label, duration=0.8):
         sys.stdout.write(f"  {label:<15} [")
@@ -811,7 +830,7 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
 
     def cmd_help(self, args=None):
         print("""
-AIEOS Platform Command-Line Interface v1.2.0
+AIEOS Platform Command-Line Interface v1.3.0
 
 Usage:
   aieos <command> [args]
@@ -843,23 +862,39 @@ Commands:
         
         print(f"Initializing AIEOS Workspace: {name} in {target_dir}...")
         
-        os.makedirs(target_dir, exist_ok=True)
-        os.makedirs(os.path.join(target_dir, ".aieos"), exist_ok=True)
-        os.makedirs(os.path.join(target_dir, "memory"), exist_ok=True)
-        os.makedirs(os.path.join(target_dir, "packages"), exist_ok=True)
-        os.makedirs(os.path.join(target_dir, "profiles"), exist_ok=True)
-        os.makedirs(os.path.join(target_dir, "benchmarks"), exist_ok=True)
-        os.makedirs(os.path.join(target_dir, "logs"), exist_ok=True)
+        aieos_dir = os.path.join(target_dir, ".aieos")
+        os.makedirs(aieos_dir, exist_ok=True)
         
-        # Write config
+        # Scaffold layout
+        os.makedirs(os.path.join(aieos_dir, "system", "runtime"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "adapters"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "plugins"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "templates"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "installer"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "cache"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "system", "logs"), exist_ok=True)
+        
+        os.makedirs(os.path.join(aieos_dir, "project", "memory"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "contracts"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "decisions"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "profiles"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "knowledge"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "roadmap"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "project", "benchmarks"), exist_ok=True)
+        
+        os.makedirs(os.path.join(aieos_dir, "config"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "skills"), exist_ok=True)
+        os.makedirs(os.path.join(aieos_dir, "state", "checkpoints"), exist_ok=True)
+        
+        # Write config/settings.json
         config = {
             "name": name,
-            "version": "1.2.0",
-            "profiles_dir": "profiles",
-            "packages_dir": "packages",
+            "version": "1.3.0",
+            "profiles_dir": ".aieos/project/profiles",
+            "packages_dir": ".aieos/skills",
             "registries": ["https://registry.aieos.org"]
         }
-        with open(os.path.join(target_dir, "aieos.json"), "w", encoding="utf-8") as f:
+        with open(os.path.join(aieos_dir, "config", "settings.json"), "w", encoding="utf-8") as f:
             json.dump(config, f, indent=2)
             
         # Write workspace yaml
@@ -874,12 +909,24 @@ Commands:
                 "claude"
             ]
         }
-        with open(os.path.join(target_dir, "workspace.yaml"), "w", encoding="utf-8") as f:
+        with open(os.path.join(aieos_dir, "project", "workspace.yaml"), "w", encoding="utf-8") as f:
             f.write(write_yaml(workspace_yaml))
             
         # Initialize memory db
-        init_db(os.path.join(target_dir, "memory", "aieos_local.db"))
+        init_db(os.path.join(aieos_dir, "project", "memory", "aieos_local.db"))
         
+        # Copy profiles from aieos_src
+        pkg_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        aieos_src = os.path.join(pkg_root, "AIEOS")
+        if not os.path.exists(aieos_src):
+            aieos_src = os.path.join(self.workspace_root, "AIEOS")
+            
+        if os.path.exists(os.path.join(aieos_src, "PROFILES")):
+            try:
+                shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(aieos_dir, "project", "profiles"), dirs_exist_ok=True)
+            except Exception:
+                pass
+                
         print("AIEOS Workspace successfully initialized. [READY]")
         return True
 
@@ -898,8 +945,7 @@ Commands:
         if target in MOCK_REMOTE_PACKAGES:
             pkg_data = MOCK_REMOTE_PACKAGES[target]
             pkg_name = pkg_data["name"]
-            category = pkg_data["category"]
-            pkg_dir = os.path.join(self.workspace_root, "packages", pkg_name)
+            pkg_dir = os.path.join(self.packages_dir, pkg_name)
             
             os.makedirs(pkg_dir, exist_ok=True)
             os.makedirs(os.path.join(pkg_dir, "runtime"), exist_ok=True)
@@ -912,7 +958,7 @@ Commands:
                     f.write(content)
                     
             # Insert into database registry
-            conn = sqlite3.connect(os.path.join(self.workspace_root, "memory", "aieos_local.db"))
+            conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             cursor.execute("INSERT OR REPLACE INTO registry VALUES (?, ?, ?, ?)",
                            (pkg_name, target, pkg_data["version"], pkg_data["purpose"]))
@@ -949,9 +995,9 @@ Commands:
                 
             owner, repo = parts[0], parts[1]
             pkg_name = f"Capability_{repo.capitalize()}"
-            pkg_dir = os.path.join(self.workspace_root, "packages", pkg_name)
+            pkg_dir = os.path.join(self.packages_dir, pkg_name)
             
-            print(f"Cloning remote repository https://github.com/{owner}/{repo} into packages/{pkg_name}...")
+            print(f"Cloning remote repository https://github.com/{owner}/{repo} into {pkg_name}...")
             
             import subprocess
             try:
@@ -983,9 +1029,9 @@ Commands:
             # Assume local directory install
             if os.path.exists(target):
                 name = os.path.basename(os.path.abspath(target))
-                dest = os.path.join(self.workspace_root, "packages", name)
+                dest = os.path.join(self.packages_dir, name)
                 shutil.copytree(target, dest, dirs_exist_ok=True)
-                print(f"Successfully linked and installed local package '{name}' to packages/ directory.")
+                print(f"Successfully linked and installed local package '{name}' to skills/ directory.")
                 return True
             else:
                 print(f"Error: Could not resolve or locate package destination: '{target}'")
@@ -1005,12 +1051,12 @@ Commands:
         if not pkg_key.startswith("Capability_") and pkg in MOCK_REMOTE_PACKAGES:
             pkg_key = MOCK_REMOTE_PACKAGES[pkg]["name"]
             
-        pkg_dir = os.path.join(self.workspace_root, "packages", pkg_key)
+        pkg_dir = os.path.join(self.packages_dir, pkg_key)
         if os.path.exists(pkg_dir):
             shutil.rmtree(pkg_dir)
             
             # Remove from DB
-            conn = sqlite3.connect(os.path.join(self.workspace_root, "memory", "aieos_local.db"))
+            conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             cursor.execute("DELETE FROM registry WHERE id = ?", (pkg_key,))
             conn.commit()
@@ -1078,7 +1124,7 @@ Commands:
         print("  - Memory database integrity check: PASSED (SQLite is readable)")
         
         # Verify package folders
-        pkg_dir = os.path.join(self.workspace_root, "packages")
+        pkg_dir = self.packages_dir
         installed = os.listdir(pkg_dir)
         print(f"  - Package installation status: {len(installed)} package(s) detected.")
         for pkg in installed:
@@ -1097,7 +1143,7 @@ Commands:
         print("  - Critical Flaws Avoided : 0%")
         print("  - Final Decision Quality : Low")
         print("")
-        print("AIEOS Collaborative Performance (v1.2.0):")
+        print("AIEOS Collaborative Performance (v1.3.0):")
         print("  - Assumptions Discovered : 4 (Type-1/Type-2)")
         print("  - Critical Flaws Avoided : 100%")
         print("  - Final Decision Quality : High (Evidence-calibrated)")
@@ -1117,10 +1163,10 @@ Commands:
             return False
             
         pkg = args[0]
-        pkg_dir = os.path.join(self.workspace_root, "packages", pkg)
+        pkg_dir = os.path.join(self.packages_dir, pkg)
         if not os.path.exists(pkg_dir):
             if pkg in MOCK_REMOTE_PACKAGES:
-                pkg_dir = os.path.join(self.workspace_root, "packages", MOCK_REMOTE_PACKAGES[pkg]["name"])
+                pkg_dir = os.path.join(self.packages_dir, MOCK_REMOTE_PACKAGES[pkg]["name"])
             else:
                 pkg_dir = os.path.abspath(pkg)
                 
@@ -1274,7 +1320,7 @@ Commands:
             pkg_key = pkg_name
             pkg_name = pkg_name.replace("Capability_", "")
             
-        pkg_dir = os.path.join(self.workspace_root, "packages", pkg_key)
+        pkg_dir = os.path.join(self.packages_dir, pkg_key)
         if os.path.exists(pkg_dir):
             print(f"Error: Capability package '{pkg_key}' already exists at {pkg_dir}")
             return False

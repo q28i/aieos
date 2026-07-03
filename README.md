@@ -70,22 +70,21 @@ One command installs AIEOS specifications, constitutions, and policies directly 
 
 ### Local Project Workspaces
 
-If you want to configure a standalone workspace for project-specific vibe coding, run it against directory paths:
+If you want to configure a standalone workspace for project-specific vibe coding, run the interactive wizard or the uninstaller:
 
 ```bash
-npx @q28i/aieos                 # install in current directory
-npx @q28i/aieos .               # install in current directory
-npx @q28i/aieos ../MyProject    # install in a specific project folder
+npx @q28i/aieos                 # run interactive installer wizard
+npx @q28i/aieos uninstall       # clean uninstall of integrations
 ```
 
 This scaffolds a local `.aieos` environment containing:
 ```text
-.aieos/          # core constitutions, protocols, and policies
-skills/          # local capability package registry
-contracts/       # generated decision quality contracts
-memory/          # local SQLite database tracking assumptions & lessons
-profiles/        # cognitive profile configurations (e.g. SoftwareEngineer)
-aieos.json       # registry settings
+.aieos/
+├── system/                 # Managed ONLY by AIEOS (runtime, logs, adapters)
+├── project/                # Project intelligence (memory, decisions, contracts)
+├── config/                 # Configuration files (settings.json, tools.json)
+├── skills/                 # Custom local capability packages
+└── state/                  # Current session state and checkpoints
 ```
 
 ---

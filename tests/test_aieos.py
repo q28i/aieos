@@ -15,7 +15,7 @@ class TestAIEOSCLI(unittest.TestCase):
         self.test_dir = tempfile.mkdtemp()
         self.old_cwd = os.getcwd()
         os.chdir(self.test_dir)
-        self.cli = AIEOS_CLI()
+        self.cli = AIEOS_CLI(workspace_root=self.test_dir)
 
     def tearDown(self):
         # Restore cwd and remove temp directory
@@ -28,14 +28,13 @@ class TestAIEOSCLI(unittest.TestCase):
         self.assertTrue(success)
         
         # Verify files and folders exist
-        self.assertTrue(os.path.exists("aieos.json"))
-        self.assertTrue(os.path.exists("workspace.yaml"))
-        self.assertTrue(os.path.exists(".aieos"))
-        self.assertTrue(os.path.exists("memory/aieos_local.db"))
-        self.assertTrue(os.path.exists("packages"))
-        self.assertTrue(os.path.exists("profiles"))
-        self.assertTrue(os.path.exists("benchmarks"))
-        self.assertTrue(os.path.exists("logs"))
+        self.assertTrue(os.path.exists(".aieos/config/settings.json"))
+        self.assertTrue(os.path.exists(".aieos/project/workspace.yaml"))
+        self.assertTrue(os.path.exists(".aieos/project/memory/aieos_local.db"))
+        self.assertTrue(os.path.exists(".aieos/skills"))
+        self.assertTrue(os.path.exists(".aieos/project/profiles"))
+        self.assertTrue(os.path.exists(".aieos/project/benchmarks"))
+        self.assertTrue(os.path.exists(".aieos/system/logs"))
 
     def test_create_package(self):
         # Initialize first
@@ -46,7 +45,7 @@ class TestAIEOSCLI(unittest.TestCase):
         self.assertTrue(success)
         
         # Verify template folders and files exist
-        pkg_dir = "packages/Capability_FuzzyLogic"
+        pkg_dir = ".aieos/skills/Capability_FuzzyLogic"
         self.assertTrue(os.path.exists(os.path.join(pkg_dir, "manifest.yaml")))
         self.assertTrue(os.path.exists(os.path.join(pkg_dir, "Contract.md")))
         self.assertTrue(os.path.exists(os.path.join(pkg_dir, "Interfaces.md")))
@@ -59,17 +58,17 @@ class TestAIEOSCLI(unittest.TestCase):
         # Install package
         success = self.cli.execute(["install", "@aieos/research"])
         self.assertTrue(success)
-        self.assertTrue(os.path.exists("packages/Capability_Research"))
+        self.assertTrue(os.path.exists(".aieos/skills/Capability_Research"))
         
         # Check active capabilities list
-        with open("workspace.yaml", "r", encoding="utf-8") as f:
+        with open(".aieos/project/workspace.yaml", "r", encoding="utf-8") as f:
             content = f.read()
         self.assertIn("Capability_Research", content)
         
         # Remove package
         success = self.cli.execute(["remove", "@aieos/research"])
         self.assertTrue(success)
-        self.assertFalse(os.path.exists("packages/Capability_Research"))
+        self.assertFalse(os.path.exists(".aieos/skills/Capability_Research"))
 
     def test_doctor_audit(self):
         self.cli.execute(["init"])
@@ -86,7 +85,7 @@ class TestAIEOSCLI(unittest.TestCase):
         self.assertTrue(success)
         
         # Verify profile is updated in workspace.yaml
-        with open("workspace.yaml", "r", encoding="utf-8") as f:
+        with open(".aieos/project/workspace.yaml", "r", encoding="utf-8") as f:
             content = f.read()
         self.assertIn("SoftwareEngineer", content)
 
@@ -97,8 +96,8 @@ class TestAIEOSCLI(unittest.TestCase):
         success = self.cli.execute(["config", "custom_key", "custom_value"])
         self.assertTrue(success)
         
-        # Verify updated key in aieos.json
-        with open("aieos.json", "r", encoding="utf-8") as f:
+        # Verify updated key in settings.json
+        with open(".aieos/config/settings.json", "r", encoding="utf-8") as f:
             data = f.read()
         self.assertIn("custom_key", data)
         self.assertIn("custom_value", data)
