@@ -6,6 +6,12 @@ const path = require('path');
 const cliPath = path.join(__dirname, '../aieos.py');
 const args = process.argv.slice(2);
 
+if (args.length === 0) {
+    const { runWizard } = require('../src/installer');
+    runWizard();
+    return;
+}
+
 const candidates = ['python', 'python3', 'py'];
 let chosenPython = null;
 

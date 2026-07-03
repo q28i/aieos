@@ -288,7 +288,42 @@ class AIEOS_CLI:
         if "--json" in args:
             self.json_mode = True
             args = [a for a in args if a != "--json"]
-            
+
+        import sys
+        import io
+        import json
+
+        if self.json_mode:
+            self.stdout_capture = io.StringIO()
+            self.old_stdout = sys.stdout
+            sys.stdout = self.stdout_capture
+
+        success = False
+        try:
+            success = self._route_execute(args)
+        finally:
+            if self.json_mode:
+                sys.stdout = self.old_stdout
+                output_str = self.stdout_capture.getvalue().strip()
+                
+                parsed_data = None
+                try:
+                    parsed_data = json.loads(output_str)
+                except Exception:
+                    pass
+                
+                response = {
+                    "success": bool(success)
+                }
+                if parsed_data is not None:
+                    response = parsed_data
+                else:
+                    response["message"] = output_str
+                
+                print(json.dumps(response))
+        return success
+
+    def _route_execute(self, args):
         base_commands = {
             "init": self.cmd_init,
             "create": self.cmd_create,
