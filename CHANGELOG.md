@@ -2,6 +2,13 @@
 
 All notable changes to AIEOS will be documented in this file.
 
+## [1.1.0] - 2026-07-03
+
+### Added
+- **Direct Platform Installer**: OVERHAULED the primary CLI execution. Running `npx @q28i/aieos` acts as an automated plug-and-play installer, accepting direct targets like `--claude`, `--cursor`, `--gemini`, `--codex`, `--antigravity`, `--opencode`, `--kiro`, or `--all`.
+- **Project Directory Targets**: Scaffold workspace environments on-demand by passing folders (e.g. `npx @q28i/aieos .` or `npx @q28i/aieos ../TradingBot`).
+- **Whitelisted Templates**: Re-whitelisted `AIEOS` specifications inside the NPM distribution whitelist to ensure the installer copies full policies, protocols, and profiles directly from NPM caches.
+
 ## [1.0.2] - 2026-07-03
 
 ### Changed

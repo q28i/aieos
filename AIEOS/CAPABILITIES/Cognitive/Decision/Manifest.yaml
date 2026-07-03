@@ -1,6 +1,6 @@
 name: Decision Tracing Capability
 category: Cognitive
-version: 1.0.2
+version: 1.1.0
 maturity: Validated
 extends: Capability_BaseCognitive
 dependencies:

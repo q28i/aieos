@@ -106,11 +106,11 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/research": {
         "name": "Capability_Research",
         "category": "Research",
-        "version": "1.0.2",
+        "version": "1.1.0",
         "purpose": "General research capability package.",
         "dependencies": ["Capability_BaseCognitive"],
         "files": {
-            "manifest.yaml": "name: Capability_Research\nversion: 1.0.2\nmaturity: Validated\ncategory: Research\n",
+            "manifest.yaml": "name: Capability_Research\nversion: 1.1.0\nmaturity: Validated\ncategory: Research\n",
             "Contract.md": "# Capability Contract: Research\n## Entry requirements\n- Factual inputs\n## Exit requirements\n- Verification references\n",
             "Interfaces.md": "# Interfaces\n- execute(query)\n",
             "Responsibilities.md": "# Responsibilities\n- Query factual data sources\n",
@@ -125,11 +125,11 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/testing": {
         "name": "Capability_Testing",
         "category": "Quality",
-        "version": "1.0.2",
+        "version": "1.1.0",
         "purpose": "QA execution and validation capabilities.",
         "dependencies": ["Capability_BaseCognitive"],
         "files": {
-            "manifest.yaml": "name: Capability_Testing\nversion: 1.0.2\nmaturity: Production\ncategory: Quality\n",
+            "manifest.yaml": "name: Capability_Testing\nversion: 1.1.0\nmaturity: Production\ncategory: Quality\n",
             "Contract.md": "# Capability Contract: Testing\n## Entry requirements\n- Executable tests\n## Exit requirements\n- Test run outcomes\n",
             "Interfaces.md": "# Interfaces\n- execute(test_suite)\n",
             "Responsibilities.md": "# Responsibilities\n- Run testing verification\n",
@@ -155,47 +155,206 @@ class AIEOS_CLI:
                 os.path.exists(os.path.join(target, "workspace.yaml")))
 
     def execute(self, args):
-        if not args:
-            self.cmd_help()
-            return True
-            
-        first_arg = args[0].lower()
-        if first_arg in ["--help", "-h"]:
-            self.cmd_help()
-            return True
-        if first_arg in ["--version", "-v"]:
-            print("AIEOS CLI Platform v1.0.2")
-            return True
-            
-        cmd = first_arg
-        cmd_args = args[1:]
-        
-        commands = {
-            "init": self.cmd_init,
-            "create": self.cmd_create,
-            "install": self.cmd_install,
-            "remove": self.cmd_remove,
-            "update": self.cmd_update,
-            "doctor": self.cmd_doctor,
-            "benchmark": self.cmd_benchmark,
-            "publish": self.cmd_publish,
-            "search": self.cmd_search,
-            "workspace": self.cmd_workspace,
-            "profile": self.cmd_profile,
-            "config": self.cmd_config,
-            "validate": self.cmd_validate,
-            "help": self.cmd_help
+        legacy_commands = {
+            "init", "create", "install", "remove", "update", "doctor",
+            "benchmark", "publish", "search", "workspace", "profile",
+            "config", "validate", "help"
         }
         
-        if cmd in commands:
-            return commands[cmd](cmd_args)
-        else:
-            print(f"\033[31mError: Unknown command '{cmd}'. Type 'aieos help' for usage details.\033[0m")
+        if args:
+            first_arg = args[0].lower()
+            if first_arg in ["--help", "-h"]:
+                self.cmd_help()
+                return True
+            if first_arg in ["--version", "-v"]:
+                print("AIEOS CLI Platform v1.1.0")
+                return True
+            if first_arg in legacy_commands:
+                commands = {
+                    "init": self.cmd_init,
+                    "create": self.cmd_create,
+                    "install": self.cmd_install,
+                    "remove": self.cmd_remove,
+                    "update": self.cmd_update,
+                    "doctor": self.cmd_doctor,
+                    "benchmark": self.cmd_benchmark,
+                    "publish": self.cmd_publish,
+                    "search": self.cmd_search,
+                    "workspace": self.cmd_workspace,
+                    "profile": self.cmd_profile,
+                    "config": self.cmd_config,
+                    "validate": self.cmd_validate,
+                    "help": self.cmd_help
+                }
+                return commands[first_arg](args[1:])
+                
+        return self.cmd_installer(args)
+
+    def cmd_installer(self, args):
+        targets = []
+        bundle = "full"
+        project_dir = None
+        
+        i = 0
+        while i < len(args):
+            arg = args[i].lower()
+            if arg == "--claude":
+                targets.append("claude")
+            elif arg == "--cursor":
+                targets.append("cursor")
+            elif arg == "--gemini":
+                targets.append("gemini")
+            elif arg == "--codex":
+                targets.append("codex")
+            elif arg == "--antigravity":
+                targets.append("antigravity")
+            elif arg == "--opencode":
+                targets.append("opencode")
+            elif arg == "--kiro":
+                targets.append("kiro")
+            elif arg == "--all":
+                targets.extend(["claude", "cursor", "gemini", "codex", "antigravity", "opencode", "kiro"])
+            elif arg == "--bundle":
+                if i + 1 < len(args):
+                    bundle = args[i+1].lower()
+                    i += 1
+            else:
+                project_dir = args[i]
+            i += 1
+            
+        pkg_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        aieos_src = os.path.join(pkg_root, "AIEOS")
+        if not os.path.exists(aieos_src):
+            aieos_src = os.path.join(self.workspace_root, "AIEOS")
+            
+        if not os.path.exists(aieos_src):
+            print(f"\033[31mError: AIEOS specifications directory not found at: {aieos_src}\033[0m")
             return False
+            
+        if targets:
+            success = True
+            for target in set(targets):
+                if target == "cursor":
+                    dest_dir = project_dir or self.workspace_root
+                    cursorrules_path = os.path.join(dest_dir, ".cursorrules")
+                    print(f"Installing AIEOS rules into Cursor project at: {cursorrules_path}...")
+                    
+                    instructions = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.1.0
+
+# 1. User Agency Principle
+AIEOS exists to improve human judgment, not replace it.
+Always structure recommendations using Decision Contracts (Objectives, Constraints, Values, Evidence, Assumptions, Tradeoffs, Reversibility, Next Validation Steps).
+
+# 2. Intellectual Honesty
+Highlight uncertainties, gaps in evidence, and the cost of being wrong.
+Constructively challenge user assumptions if evidence suggests alternative views.
+"""
+                    try:
+                        mode = "a" if os.path.exists(cursorrules_path) else "w"
+                        with open(cursorrules_path, mode, encoding="utf-8") as f:
+                            f.write("\n" + instructions)
+                        print(f"  * Cursor rules successfully installed to {cursorrules_path} \033[32m[SUCCESS]\033[0m")
+                    except Exception as e:
+                        print(f"  * \033[31mError: Failed to install Cursor rules: {e}\033[0m")
+                        success = False
+                else:
+                    home = os.path.expanduser("~")
+                    paths = {
+                        "claude": os.path.join(home, ".claude", "skills"),
+                        "gemini": os.path.join(home, ".gemini", "skills"),
+                        "codex": os.path.join(home, ".codex", "skills"),
+                        "antigravity": os.path.join(home, ".gemini", "config", "skills"),
+                        "opencode": os.path.join(home, ".opencode", "skills"),
+                        "kiro": os.path.join(home, ".kiro", "skills")
+                    }
+                    
+                    dest = paths[target]
+                    print(f"Installing AIEOS specifications into {target.capitalize()} at: {dest}...")
+                    os.makedirs(dest, exist_ok=True)
+                    
+                    try:
+                        shutil.copytree(os.path.join(aieos_src, "CONSTITUTION"), os.path.join(dest, "CONSTITUTION"), dirs_exist_ok=True)
+                        shutil.copytree(os.path.join(aieos_src, "PROTOCOLS"), os.path.join(dest, "PROTOCOLS"), dirs_exist_ok=True)
+                        shutil.copytree(os.path.join(aieos_src, "POLICIES"), os.path.join(dest, "POLICIES"), dirs_exist_ok=True)
+                        shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(dest, "PROFILES"), dirs_exist_ok=True)
+                        
+                        cap_src = os.path.join(aieos_src, "CAPABILITIES")
+                        cap_dest = os.path.join(dest, "CAPABILITIES")
+                        if os.path.exists(cap_src):
+                            if bundle == "full":
+                                shutil.copytree(cap_src, cap_dest, dirs_exist_ok=True)
+                            else:
+                                os.makedirs(cap_dest, exist_ok=True)
+                                for domain in os.listdir(cap_src):
+                                    domain_path = os.path.join(cap_src, domain)
+                                    if not os.path.isdir(domain_path):
+                                        continue
+                                    for cap in os.listdir(domain_path):
+                                        cap_path = os.path.join(domain_path, cap)
+                                        if not os.path.isdir(cap_path):
+                                            continue
+                                        if bundle in cap.lower() or bundle in domain.lower():
+                                            shutil.copytree(cap_path, os.path.join(cap_dest, domain, cap), dirs_exist_ok=True)
+                                            
+                        print(f"  * AIEOS specs installed to {target.capitalize()} successfully. \033[32m[SUCCESS]\033[0m")
+                    except Exception as e:
+                        print(f"  * \033[31mError: Failed to copy AIEOS resources to {target.capitalize()}: {e}\033[0m")
+                        success = False
+            return success
+        else:
+            target_dir = project_dir or "."
+            target_dir = os.path.abspath(target_dir)
+            
+            print(f"Initializing AIEOS project installer at: {target_dir}...")
+            
+            os.makedirs(target_dir, exist_ok=True)
+            os.makedirs(os.path.join(target_dir, ".aieos"), exist_ok=True)
+            os.makedirs(os.path.join(target_dir, "skills"), exist_ok=True)
+            os.makedirs(os.path.join(target_dir, "contracts"), exist_ok=True)
+            os.makedirs(os.path.join(target_dir, "memory"), exist_ok=True)
+            os.makedirs(os.path.join(target_dir, "profiles"), exist_ok=True)
+            
+            config = {
+                "name": os.path.basename(target_dir),
+                "version": "1.1.0",
+                "profiles_dir": "profiles",
+                "packages_dir": "skills",
+                "registries": ["https://registry.loftyrux.in"]
+            }
+            with open(os.path.join(target_dir, "aieos.json"), "w", encoding="utf-8") as f:
+                json.dump(config, f, indent=2)
+                
+            workspace_yaml = {
+                "active_profile": "SoftwareEngineer",
+                "active_capabilities": [
+                    "Capability_BaseCognitive",
+                    "Capability_Decision"
+                ],
+                "adapters": [
+                    "generic",
+                    "claude"
+                ]
+            }
+            with open(os.path.join(target_dir, "workspace.yaml"), "w", encoding="utf-8") as f:
+                f.write(write_yaml(workspace_yaml))
+                
+            init_db(os.path.join(target_dir, "memory", "aieos_local.db"))
+            
+            try:
+                shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(target_dir, "profiles"), dirs_exist_ok=True)
+                shutil.copytree(os.path.join(aieos_src, "CONSTITUTION"), os.path.join(target_dir, ".aieos", "CONSTITUTION"), dirs_exist_ok=True)
+                shutil.copytree(os.path.join(aieos_src, "PROTOCOLS"), os.path.join(target_dir, ".aieos", "PROTOCOLS"), dirs_exist_ok=True)
+                shutil.copytree(os.path.join(aieos_src, "POLICIES"), os.path.join(target_dir, ".aieos", "POLICIES"), dirs_exist_ok=True)
+                print(f"Project installer successfully populated workspace. \033[32m[SUCCESS]\033[0m")
+                return True
+            except Exception as e:
+                print(f"\033[31mError: Failed to populate project workspace templates: {e}\033[0m")
+                return False
 
     def cmd_help(self, args=None):
         print("""
-AIEOS Platform Command-Line Interface v1.0.2
+AIEOS Platform Command-Line Interface v1.1.0
 
 Usage:
   aieos <command> [args]
@@ -238,7 +397,7 @@ Commands:
         # Write config
         config = {
             "name": name,
-            "version": "1.0.2",
+            "version": "1.1.0",
             "profiles_dir": "profiles",
             "packages_dir": "packages",
             "registries": ["https://registry.aieos.org"]
@@ -481,7 +640,7 @@ Commands:
         print("  - Critical Flaws Avoided : 0%")
         print("  - Final Decision Quality : Low")
         print("")
-        print("AIEOS Collaborative Performance (v1.0.2):")
+        print("AIEOS Collaborative Performance (v1.1.0):")
         print("  - Assumptions Discovered : 4 (Type-1/Type-2)")
         print("  - Critical Flaws Avoided : 100%")
         print("  - Final Decision Quality : High (Evidence-calibrated)")

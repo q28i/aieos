@@ -1,6 +1,6 @@
 name: Security Hardening Capability
 category: Security
-version: 1.0.2
+version: 1.1.0
 maturity: Production
 extends: Capability_BaseCognitive
 dependencies:
