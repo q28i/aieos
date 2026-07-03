@@ -1,6 +1,6 @@
 name: Negotiation Design Capability
 category: Business
-version: 1.3.0
+version: 1.4.0
 maturity: Validated
 extends: Capability_BaseCognitive
 dependencies:

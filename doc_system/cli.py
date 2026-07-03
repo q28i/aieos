@@ -106,11 +106,14 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/research": {
         "name": "Capability_Research",
         "category": "Research",
-        "version": "1.3.0",
+        "version": "1.4.0",
         "purpose": "General research capability package.",
         "dependencies": ["Capability_BaseCognitive"],
+        "tags": ["research", "quant", "analysis"],
+        "supports": ["research", "planning"],
+        "project_types": ["trading_bot", "fintech", "saas", "library"],
         "files": {
-            "manifest.yaml": "name: Capability_Research\nversion: 1.3.0\nmaturity: Validated\ncategory: Research\n",
+            "manifest.yaml": "name: Capability_Research\nversion: 1.4.0\nmaturity: Validated\ncategory: Research\n",
             "Contract.md": "# Capability Contract: Research\n## Entry requirements\n- Factual inputs\n## Exit requirements\n- Verification references\n",
             "Interfaces.md": "# Interfaces\n- execute(query)\n",
             "Responsibilities.md": "# Responsibilities\n- Query factual data sources\n",
@@ -125,11 +128,14 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/testing": {
         "name": "Capability_Testing",
         "category": "Quality",
-        "version": "1.3.0",
+        "version": "1.4.0",
         "purpose": "QA execution and validation capabilities.",
         "dependencies": ["Capability_BaseCognitive"],
+        "tags": ["testing", "quality", "ci/cd"],
+        "supports": ["verification", "validation"],
+        "project_types": ["saas", "library", "backend"],
         "files": {
-            "manifest.yaml": "name: Capability_Testing\nversion: 1.3.0\nmaturity: Production\ncategory: Quality\n",
+            "manifest.yaml": "name: Capability_Testing\nversion: 1.4.0\nmaturity: Production\ncategory: Quality\n",
             "Contract.md": "# Capability Contract: Testing\n## Entry requirements\n- Executable tests\n## Exit requirements\n- Test run outcomes\n",
             "Interfaces.md": "# Interfaces\n- execute(test_suite)\n",
             "Responsibilities.md": "# Responsibilities\n- Run testing verification\n",
@@ -139,6 +145,125 @@ MOCK_REMOTE_PACKAGES = {
             "Evolution.md": "# Evolution\n- Evolve test assertions\n",
             "runtime/hooks.py": "# Testing hooks\ndef run_hook(): pass\n",
             "adapters/claude.py": "# Claude adapter\ndef adapt(): pass\n"
+        }
+    },
+    "@aieos/trading": {
+        "name": "Capability_Trading",
+        "category": "Finance",
+        "version": "1.4.0",
+        "purpose": "Autonomous trading engine and simulation tools.",
+        "dependencies": ["Capability_Research", "Capability_Risk"],
+        "tags": ["trading", "quant", "exchange", "portfolio"],
+        "supports": ["execution", "research"],
+        "project_types": ["trading_bot", "fintech"],
+        "files": {
+            "manifest.yaml": "name: Capability_Trading\nversion: 1.4.0\ncategory: Finance\n",
+            "Contract.md": "# Trading Contract\n",
+            "Interfaces.md": "# Interfaces\n",
+            "runtime/hooks.py": "def run_hook(): pass\n",
+            "adapters/claude.py": "def adapt(): pass\n"
+        }
+    },
+    "@aieos/security": {
+        "name": "Capability_Security",
+        "category": "Security",
+        "version": "1.4.0",
+        "purpose": "Auditing and credential security rules.",
+        "dependencies": ["Capability_BaseCognitive"],
+        "tags": ["security", "auth", "jwt", "rate-limiting"],
+        "supports": ["auditing", "verification"],
+        "project_types": ["saas", "backend", "trading_bot"],
+        "files": {
+            "manifest.yaml": "name: Capability_Security\nversion: 1.4.0\ncategory: Security\n",
+            "Contract.md": "# Security Contract\n",
+            "Interfaces.md": "# Interfaces\n",
+            "runtime/hooks.py": "def run_hook(): pass\n",
+            "adapters/claude.py": "def adapt(): pass\n"
+        }
+    },
+    "@aieos/datapipeline": {
+        "name": "Capability_Datapipeline",
+        "category": "Data",
+        "version": "1.4.0",
+        "purpose": "Data pipeline and database streams management.",
+        "dependencies": ["Capability_BaseCognitive"],
+        "tags": ["database", "postgres", "sql", "ingest", "pipeline"],
+        "supports": ["data", "architecture"],
+        "project_types": ["trading_bot", "saas", "backend"],
+        "files": {
+            "manifest.yaml": "name: Capability_Datapipeline\nversion: 1.4.0\ncategory: Data\n",
+            "Contract.md": "# Data Contract\n",
+            "Interfaces.md": "# Interfaces\n",
+            "runtime/hooks.py": "def run_hook(): pass\n",
+            "adapters/claude.py": "def adapt(): pass\n"
+        }
+    },
+    "@aieos/risk": {
+        "name": "Capability_Risk",
+        "category": "Risk",
+        "version": "1.4.0",
+        "purpose": "Exposure monitoring and risk controllers.",
+        "dependencies": ["Capability_BaseCognitive"],
+        "tags": ["risk", "drawdown", "exposure", "position-sizing"],
+        "supports": ["planning", "execution"],
+        "project_types": ["trading_bot", "fintech"],
+        "files": {
+            "manifest.yaml": "name: Capability_Risk\nversion: 1.4.0\ncategory: Risk\n",
+            "Contract.md": "# Risk Contract\n",
+            "Interfaces.md": "# Interfaces\n",
+            "runtime/hooks.py": "def run_hook(): pass\n",
+            "adapters/claude.py": "def adapt(): pass\n"
+        }
+    },
+    "@aieos/performance": {
+        "name": "Capability_Performance",
+        "category": "Performance",
+        "version": "1.4.0",
+        "purpose": "Performance audit and caching optimization mechanisms.",
+        "dependencies": ["Capability_BaseCognitive"],
+        "tags": ["performance", "bottleneck", "cache", "indexing"],
+        "supports": ["architecture", "verification"],
+        "project_types": ["saas", "backend"],
+        "files": {
+            "manifest.yaml": "name: Capability_Performance\nversion: 1.4.0\ncategory: Performance\n",
+            "Contract.md": "# Performance Contract\n",
+            "Interfaces.md": "# Interfaces\n",
+            "runtime/hooks.py": "def run_hook(): pass\n",
+            "adapters/claude.py": "def adapt(): pass\n"
+        }
+    },
+    "@aieos/docs": {
+        "name": "Capability_Docs",
+        "category": "Documentation",
+        "version": "1.4.0",
+        "purpose": "OpenAPI and markdown documentation compiler.",
+        "dependencies": ["Capability_BaseCognitive"],
+        "tags": ["documentation", "openapi", "markdown"],
+        "supports": ["documentation"],
+        "project_types": ["saas", "library", "backend"],
+        "files": {
+            "manifest.yaml": "name: Capability_Docs\nversion: 1.4.0\ncategory: Documentation\n",
+            "Contract.md": "# Docs Contract\n",
+            "Interfaces.md": "# Interfaces\n",
+            "runtime/hooks.py": "def run_hook(): pass\n",
+            "adapters/claude.py": "def adapt(): pass\n"
+        }
+    },
+    "@aieos/memory": {
+        "name": "Capability_Memory",
+        "category": "Memory",
+        "version": "1.4.0",
+        "purpose": "Context graph database memory adapter.",
+        "dependencies": ["Capability_BaseCognitive"],
+        "tags": ["memory", "graph", "sqlite", "context"],
+        "supports": ["data", "planning"],
+        "project_types": ["saas", "ai_agent", "trading_bot"],
+        "files": {
+            "manifest.yaml": "name: Capability_Memory\nversion: 1.4.0\ncategory: Memory\n",
+            "Contract.md": "# Memory Contract\n",
+            "Interfaces.md": "# Interfaces\n",
+            "runtime/hooks.py": "def run_hook(): pass\n",
+            "adapters/claude.py": "def adapt(): pass\n"
         }
     }
 }
@@ -162,7 +287,7 @@ class AIEOS_CLI:
         legacy_commands = {
             "init", "create", "install", "remove", "update", "doctor",
             "benchmark", "publish", "search", "workspace", "profile",
-            "config", "validate", "help", "uninstall"
+            "config", "validate", "help", "uninstall", "discover"
         }
         
         if args:
@@ -171,7 +296,7 @@ class AIEOS_CLI:
                 self.cmd_help()
                 return True
             if first_arg in ["--version", "-v"]:
-                print("AIEOS CLI Platform v1.3.0")
+                print("AIEOS CLI Platform v1.4.0")
                 return True
             if first_arg in legacy_commands:
                 commands = {
@@ -189,7 +314,8 @@ class AIEOS_CLI:
                     "config": self.cmd_config,
                     "validate": self.cmd_validate,
                     "help": self.cmd_help,
-                    "uninstall": self.cmd_uninstall
+                    "uninstall": self.cmd_uninstall,
+                    "discover": self.cmd_discover
                 }
                 return commands[first_arg](args[1:])
                 
@@ -391,7 +517,7 @@ class AIEOS_CLI:
         return success
 
     def run_wizard(self):
-        print("\n\033[1;33m🧠 Welcome to AIEOS\033[0m\n")
+        print("\n\033[1;33m[AIEOS] Welcome to AIEOS\033[0m\n")
         print("What would you like to do?")
         print("  [1] Initialize project")
         print("  [2] Install globally")
@@ -477,7 +603,7 @@ class AIEOS_CLI:
                     
             print("\nDetected:")
             for d in detected:
-                print(f"  \033[32m✓\033[0m {d.capitalize()}")
+                print(f"  \033[32m+\033[0m {d.capitalize()}")
             print("\nNot detected:")
             for nd in not_detected:
                 print(f"  {nd.capitalize()}")
@@ -657,7 +783,7 @@ class AIEOS_CLI:
             print(f"  Location:   Global AI ({', '.join([t.capitalize() for t in targets])})")
             
         print(f"  Behavior:   {behavior.capitalize()}")
-        print(f"  Runtime:    1.3.0")
+        print(f"  Runtime:    1.4.0")
         print("─" * 40 + "\n")
         
         return success
@@ -665,7 +791,7 @@ class AIEOS_CLI:
     def get_profile_instructions(self, behavior):
         if behavior == "decision-os":
             return """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.3.0
+# Version: 1.4.0
 
 # 1. User Agency Principle
 AIEOS exists to improve human judgment, not replace it.
@@ -677,7 +803,7 @@ Constructively challenge user assumptions if evidence suggests alternative views
 """
         elif behavior == "architect":
             return """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.3.0
+# Version: 1.4.0
 
 # 1. Architect Behavior Profile
 Primary focus: modularity, scalability, and system design integrity.
@@ -687,7 +813,7 @@ Insist on clear system diagrams and data flow specifications.
 """
         elif behavior == "mentor":
             return """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.3.0
+# Version: 1.4.0
 
 # 1. Mentor Behavior Profile
 Primary focus: education, socratic teaching, and growth.
@@ -697,7 +823,7 @@ Promotes independent learning and clean code habits.
 """
         elif behavior == "reviewer":
             return """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.3.0
+# Version: 1.4.0
 
 # 1. Reviewer Behavior Profile
 Primary focus: code quality, security, and verification.
@@ -707,7 +833,7 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
 """
         else:
             return """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.3.0
+# Version: 1.4.0
 - Responds directly to requests with optimal suggestions.
 - Maintains high standard of styling, code correctness, and clarity.
 """
@@ -738,7 +864,7 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
         
         config = {
             "name": os.path.basename(target_dir),
-            "version": "1.3.0",
+            "version": "1.4.0",
             "profiles_dir": ".aieos/project/profiles",
             "packages_dir": ".aieos/skills",
             "registries": ["https://registry.loftyrux.in"]
@@ -770,15 +896,15 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
             pass
 
     def cmd_uninstall(self, args=None):
-        print("\n\033[1;33m🧠 AIEOS Uninstall\033[0m\n")
+        print("\n\033[1;33m[AIEOS] Uninstall\033[0m\n")
         print("Remove:")
-        print("  ✓ Claude integration")
-        print("  ✓ Antigravity integration")
-        print("  ✓ Global Runtime")
+        print("  - Claude integration")
+        print("  - Antigravity integration")
+        print("  - Global Runtime")
         print("Keep:")
-        print("  ✓ Project memory")
-        print("  ✓ Contracts")
-        print("  ✓ Decisions")
+        print("  + Project memory")
+        print("  + Contracts")
+        print("  + Decisions")
         
         confirm = "n"
         try:
@@ -830,7 +956,7 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
 
     def cmd_help(self, args=None):
         print("""
-AIEOS Platform Command-Line Interface v1.3.0
+AIEOS Platform Command-Line Interface v1.4.0
 
 Usage:
   aieos <command> [args]
@@ -849,10 +975,12 @@ Commands:
   benchmark         - Run longitudinal collaborative benchmarks (LLM vs. AIEOS).
   publish <package> - Package a capability folder into local dist/ as tarball.
   search <query>    - Search remote registry endpoints for capabilities.
+  discover          - Intelligent capability recommendation engine scan.
   workspace         - Print detailed status of the active workspace.
   profile <name>    - Activate or view cognitive profiles.
   config            - View and update local options.
   validate <dir>    - Run schema and contract checks on a local directory.
+  uninstall         - Uninstall global integrations and customization rules.
 """)
         return True
 
@@ -889,7 +1017,7 @@ Commands:
         # Write config/settings.json
         config = {
             "name": name,
-            "version": "1.3.0",
+            "version": "1.4.0",
             "profiles_dir": ".aieos/project/profiles",
             "packages_dir": ".aieos/skills",
             "registries": ["https://registry.aieos.org"]
@@ -1143,7 +1271,7 @@ Commands:
         print("  - Critical Flaws Avoided : 0%")
         print("  - Final Decision Quality : Low")
         print("")
-        print("AIEOS Collaborative Performance (v1.3.0):")
+        print("AIEOS Collaborative Performance (v1.4.0):")
         print("  - Assumptions Discovered : 4 (Type-1/Type-2)")
         print("  - Critical Flaws Avoided : 100%")
         print("  - Final Decision Quality : High (Evidence-calibrated)")
@@ -1204,6 +1332,171 @@ Commands:
             if not query or query in key or query in val["purpose"].lower():
                 print(f"{key:<20} | Version: {val['version']} | Purpose: {val['purpose']}")
         print("-" * 60)
+        return True
+
+    def cmd_discover(self, args=None):
+        print("\n\033[1;33m[AIEOS] Capability Recommendation Engine\033[0m\n")
+        
+        desc = ""
+        if not args:
+            if sys.stdin.isatty():
+                try:
+                    desc = input("Describe your project: ").strip().lower()
+                except (KeyboardInterrupt, EOFError):
+                    pass
+        else:
+            desc = " ".join(args).lower()
+            
+        print("\nSearching...")
+        time.sleep(0.3)
+        
+        local_skills = []
+        if os.path.exists(self.packages_dir):
+            local_skills = [s for s in os.listdir(self.packages_dir) if os.path.isdir(os.path.join(self.packages_dir, s))]
+            
+        print(f"  + Local capabilities ({len(local_skills)})")
+        print("  + Team registry (42)")
+        print(f"  + AIEOS Registry ({len(MOCK_REMOTE_PACKAGES)})")
+        print("\nDone.")
+        time.sleep(0.2)
+        
+        matched_tags = []
+        
+        # Scan file system for indicators
+        for root, dirs, files in os.walk(self.workspace_root):
+            depth = root[len(self.workspace_root):].count(os.sep)
+            if depth > 2:
+                continue
+                
+            for d in dirs:
+                dl = d.lower()
+                if dl in ["strategies", "backtests", "execution", "risk", "trading"]:
+                    matched_tags.extend(["trading", "quant", "finance"])
+                if dl in ["auth", "security", "jwt"]:
+                    matched_tags.extend(["security", "auth"])
+                if dl in ["db", "sql", "migration", "pipeline"]:
+                    matched_tags.extend(["database", "pipeline"])
+                if dl in ["tests", "specs"]:
+                    matched_tags.extend(["testing", "quality"])
+                    
+            for f in files:
+                fl = f.lower()
+                if "trade" in fl or "quant" in fl or "drawdown" in fl or "portfolio" in fl:
+                    matched_tags.extend(["trading", "quant", "finance"])
+                if "auth" in fl or "jwt" in fl or "crypto" in fl or "security" in fl:
+                    matched_tags.extend(["security", "auth"])
+                if "db" in fl or "postgres" in fl or "sql" in fl or "pipeline" in fl:
+                    matched_tags.extend(["database", "pipeline"])
+                if "test_" in fl or "_test" in fl:
+                    matched_tags.extend(["testing", "quality"])
+                    
+        if "trading" in desc or "quant" in desc or "algorithmic" in desc or "portfolio" in desc:
+            matched_tags.extend(["trading", "quant", "finance", "risk"])
+        if "saas" in desc or "web" in desc or "backend" in desc or "api" in desc:
+            matched_tags.extend(["backend", "saas", "database", "security"])
+        if "security" in desc or "auth" in desc or "login" in desc:
+            matched_tags.extend(["security", "auth"])
+        if "test" in desc or "qa" in desc or "verify" in desc:
+            matched_tags.extend(["testing", "quality"])
+            
+        matched_tags = list(set(matched_tags))
+        
+        recommendations = []
+        for pkg_id, pkg_info in MOCK_REMOTE_PACKAGES.items():
+            confidence = 10
+            matches = 0
+            
+            for tag in pkg_info.get("tags", []):
+                if tag in matched_tags:
+                    confidence += 30
+                    matches += 1
+            for pt in pkg_info.get("project_types", []):
+                if pt == "trading_bot" and ("trading" in matched_tags or "quant" in matched_tags):
+                    confidence += 40
+                if pt == "saas" and ("saas" in matched_tags or "backend" in matched_tags):
+                    confidence += 40
+                    
+            confidence = min(99, max(5, confidence))
+            
+            reason = pkg_info["purpose"]
+            if pkg_id == "@aieos/trading":
+                reason = "Quant trading platforms require exchange gateways, position sizing, and simulation tools."
+            elif pkg_id == "@aieos/risk":
+                reason = "Every trading platform needs drawdown protection, exposure limits, and position sizing rules."
+            elif pkg_id == "@aieos/security":
+                reason = "Required to audit credentials, securely store keys, and prevent unauthorized API queries."
+            elif pkg_id == "@aieos/datapipeline":
+                reason = "Tick data storage and stream ingestion require highly robust database and index mappings."
+            elif pkg_id == "@aieos/memory":
+                reason = "Maintains persistent context-aware semantic graphs for conversational project states."
+            elif pkg_id == "@aieos/docs":
+                reason = "Compiles OpenAPI structures and markdown guidelines automatically on workspace edits."
+                
+            installed = pkg_info["name"] in local_skills
+            
+            recommendations.append({
+                "id": pkg_id,
+                "name": pkg_info["name"],
+                "confidence": confidence,
+                "reason": reason,
+                "installed": installed,
+                "dependencies": pkg_info.get("dependencies", [])
+            })
+            
+        recommendations.sort(key=lambda x: x["confidence"], reverse=True)
+        
+        print("\n[AIEOS] analyzed your project.\n")
+        
+        print("Recommended capabilities\n")
+        for rec in recommendations[:5]:
+            stars = "*" * int(rec["confidence"] / 20) + " " * (5 - int(rec["confidence"] / 20))
+            installed_lbl = " [Installed]" if rec["installed"] else ""
+            print(f"  [{stars}] {rec['id']:<20} ({rec['confidence']}% Match){installed_lbl}")
+            print(f"        \033[3mReason: {rec['reason']}\033[0m\n")
+            
+        to_install = [r for r in recommendations[:3] if not r["installed"]]
+        if not to_install:
+            print("All recommended capabilities are already installed.")
+            return True
+            
+        confirm = "y"
+        if sys.stdin.isatty():
+            print("Install recommended capabilities? (Y/N) [Y]: ", end="")
+            try:
+                val = input().strip().lower()
+                if val:
+                    confirm = val
+            except (KeyboardInterrupt, EOFError):
+                pass
+        else:
+            print("Auto-confirming capability installation in non-interactive environment...")
+            
+        if confirm in ["y", "yes"]:
+            print("\nResolving dependencies...")
+            time.sleep(0.3)
+            
+            installed_any = False
+            for rec in to_install:
+                deps = rec["dependencies"]
+                for dep in deps:
+                    dep_pkg_id = None
+                    for k, v in MOCK_REMOTE_PACKAGES.items():
+                        if v["name"] == dep:
+                            dep_pkg_id = k
+                            break
+                    if dep_pkg_id:
+                        print(f"  Installing dependency '{dep}'...")
+                        self.cmd_install([dep_pkg_id])
+                
+                print(f"Installing capability '{rec['id']}'...")
+                self.cmd_install([rec['id']])
+                installed_any = True
+                
+            if installed_any:
+                print("\n\033[32mRecommended capabilities successfully installed. [SUCCESS]\033[0m\n")
+        else:
+            print("\nInstallation aborted.")
+            
         return True
 
     def cmd_workspace(self, args):

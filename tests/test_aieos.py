@@ -102,5 +102,11 @@ class TestAIEOSCLI(unittest.TestCase):
         self.assertIn("custom_key", data)
         self.assertIn("custom_value", data)
 
+    def test_discover_recommendations(self):
+        self.cli.execute(["init"])
+        # Discover mock trading bot suggestions
+        success = self.cli.execute(["discover", "trading"])
+        self.assertTrue(success)
+
 if __name__ == "__main__":
     unittest.main()

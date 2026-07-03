@@ -70,10 +70,11 @@ One command installs AIEOS specifications, constitutions, and policies directly 
 
 ### Local Project Workspaces
 
-If you want to configure a standalone workspace for project-specific vibe coding, run the interactive wizard or the uninstaller:
+If you want to configure a standalone workspace for project-specific vibe coding, run the interactive wizard, the uninstaller, or the recommendation engine:
 
 ```bash
 npx @q28i/aieos                 # run interactive installer wizard
+npx @q28i/aieos discover        # scan repository and get capability recommendations
 npx @q28i/aieos uninstall       # clean uninstall of integrations
 ```
 
