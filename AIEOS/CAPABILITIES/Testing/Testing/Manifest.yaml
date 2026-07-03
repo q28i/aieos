@@ -1,6 +1,6 @@
 name: Quality Testing Capability
 category: Testing
-version: 1.1.0
+version: 1.2.0
 maturity: Production
 extends: Capability_BaseCognitive
 dependencies:

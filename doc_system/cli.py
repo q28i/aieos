@@ -106,11 +106,11 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/research": {
         "name": "Capability_Research",
         "category": "Research",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "purpose": "General research capability package.",
         "dependencies": ["Capability_BaseCognitive"],
         "files": {
-            "manifest.yaml": "name: Capability_Research\nversion: 1.1.0\nmaturity: Validated\ncategory: Research\n",
+            "manifest.yaml": "name: Capability_Research\nversion: 1.2.0\nmaturity: Validated\ncategory: Research\n",
             "Contract.md": "# Capability Contract: Research\n## Entry requirements\n- Factual inputs\n## Exit requirements\n- Verification references\n",
             "Interfaces.md": "# Interfaces\n- execute(query)\n",
             "Responsibilities.md": "# Responsibilities\n- Query factual data sources\n",
@@ -125,11 +125,11 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/testing": {
         "name": "Capability_Testing",
         "category": "Quality",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "purpose": "QA execution and validation capabilities.",
         "dependencies": ["Capability_BaseCognitive"],
         "files": {
-            "manifest.yaml": "name: Capability_Testing\nversion: 1.1.0\nmaturity: Production\ncategory: Quality\n",
+            "manifest.yaml": "name: Capability_Testing\nversion: 1.2.0\nmaturity: Production\ncategory: Quality\n",
             "Contract.md": "# Capability Contract: Testing\n## Entry requirements\n- Executable tests\n## Exit requirements\n- Test run outcomes\n",
             "Interfaces.md": "# Interfaces\n- execute(test_suite)\n",
             "Responsibilities.md": "# Responsibilities\n- Run testing verification\n",
@@ -167,7 +167,7 @@ class AIEOS_CLI:
                 self.cmd_help()
                 return True
             if first_arg in ["--version", "-v"]:
-                print("AIEOS CLI Platform v1.1.0")
+                print("AIEOS CLI Platform v1.2.0")
                 return True
             if first_arg in legacy_commands:
                 commands = {
@@ -191,29 +191,69 @@ class AIEOS_CLI:
         return self.cmd_installer(args)
 
     def cmd_installer(self, args):
+        bypass_flags = {
+            "--claude", "--cursor", "--gemini", "--codex", "--antigravity",
+            "--opencode", "--kiro", "--all", "--global", "--project", "--both",
+            "--behavior", "--bundle"
+        }
+        
+        has_bypass = False
+        for arg in args:
+            if arg.lower() in bypass_flags:
+                has_bypass = True
+                break
+                
+        if len(args) == 1 and not args[0].startswith("-"):
+            has_bypass = True
+            
+        if not args or not has_bypass:
+            return self.run_wizard()
+            
         targets = []
         bundle = "full"
         project_dir = None
+        behavior = "decision-os"
+        install_global = False
+        install_project = False
         
         i = 0
         while i < len(args):
             arg = args[i].lower()
             if arg == "--claude":
                 targets.append("claude")
+                install_global = True
             elif arg == "--cursor":
                 targets.append("cursor")
+                install_global = True
             elif arg == "--gemini":
                 targets.append("gemini")
+                install_global = True
             elif arg == "--codex":
                 targets.append("codex")
+                install_global = True
             elif arg == "--antigravity":
                 targets.append("antigravity")
+                install_global = True
             elif arg == "--opencode":
                 targets.append("opencode")
+                install_global = True
             elif arg == "--kiro":
                 targets.append("kiro")
+                install_global = True
             elif arg == "--all":
                 targets.extend(["claude", "cursor", "gemini", "codex", "antigravity", "opencode", "kiro"])
+                install_global = True
+            elif arg == "--global":
+                install_global = True
+            elif arg == "--project":
+                install_project = True
+            elif arg == "--both":
+                install_global = True
+                install_project = True
+            elif arg == "--behavior":
+                if i + 1 < len(args):
+                    behavior = args[i+1].lower()
+                    i += 1
             elif arg == "--bundle":
                 if i + 1 < len(args):
                     bundle = args[i+1].lower()
@@ -222,6 +262,32 @@ class AIEOS_CLI:
                 project_dir = args[i]
             i += 1
             
+        if install_global and not targets:
+            home = os.path.expanduser("~")
+            appdata = os.environ.get("APPDATA", "")
+            localappdata = os.environ.get("LOCALAPPDATA", "")
+            paths = {
+                "claude": [os.path.join(home, ".claude"), os.path.join(appdata, "Claude")],
+                "antigravity": [os.path.join(home, ".gemini", "config"), os.path.join(appdata, "antigravity-ide")],
+                "cursor": [os.path.join(home, ".cursor"), os.path.join(appdata, "Cursor"), os.path.join(localappdata, "Programs", "cursor")],
+                "gemini": [os.path.join(home, ".gemini")],
+                "codex": [os.path.join(home, ".codex")],
+                "kiro": [os.path.join(home, ".kiro")]
+            }
+            for platform, search_paths in paths.items():
+                for p in search_paths:
+                    if p and os.path.exists(p):
+                        targets.append(platform)
+                        break
+            if not targets:
+                targets = ["claude", "cursor", "antigravity"]
+                
+        if not install_global and not install_project:
+            if targets:
+                install_global = True
+            else:
+                install_project = True
+
         pkg_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         aieos_src = os.path.join(pkg_root, "AIEOS")
         if not os.path.exists(aieos_src):
@@ -231,16 +297,12 @@ class AIEOS_CLI:
             print(f"\033[31mError: AIEOS specifications directory not found at: {aieos_src}\033[0m")
             return False
             
-        if targets:
-            success = True
-            for target in set(targets):
-                if target == "cursor":
-                    dest_dir = project_dir or self.workspace_root
-                    cursorrules_path = os.path.join(dest_dir, ".cursorrules")
-                    print(f"Installing AIEOS rules into Cursor project at: {cursorrules_path}...")
-                    
-                    instructions = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.1.0
+        success = True
+        
+        profile_inst = ""
+        if behavior == "decision-os":
+            profile_inst = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.2.0
 
 # 1. User Agency Principle
 AIEOS exists to improve human judgment, not replace it.
@@ -250,10 +312,53 @@ Always structure recommendations using Decision Contracts (Objectives, Constrain
 Highlight uncertainties, gaps in evidence, and the cost of being wrong.
 Constructively challenge user assumptions if evidence suggests alternative views.
 """
+        elif behavior == "architect":
+            profile_inst = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.2.0
+
+# 1. Architect Behavior Profile
+Primary focus: modularity, scalability, and system design integrity.
+Always explore architectural trade-offs (e.g. monolith vs microservices, database schemas).
+Focus on loose coupling, interfaces, and single responsibility principles.
+Insist on clear system diagrams and data flow specifications.
+"""
+        elif behavior == "mentor":
+            profile_inst = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.2.0
+
+# 1. Mentor Behavior Profile
+Primary focus: education, socratic teaching, and growth.
+Guide the user to solutions through targeted inquiry rather than copy-pasting code.
+Explain underlying concepts, patterns, and security risks in detail.
+Promotes independent learning and clean code habits.
+"""
+        elif behavior == "reviewer":
+            profile_inst = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.2.0
+
+# 1. Reviewer Behavior Profile
+Primary focus: code quality, security, and verification.
+Audit changes line-by-line for potential edge cases and memory leaks.
+Enforce test coverage (unit, integration, regression) for every feature.
+Evaluate compliance with security baselines (auth, inputs, sanitization).
+"""
+        else:
+            profile_inst = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.2.0
+- Responds directly to requests with optimal suggestions.
+- Maintains high standard of styling, code correctness, and clarity.
+"""
+
+        if install_global and targets:
+            for target in set(targets):
+                if target == "cursor":
+                    dest_dir = project_dir or self.workspace_root
+                    cursorrules_path = os.path.join(dest_dir, ".cursorrules")
+                    print(f"Installing AIEOS rules into Cursor project at: {cursorrules_path}...")
                     try:
                         mode = "a" if os.path.exists(cursorrules_path) else "w"
                         with open(cursorrules_path, mode, encoding="utf-8") as f:
-                            f.write("\n" + instructions)
+                            f.write("\n" + profile_inst)
                         print(f"  * Cursor rules successfully installed to {cursorrules_path} \033[32m[SUCCESS]\033[0m")
                     except Exception as e:
                         print(f"  * \033[31mError: Failed to install Cursor rules: {e}\033[0m")
@@ -268,7 +373,6 @@ Constructively challenge user assumptions if evidence suggests alternative views
                         "opencode": os.path.join(home, ".opencode", "skills"),
                         "kiro": os.path.join(home, ".kiro", "skills")
                     }
-                    
                     dest = paths[target]
                     print(f"Installing AIEOS specifications into {target.capitalize()} at: {dest}...")
                     os.makedirs(dest, exist_ok=True)
@@ -279,6 +383,9 @@ Constructively challenge user assumptions if evidence suggests alternative views
                         shutil.copytree(os.path.join(aieos_src, "POLICIES"), os.path.join(dest, "POLICIES"), dirs_exist_ok=True)
                         shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(dest, "PROFILES"), dirs_exist_ok=True)
                         
+                        with open(os.path.join(dest, "CONSTITUTION", "UserAgency.md"), "w", encoding="utf-8") as f:
+                            f.write(profile_inst)
+                            
                         cap_src = os.path.join(aieos_src, "CAPABILITIES")
                         cap_dest = os.path.join(dest, "CAPABILITIES")
                         if os.path.exists(cap_src):
@@ -301,8 +408,8 @@ Constructively challenge user assumptions if evidence suggests alternative views
                     except Exception as e:
                         print(f"  * \033[31mError: Failed to copy AIEOS resources to {target.capitalize()}: {e}\033[0m")
                         success = False
-            return success
-        else:
+                        
+        if install_project:
             target_dir = project_dir or "."
             target_dir = os.path.abspath(target_dir)
             
@@ -317,7 +424,7 @@ Constructively challenge user assumptions if evidence suggests alternative views
             
             config = {
                 "name": os.path.basename(target_dir),
-                "version": "1.1.0",
+                "version": "1.2.0",
                 "profiles_dir": "profiles",
                 "packages_dir": "skills",
                 "registries": ["https://registry.loftyrux.in"]
@@ -327,14 +434,8 @@ Constructively challenge user assumptions if evidence suggests alternative views
                 
             workspace_yaml = {
                 "active_profile": "SoftwareEngineer",
-                "active_capabilities": [
-                    "Capability_BaseCognitive",
-                    "Capability_Decision"
-                ],
-                "adapters": [
-                    "generic",
-                    "claude"
-                ]
+                "active_capabilities": ["Capability_BaseCognitive", "Capability_Decision"],
+                "adapters": ["generic", "claude"]
             }
             with open(os.path.join(target_dir, "workspace.yaml"), "w", encoding="utf-8") as f:
                 f.write(write_yaml(workspace_yaml))
@@ -346,15 +447,371 @@ Constructively challenge user assumptions if evidence suggests alternative views
                 shutil.copytree(os.path.join(aieos_src, "CONSTITUTION"), os.path.join(target_dir, ".aieos", "CONSTITUTION"), dirs_exist_ok=True)
                 shutil.copytree(os.path.join(aieos_src, "PROTOCOLS"), os.path.join(target_dir, ".aieos", "PROTOCOLS"), dirs_exist_ok=True)
                 shutil.copytree(os.path.join(aieos_src, "POLICIES"), os.path.join(target_dir, ".aieos", "POLICIES"), dirs_exist_ok=True)
+                
+                with open(os.path.join(target_dir, ".aieos", "CONSTITUTION", "UserAgency.md"), "w", encoding="utf-8") as f:
+                    f.write(profile_inst)
+                    
                 print(f"Project installer successfully populated workspace. \033[32m[SUCCESS]\033[0m")
-                return True
             except Exception as e:
                 print(f"\033[31mError: Failed to populate project workspace templates: {e}\033[0m")
+                success = False
+                
+        return success
+
+    def run_wizard(self):
+        print("\n\033[1;33m🧠 AIEOS Installer v1.2.0\033[0m\n")
+        print("No options supplied.")
+        print("Let's configure your AI environment.")
+        print("─" * 40)
+        
+        print("Step 1 — Where do you want AIEOS?")
+        print("  [1] Current Project Workspace")
+        print("  [2] Global AI Customizations")
+        print("  [3] Both (Recommended)")
+        
+        loc_choice = "3"
+        try:
+            val = input("\nSelect location [3]: ").strip()
+            if val:
+                loc_choice = val
+        except (KeyboardInterrupt, EOFError):
+            print("\nAborted.")
+            return False
+            
+        install_project = loc_choice in ["1", "3"]
+        install_global = loc_choice in ["2", "3"]
+        
+        targets = []
+        if install_global:
+            print("\nScanning for AI tools...")
+            time.sleep(0.5)
+            
+            home = os.path.expanduser("~")
+            appdata = os.environ.get("APPDATA", "")
+            localappdata = os.environ.get("LOCALAPPDATA", "")
+            
+            paths = {
+                "claude": [os.path.join(home, ".claude"), os.path.join(appdata, "Claude")],
+                "antigravity": [os.path.join(home, ".gemini", "config"), os.path.join(appdata, "antigravity-ide")],
+                "cursor": [os.path.join(home, ".cursor"), os.path.join(appdata, "Cursor"), os.path.join(localappdata, "Programs", "cursor")],
+                "gemini": [os.path.join(home, ".gemini")],
+                "codex": [os.path.join(home, ".codex")],
+                "kiro": [os.path.join(home, ".kiro")]
+            }
+            
+            detected = []
+            not_detected = []
+            for platform, search_paths in paths.items():
+                found = False
+                for p in search_paths:
+                    if p and os.path.exists(p):
+                        found = True
+                        break
+                if found:
+                    detected.append(platform)
+                else:
+                    not_detected.append(platform)
+                    
+            print("\nDetected:")
+            for d in detected:
+                print(f"  \033[32m✓\033[0m {d.capitalize()}")
+            print("\nNot detected:")
+            for nd in not_detected:
+                print(f"  {nd.capitalize()}")
+                
+            print("\nInstall for:")
+            all_platforms = ["claude", "antigravity", "cursor", "gemini", "codex", "kiro"]
+            for idx, p in enumerate(all_platforms, 1):
+                marker = "[x]" if p in detected else "[ ]"
+                print(f"  [{idx}] {marker} {p.capitalize()}")
+            print(f"  [{len(all_platforms)+1}] All Detected (Recommended)")
+            
+            tool_choice = str(len(all_platforms)+1)
+            try:
+                val = input(f"\nSelect target options [{tool_choice}]: ").strip()
+                if val:
+                    tool_choice = val
+            except (KeyboardInterrupt, EOFError):
+                print("\nAborted.")
                 return False
+                
+            if tool_choice == str(len(all_platforms)+1):
+                targets = detected if detected else ["claude", "cursor", "antigravity"]
+            else:
+                try:
+                    chosen_idx = int(tool_choice) - 1
+                    if 0 <= chosen_idx < len(all_platforms):
+                        targets = [all_platforms[chosen_idx]]
+                    else:
+                        targets = ["claude", "cursor", "antigravity"]
+                except ValueError:
+                    targets = ["claude", "cursor", "antigravity"]
+                    
+        print("\nStep 3 — Choose behavior profile")
+        print("Behavior profiles define the AI's default working style.")
+        print("  [1] Default Assistant (Standard)")
+        print("  [2] Architect (Modularity & trade-offs)")
+        print("  [3] Decision OS (AIEOS) (Challenges assumptions, Recommended)")
+        print("  [4] Mentor (Interactive teaching)")
+        print("  [5] Reviewer (Strict audits & validation)")
+        
+        behavior_choice = "3"
+        try:
+            val = input("\nSelect behavior profile [3]: ").strip()
+            if val:
+                behavior_choice = val
+        except (KeyboardInterrupt, EOFError):
+            print("\nAborted.")
+            return False
+            
+        behavior_map = {
+            "1": "default",
+            "2": "architect",
+            "3": "decision-os",
+            "4": "mentor",
+            "5": "reviewer"
+        }
+        behavior = behavior_map.get(behavior_choice, "decision-os")
+        
+        if behavior == "decision-os":
+            print("\n" + "─" * 40)
+            print("\033[1mDecision OS Preview\033[0m\n")
+            print("Instead of:")
+            print("  User: Build a trading bot.")
+            print("  AI:   Sure. Here is some random code...\n")
+            print("The AI will now naturally:")
+            print("  • Ask clarifying questions")
+            print("  • Identify assumptions")
+            print("  • Explore tradeoffs")
+            print("  • Challenge weak reasoning")
+            print("  • Build decision contracts")
+            print("  • Track decisions")
+            print("  • Preserve context\n")
+            print("This changes how supported AIs naturally work.")
+            print("It does NOT change the underlying AI model.")
+            
+            try:
+                confirm = input("\nContinue? (Y/N) [Y]: ").strip().lower()
+                if confirm in ["n", "no"]:
+                    print("\nAborted.")
+                    return False
+            except (KeyboardInterrupt, EOFError):
+                print("\nAborted.")
+                return False
+                
+        print("\nStep 4 — Choose components to install")
+        print("  [1] Core Runtime, Memory, & Skills (Full Pack - Recommended)")
+        print("  [2] Custom Bundle")
+        
+        comp_choice = "1"
+        try:
+            val = input("\nSelect option [1]: ").strip()
+            if val:
+                comp_choice = val
+        except (KeyboardInterrupt, EOFError):
+            print("\nAborted.")
+            return False
+            
+        bundle = "full"
+        if comp_choice == "2":
+            try:
+                bundle_val = input("Enter bundle filter (e.g. research, security): ").strip().lower()
+                if bundle_val:
+                    bundle = bundle_val
+            except (KeyboardInterrupt, EOFError):
+                print("\nAborted.")
+                return False
+                
+        print("\nInstalling...")
+        time.sleep(0.3)
+        
+        pkg_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        aieos_src = os.path.join(pkg_root, "AIEOS")
+        if not os.path.exists(aieos_src):
+            aieos_src = os.path.join(self.workspace_root, "AIEOS")
+            
+        success = True
+        
+        profile_inst = ""
+        if behavior == "decision-os":
+            profile_inst = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.2.0
+
+# 1. User Agency Principle
+AIEOS exists to improve human judgment, not replace it.
+Always structure recommendations using Decision Contracts (Objectives, Constraints, Values, Evidence, Assumptions, Tradeoffs, Reversibility, Next Validation Steps).
+
+# 2. Intellectual Honesty
+Highlight uncertainties, gaps in evidence, and the cost of being wrong.
+Constructively challenge user assumptions if evidence suggests alternative views.
+"""
+        elif behavior == "architect":
+            profile_inst = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.2.0
+
+# 1. Architect Behavior Profile
+Primary focus: modularity, scalability, and system design integrity.
+Always explore architectural trade-offs (e.g. monolith vs microservices, database schemas).
+Focus on loose coupling, interfaces, and single responsibility principles.
+Insist on clear system diagrams and data flow specifications.
+"""
+        elif behavior == "mentor":
+            profile_inst = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.2.0
+
+# 1. Mentor Behavior Profile
+Primary focus: education, socratic teaching, and growth.
+Guide the user to solutions through targeted inquiry rather than copy-pasting code.
+Explain underlying concepts, patterns, and security risks in detail.
+Promotes independent learning and clean code habits.
+"""
+        elif behavior == "reviewer":
+            profile_inst = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.2.0
+
+# 1. Reviewer Behavior Profile
+Primary focus: code quality, security, and verification.
+Audit changes line-by-line for potential edge cases and memory leaks.
+Enforce test coverage (unit, integration, regression) for every feature.
+Evaluate compliance with security baselines (auth, inputs, sanitization).
+"""
+        else:
+            profile_inst = """# AIEOS Human Intelligence Amplification Rules
+# Version: 1.2.0
+- Responds directly to requests with optimal suggestions.
+- Maintains high standard of styling, code correctness, and clarity.
+"""
+
+        if install_global and targets:
+            for target in set(targets):
+                if target == "cursor":
+                    cursorrules_path = os.path.join(self.workspace_root, ".cursorrules")
+                    try:
+                        mode = "a" if os.path.exists(cursorrules_path) else "w"
+                        with open(cursorrules_path, mode, encoding="utf-8") as f:
+                            f.write("\n" + profile_inst)
+                        self.print_progress("Cursor rules")
+                    except Exception as e:
+                        print(f"Failed to install Cursor rules: {e}")
+                        success = False
+                else:
+                    home = os.path.expanduser("~")
+                    paths = {
+                        "claude": os.path.join(home, ".claude", "skills"),
+                        "gemini": os.path.join(home, ".gemini", "skills"),
+                        "codex": os.path.join(home, ".codex", "skills"),
+                        "antigravity": os.path.join(home, ".gemini", "config", "skills"),
+                        "opencode": os.path.join(home, ".opencode", "skills"),
+                        "kiro": os.path.join(home, ".kiro", "skills")
+                    }
+                    dest = paths[target]
+                    os.makedirs(dest, exist_ok=True)
+                    
+                    try:
+                        shutil.copytree(os.path.join(aieos_src, "CONSTITUTION"), os.path.join(dest, "CONSTITUTION"), dirs_exist_ok=True)
+                        shutil.copytree(os.path.join(aieos_src, "PROTOCOLS"), os.path.join(dest, "PROTOCOLS"), dirs_exist_ok=True)
+                        shutil.copytree(os.path.join(aieos_src, "POLICIES"), os.path.join(dest, "POLICIES"), dirs_exist_ok=True)
+                        shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(dest, "PROFILES"), dirs_exist_ok=True)
+                        
+                        with open(os.path.join(dest, "CONSTITUTION", "UserAgency.md"), "w", encoding="utf-8") as f:
+                            f.write(profile_inst)
+                            
+                        cap_src = os.path.join(aieos_src, "CAPABILITIES")
+                        cap_dest = os.path.join(dest, "CAPABILITIES")
+                        if os.path.exists(cap_src):
+                            if bundle == "full":
+                                shutil.copytree(cap_src, cap_dest, dirs_exist_ok=True)
+                            else:
+                                os.makedirs(cap_dest, exist_ok=True)
+                                for domain in os.listdir(cap_src):
+                                    domain_path = os.path.join(cap_src, domain)
+                                    if not os.path.isdir(domain_path):
+                                        continue
+                                    for cap in os.listdir(domain_path):
+                                        cap_path = os.path.join(domain_path, cap)
+                                        if not os.path.isdir(cap_path):
+                                            continue
+                                        if bundle in cap.lower() or bundle in domain.lower():
+                                            shutil.copytree(cap_path, os.path.join(cap_dest, domain, cap), dirs_exist_ok=True)
+                                            
+                        self.print_progress(target.capitalize())
+                    except Exception as e:
+                        print(f"Failed to copy resources to {target.capitalize()}: {e}")
+                        success = False
+                        
+        if install_project:
+            target_dir = os.path.abspath(".")
+            os.makedirs(target_dir, exist_ok=True)
+            os.makedirs(os.path.join(target_dir, ".aieos"), exist_ok=True)
+            os.makedirs(os.path.join(target_dir, "skills"), exist_ok=True)
+            os.makedirs(os.path.join(target_dir, "contracts"), exist_ok=True)
+            os.makedirs(os.path.join(target_dir, "memory"), exist_ok=True)
+            os.makedirs(os.path.join(target_dir, "profiles"), exist_ok=True)
+            
+            config = {
+                "name": os.path.basename(target_dir),
+                "version": "1.2.0",
+                "profiles_dir": "profiles",
+                "packages_dir": "skills",
+                "registries": ["https://registry.loftyrux.in"]
+            }
+            with open(os.path.join(target_dir, "aieos.json"), "w", encoding="utf-8") as f:
+                json.dump(config, f, indent=2)
+                
+            workspace_yaml = {
+                "active_profile": "SoftwareEngineer",
+                "active_capabilities": ["Capability_BaseCognitive", "Capability_Decision"],
+                "adapters": ["generic", "claude"]
+            }
+            with open(os.path.join(target_dir, "workspace.yaml"), "w", encoding="utf-8") as f:
+                f.write(write_yaml(workspace_yaml))
+                
+            init_db(os.path.join(target_dir, "memory", "aieos_local.db"))
+            
+            try:
+                shutil.copytree(os.path.join(aieos_src, "PROFILES"), os.path.join(target_dir, "profiles"), dirs_exist_ok=True)
+                shutil.copytree(os.path.join(aieos_src, "CONSTITUTION"), os.path.join(target_dir, ".aieos", "CONSTITUTION"), dirs_exist_ok=True)
+                shutil.copytree(os.path.join(aieos_src, "PROTOCOLS"), os.path.join(target_dir, ".aieos", "PROTOCOLS"), dirs_exist_ok=True)
+                shutil.copytree(os.path.join(aieos_src, "POLICIES"), os.path.join(target_dir, ".aieos", "POLICIES"), dirs_exist_ok=True)
+                
+                with open(os.path.join(target_dir, ".aieos", "CONSTITUTION", "UserAgency.md"), "w", encoding="utf-8") as f:
+                    f.write(profile_inst)
+                    
+                self.print_progress("Local Project")
+            except Exception as e:
+                print(f"Failed to populate project workspace templates: {e}")
+                success = False
+                
+        print("\n\033[32mDone.\033[0m")
+        print("\n" + "─" * 40)
+        print("\033[1mInstalled Summary\033[0m\n")
+        
+        if install_project:
+            print(f"  Location:   Project Workspace")
+        if install_global and targets:
+            print(f"  Location:   Global AI ({', '.join([t.capitalize() for t in targets])})")
+            
+        print(f"  Behavior:   {behavior.capitalize()}")
+        print(f"  Runtime:    1.2.0")
+        print("─" * 40 + "\n")
+        
+        return success
+        
+    def print_progress(self, label, duration=0.8):
+        sys.stdout.write(f"  {label:<15} [")
+        sys.stdout.flush()
+        steps = 12
+        for step in range(steps + 1):
+            percent = int((step / steps) * 100)
+            sys.stdout.write(f"\r  {label:<15} [{'█' * step}{' ' * (steps - step)}] {percent}%")
+            sys.stdout.flush()
+            time.sleep(duration / steps)
+        sys.stdout.write("\n")
+        sys.stdout.flush()
 
     def cmd_help(self, args=None):
         print("""
-AIEOS Platform Command-Line Interface v1.1.0
+AIEOS Platform Command-Line Interface v1.2.0
 
 Usage:
   aieos <command> [args]
@@ -397,7 +854,7 @@ Commands:
         # Write config
         config = {
             "name": name,
-            "version": "1.1.0",
+            "version": "1.2.0",
             "profiles_dir": "profiles",
             "packages_dir": "packages",
             "registries": ["https://registry.aieos.org"]
@@ -640,7 +1097,7 @@ Commands:
         print("  - Critical Flaws Avoided : 0%")
         print("  - Final Decision Quality : Low")
         print("")
-        print("AIEOS Collaborative Performance (v1.1.0):")
+        print("AIEOS Collaborative Performance (v1.2.0):")
         print("  - Assumptions Discovered : 4 (Type-1/Type-2)")
         print("  - Critical Flaws Avoided : 100%")
         print("  - Final Decision Quality : High (Evidence-calibrated)")

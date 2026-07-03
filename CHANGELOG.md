@@ -2,6 +2,12 @@
 
 All notable changes to AIEOS will be documented in this file.
 
+## [1.2.0] - 2026-07-03
+
+### Added
+- **Interactive CLI Wizard**: Implemented a Socratic interactive installer when no arguments are provided. Includes Step 1 (Target location selection), Step 2 (Scan detection for active AI customization folders), Step 3 (Behavior profiles with interactive before/after previews), Step 4 (Component selects), and Step 5 (Animating console progress bars).
+- **Behavior Profiles**: Added Architect, Mentor, Reviewer, and Decision OS (AIEOS) profiles containing tailored AI agent instruction templates.
+
 ## [1.1.0] - 2026-07-03
 
 ### Added

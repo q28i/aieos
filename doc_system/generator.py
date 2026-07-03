@@ -239,7 +239,7 @@ def generate_aieos(output_root):
 
     # Generate AIEOS_SPECIFICATION.md dynamically
     spec_path = os.path.join(output_root, "AIEOS_SPECIFICATION.md")
-    spec_content = """# AIEOS Specification v1.1.0.2.2-beta.2.2-beta.1.1-beta.1-beta (RFC Standards Document)
+    spec_content = """# AIEOS Specification v1.2.0.2.2-beta.2.2-beta.1.1-beta.1-beta (RFC Standards Document)
 
 ## Status of this Memo
 This document specifies an industry-grade, model-independent Human Intelligence Amplification Runtime (AIEOS) for coordinating collaborative human-AI judgment workflows. Distribution of this memo is unlimited.
