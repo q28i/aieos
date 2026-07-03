@@ -105,36 +105,28 @@ def generate_aieos(output_root):
             os.makedirs(os.path.join(cap_dir, "adapters"), exist_ok=True)
             os.makedirs(os.path.join(cap_dir, "tests"), exist_ok=True)
             
-            # 1. Manifest.yaml
-            manifest_lines = [
-                f"name: {spec['name']}",
-                f"category: {category}",
-                f"version: {spec['version']}",
-                f"maturity: {spec.get('maturity', 'Draft')}",
-                f"extends: {spec.get('extends', 'None')}",
-                "dependencies:"
-            ]
-            for dep in spec.get("dependencies", []):
-                manifest_lines.append(f"  - {dep}")
-            if not spec.get("dependencies"):
-                manifest_lines.append("  - None")
-            manifest_lines.append("cognitive_effects:")
-            for eff in spec.get("effects", []):
-                manifest_lines.append(f"  - {eff}")
-            if not spec.get("effects"):
-                manifest_lines.append("  - None")
-            manifest_lines.append("related_capabilities:")
-            for rs in spec.get("related_capabilities", []):
-                manifest_lines.append(f"  - {rs}")
-            if not spec.get("related_capabilities"):
-                manifest_lines.append("  - None")
+            # 1. skill.json
+            import json
+            skill_json = {
+                "name": spec['name'],
+                "category": category,
+                "version": spec['version'],
+                "maturity": spec.get('maturity', 'Draft'),
+                "extends": spec.get('extends', 'None'),
+                "requires": spec.get("dependencies", []),
+                "effects": spec.get("effects", []),
+                "related_capabilities": spec.get("related_capabilities", [])
+            }
+            with open(os.path.join(cap_dir, "skill.json"), "w", encoding="utf-8") as f:
+                json.dump(skill_json, f, indent=2)
                 
-            with open(os.path.join(cap_dir, "Manifest.yaml"), "w", encoding="utf-8") as f:
-                f.write("\n".join(manifest_lines) + "\n")
+            # 2. persona.md
+            with open(os.path.join(cap_dir, "persona.md"), "w", encoding="utf-8") as f:
+                f.write(f"# {spec['name']} Persona\n\n{spec.get('purpose', '')}\n")
                 
-            # 2. Contract.md
+            # 3. workflow.md
             q_gates = spec.get("quality_gates", {})
-            contract_content = TEMPLATE_CAPABILITY_CONTRACT_MD.format(
+            workflow_content = TEMPLATE_CAPABILITY_CONTRACT_MD.format(
                 name=spec["name"],
                 purpose=spec.get("purpose", ""),
                 entry_requirements=q_gates.get("entry_requirements", "None"),
@@ -143,48 +135,30 @@ def generate_aieos(output_root):
                 verification=q_gates.get("verification", "None"),
                 exit_requirements=q_gates.get("exit_requirements", "None")
             )
-            with open(os.path.join(cap_dir, "Contract.md"), "w", encoding="utf-8") as f:
-                f.write(contract_content)
+            with open(os.path.join(cap_dir, "workflow.md"), "w", encoding="utf-8") as f:
+                f.write(workflow_content)
                 
-            # 3. Specification layers
-            with open(os.path.join(cap_dir, "Responsibilities.md"), "w", encoding="utf-8") as f:
-                f.write(f"# {spec['name']} Responsibilities\n\n{format_md_list(spec.get('responsibilities', []))}\n")
+            # 4. Data JSONs
+            with open(os.path.join(cap_dir, "triggers.json"), "w", encoding="utf-8") as f:
+                json.dump({"triggers": spec.get('responsibilities', [])}, f, indent=2)
+            with open(os.path.join(cap_dir, "questions.json"), "w", encoding="utf-8") as f:
+                json.dump({"questions": []}, f, indent=2)
+            with open(os.path.join(cap_dir, "tools.json"), "w", encoding="utf-8") as f:
+                json.dump({"allowed": spec.get('tools_allowed', []), "forbidden": spec.get('tools_forbidden', [])}, f, indent=2)
+            with open(os.path.join(cap_dir, "memory.json"), "w", encoding="utf-8") as f:
+                json.dump({"context": spec.get('inputs', [])}, f, indent=2)
                 
-            with open(os.path.join(cap_dir, "Interfaces.md"), "w", encoding="utf-8") as f:
-                f.write(f"# {spec['name']} Interfaces\n\n{format_md_list(spec.get('interfaces', []))}\n")
+            # 5. Runtime hooks & stubs
+            os.makedirs(os.path.join(cap_dir, "hooks"), exist_ok=True)
+            os.makedirs(os.path.join(cap_dir, "prompts"), exist_ok=True)
+            os.makedirs(os.path.join(cap_dir, "examples"), exist_ok=True)
+            
+            with open(os.path.join(cap_dir, "hooks", "pre_run.py"), "w", encoding="utf-8") as f:
+                f.write("def run():\n    pass\n")
+            with open(os.path.join(cap_dir, "examples", "example_1.md"), "w", encoding="utf-8") as f:
+                f.write(f"Example Output:\n{spec.get('example_output', 'None')}\n")
                 
-            with open(os.path.join(cap_dir, "Examples.md"), "w", encoding="utf-8") as f:
-                f.write(f"# {spec['name']} Examples\n\n- Example: `{spec.get('example_output', 'None')}`\n")
-                
-            with open(os.path.join(cap_dir, "Metrics.md"), "w", encoding="utf-8") as f:
-                f.write(f"# {spec['name']} Telemetry Metrics\n\n{format_md_list(spec.get('metrics', []))}\n")
-                
-            with open(os.path.join(cap_dir, "Benchmarks.md"), "w", encoding="utf-8") as f:
-                f.write(f"# {spec['name']} Performance Benchmarks\n\n{format_md_list(spec.get('benchmarks', []))}\n")
-                
-            with open(os.path.join(cap_dir, "FailureModes.md"), "w", encoding="utf-8") as f:
-                f.write(f"# {spec['name']} Failure Modes\n\n{format_md_list(spec.get('failure_modes', []))}\n")
-                
-            with open(os.path.join(cap_dir, "Evolution.md"), "w", encoding="utf-8") as f:
-                f.write(f"# {spec['name']} Self Evolution\n\n{format_md_list(spec.get('evolution', []))}\n")
-                
-            # 4. Runtime hooks stub
-            with open(os.path.join(cap_dir, "runtime", "hooks.py"), "w", encoding="utf-8") as f:
-                f.write("# AIEOS Local Runtime Execution Hooks\n\ndef post_execution_hook(metrics):\n    pass\n")
-                
-            # 5. Adapters stubs
-            with open(os.path.join(cap_dir, "adapters", "claude.py"), "w", encoding="utf-8") as f:
-                f.write("# AIEOS Claude Model Adapter Hooks\n\ndef adapt_prompt(raw_prompt):\n    return raw_prompt\n")
-            with open(os.path.join(cap_dir, "adapters", "codex.py"), "w", encoding="utf-8") as f:
-                f.write("# AIEOS Codex Model Adapter Hooks\n\ndef adapt_prompt(raw_prompt):\n    return raw_prompt\n")
-                
-            # 6. Tests stubs
-            with open(os.path.join(cap_dir, "tests", "contract.py"), "w", encoding="utf-8") as f:
-                f.write("# AIEOS Contract Verification Tests\n\ndef test_contract_compliance():\n    assert True\n")
-            with open(os.path.join(cap_dir, "tests", "integration.py"), "w", encoding="utf-8") as f:
-                f.write("# AIEOS Integration Verification Tests\n\ndef test_workflow_simulation():\n    assert True\n")
-                
-            print(f"Generated Package Capability: {cap_dir}")
+            print(f"Generated Executable Capability: {cap_dir}")
             
         elif doc_type in ["SERVICE", "PROTOCOL", "POLICY"]:
             if doc_type == "SERVICE":

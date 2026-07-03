@@ -8,9 +8,9 @@
 
 <h1>AIEOS</h1>
 
-<h3>The model-independent <b>Human Intelligence Amplification Runtime</b> &amp; Decision OS.</h3>
+<h3>AIEOS exists to maximize the quality of human decisions and project execution by giving any AI the capabilities, memory, structure, and workflows of a high-performing multidisciplinary engineering organization.</h3>
 
-<p><i>25 capabilities · 7 cognitive protocols · one SQLite database registry · zero dependencies</i></p>
+<p><i>The AI Capability Operating System</i></p>
 
 <br />
 
@@ -22,40 +22,45 @@
 
 <br />
 
-**[⚡ Install](#-install---choose-your-target)** &nbsp;·&nbsp; **[🗂 Domains](#-the-4-domains)** &nbsp;·&nbsp; **[📦 Bundles](#-themed-bundles)** &nbsp;·&nbsp; **[▶️ Usage](#️-using-aieos)** &nbsp;·&nbsp; **[❓ FAQ](#-faq)**
+**[⚡ Install](#-install---choose-your-target)** &nbsp;·&nbsp; **[🧠 Levels of AI](#-levels-of-ai)** &nbsp;·&nbsp; **[⚙️ Execution OS](#-the-execution-os)** &nbsp;·&nbsp; **[▶️ Commands](#-commands)** &nbsp;·&nbsp; **[❓ FAQ](#-faq)**
 
 </div>
 
 <br />
 
 ```bash
-npx @q28i/aieos --claude
+npx @q28i/aieos
 ```
 
 <br />
 
 ---
 
-## ✨ What is AIEOS
+## ✨ What is AIEOS?
 
-> **One command, then forget it exists.** Instead of treating AI as a simple question-answering tool or code generator, AIEOS structures collaboration around Socratic inquiry, preference discovery, and opportunity cost reviews—creating reusable, auditable Decision Contracts.
+**AIEOS is an AI Capability Operating System that transforms general-purpose AI assistants into project-aware execution partners through installable capabilities, structured reasoning, persistent project intelligence, and professional execution workflows.**
 
-AIEOS is a model-independent **Human Intelligence Amplification Runtime** (a Decision OS) designed to increase decision quality under uncertainty while improving the user's independent reasoning. It operates with stable database-backed capability registers, running locally with zero external network overhead or dependency lock-in.
+Instead of treating AI as a simple conversational persona, AIEOS structures collaboration around a professional **Execution OS**. The AI doesn't ask *"What prompt should I use?"* — it asks *"Which capabilities does this project need?"* and dynamically assembles an execution team (e.g., CTO + Quant + Risk) based on the specific project.
 
-<table>
-<tr>
-<td align="center"><b>25</b><br/><sub>capabilities</sub></td>
-<td align="center"><b>7</b><br/><sub>cognitive loops</sub></td>
-<td align="center"><b>5</b><br/><sub>core services</sub></td>
-<td align="center"><b>0</b><br/><sub>dependencies</sub></td>
-</tr>
-</table>
+### 🧠 Levels of AI
+
+- **Level 0 (Default AI)**: Question-answering tool or code generator. Waits for human instructions.
+- **Level 1 (Persona Prompts)**: Mimics a specific role (e.g. "Act as a Senior Engineer"). Rigid, single-threaded.
+- **Level 2 (Execution OS / AIEOS)**: Acts as an operating system. Identifies project gaps, recommends capabilities, assembles specialized teams dynamically, manages risk, and executes multi-step plans.
 
 ---
 
-## ⚡ Install — choose your target
+## ⚡ Install — Choose your target
 
-One command installs AIEOS specifications, constitutions, and policies directly into your agent's customization directory:
+Install AIEOS into your agent environment using `npx @q28i/aieos`. The installer will automatically scan your system and configure the appropriate paths.
+
+### One-Command Setup
+
+```bash
+npx @q28i/aieos
+```
+
+Alternatively, bypass the wizard and target specific environments:
 
 | Target Platform | Command | Destination Path / File |
 | --- | --- | --- |
@@ -68,43 +73,11 @@ One command installs AIEOS specifications, constitutions, and policies directly 
 | **Kiro CLI** | `npx @q28i/aieos --kiro` | `~/.kiro/skills/` |
 | **All platforms** | `npx @q28i/aieos --all` | Deploys to all of the above |
 
-### Local Project Workspaces
-
-If you want to configure a standalone workspace for project-specific vibe coding, run the interactive wizard, the uninstaller, or the recommendation engine:
-
-```bash
-npx @q28i/aieos                 # run interactive installer wizard
-npx @q28i/aieos discover        # scan repository and get capability recommendations
-npx @q28i/aieos uninstall       # clean uninstall of integrations
-```
-
-This scaffolds a local `.aieos` environment containing:
-```text
-.aieos/
-├── system/                 # Managed ONLY by AIEOS (runtime, logs, adapters)
-├── project/                # Project intelligence (memory, decisions, contracts)
-├── config/                 # Configuration files (settings.json, tools.json)
-├── skills/                 # Custom local capability packages
-└── state/                  # Current session state and checkpoints
-```
-
 ---
 
-## 📦 Themed Bundles
+## ⚙️ The Execution OS
 
-Optionally filter which capabilities get installed onto your agent platform:
-
-```bash
-npx @q28i/aieos --claude --bundle research     # only research & statistics capabilities
-npx @q28i/aieos --cursor --bundle security     # only security capabilities
-npx @q28i/aieos --bundle full                  # install everything (default)
-```
-
----
-
-## 🗂 The 4 Domains
-
-AIEOS shifts the execution paradigm from raw task processing to a values-aligned decision pipeline:
+AIEOS shifts the execution paradigm from raw task processing to a values-aligned decision pipeline. It dynamically manages the project lifecycle through its core domains:
 
 <div align="center">
 
@@ -116,6 +89,36 @@ AIEOS shifts the execution paradigm from raw task processing to a values-aligned
 | ⚙️ **Policies** | `POLICIES/` | CognitiveBias Filters, LearningProgress, KnowledgeROI |
 
 </div>
+
+### Dynamic Team Assembly
+
+When AIEOS scans a project (e.g., an algorithmic trading bot), it doesn't just act as a "Trading Persona." Instead, it executes the **AIEOS Decision Protocol** and loads an execution team:
+- **CTO**: Handles architecture, technical debt, and system boundaries.
+- **Quant Researcher**: Formulates hypotheses, runs statistical tests, and checks look-ahead biases.
+- **Risk Manager**: Defines exposure limits and position-sizing guardrails.
+
+---
+
+## ▶️ Commands
+
+Once AIEOS is installed, you can invoke it manually, or **your AI can invoke these commands natively** to manage its own capabilities.
+
+### Layer 1: User Slash Commands (IDE Support)
+You can directly command your agent to manage its capabilities using slash-command syntax.
+
+- `/aieos recommend` - Scans your current project (dependencies, directories, code) and recommends capabilities.
+- `/aieos install <capability>` - Installs a specific capability into your workspace.
+- `/aieos enable <capability>` - Enables a locally installed capability.
+- `/aieos disable <capability>` - Disables a capability without deleting it.
+- `/aieos list` - Lists all currently installed capabilities and workspace status.
+
+### Layer 2: CLI Equivalents
+Under the hood, these map to the AIEOS CLI:
+```bash
+npx @q28i/aieos recommend
+npx @q28i/aieos install @aieos/research
+npx @q28i/aieos list
+```
 
 ---
 
@@ -135,14 +138,6 @@ aieos/
 ├─ 📜 LICENSE                    # MIT License
 └─ 📖 README.md
 ```
-
----
-
-## ▶️ Using AIEOS
-
-1. **Prompt Socratic Decisions**: Once AIEOS rules are active in your agent, prompt it:
-   > *"I want to choose between Serverless SQL and standard Postgres for our analytics workload. Run an AIEOS Decision Protocol."*
-2. **Contract Output**: The agent will challenge your assumptions, simulate trade-offs, identify evidence gaps, and emit a structured Decision Contract in your workspace.
 
 ---
 

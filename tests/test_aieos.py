@@ -46,27 +46,31 @@ class TestAIEOSCLI(unittest.TestCase):
         
         # Verify template folders and files exist
         pkg_dir = ".aieos/skills/Capability_FuzzyLogic"
-        self.assertTrue(os.path.exists(os.path.join(pkg_dir, "manifest.yaml")))
-        self.assertTrue(os.path.exists(os.path.join(pkg_dir, "Contract.md")))
-        self.assertTrue(os.path.exists(os.path.join(pkg_dir, "Interfaces.md")))
-        self.assertTrue(os.path.exists(os.path.join(pkg_dir, "runtime/hooks.py")))
-        self.assertTrue(os.path.exists(os.path.join(pkg_dir, "adapters/claude.py")))
+        self.assertTrue(os.path.exists(os.path.join(pkg_dir, "skill.json")))
+        self.assertTrue(os.path.exists(os.path.join(pkg_dir, "workflow.md")))
+        self.assertTrue(os.path.exists(os.path.join(pkg_dir, "persona.md")))
+        self.assertTrue(os.path.exists(os.path.join(pkg_dir, "hooks/pre_run.py")))
+        self.assertTrue(os.path.exists(os.path.join(pkg_dir, "tools.json")))
 
     def test_install_uninstall_package(self):
         self.cli.execute(["init"])
         
         # Install package
-        success = self.cli.execute(["install", "@aieos/research"])
+        success = self.cli.execute(["skill", "install", "@aieos/research"])
         self.assertTrue(success)
         self.assertTrue(os.path.exists(".aieos/skills/Capability_Research"))
         
-        # Check active capabilities list
+        # Check active capabilities list in both files
         with open(".aieos/project/workspace.yaml", "r", encoding="utf-8") as f:
             content = f.read()
         self.assertIn("Capability_Research", content)
         
+        with open(".aieos/installed-skills.json", "r", encoding="utf-8") as f:
+            content = f.read()
+        self.assertIn("Capability_Research", content)
+        
         # Remove package
-        success = self.cli.execute(["remove", "@aieos/research"])
+        success = self.cli.execute(["skill", "remove", "@aieos/research"])
         self.assertTrue(success)
         self.assertFalse(os.path.exists(".aieos/skills/Capability_Research"))
 
@@ -105,7 +109,7 @@ class TestAIEOSCLI(unittest.TestCase):
     def test_discover_recommendations(self):
         self.cli.execute(["init"])
         # Discover mock trading bot suggestions
-        success = self.cli.execute(["discover", "trading"])
+        success = self.cli.execute(["skill", "recommend", "trading"])
         self.assertTrue(success)
 
 if __name__ == "__main__":

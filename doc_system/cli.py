@@ -284,10 +284,37 @@ class AIEOS_CLI:
                 os.path.exists(os.path.join(target, ".aieos", "config", "settings.json")))
 
     def execute(self, args):
-        legacy_commands = {
-            "init", "create", "install", "remove", "update", "doctor",
-            "benchmark", "publish", "search", "workspace", "profile",
-            "config", "validate", "help", "uninstall", "discover"
+        self.json_mode = False
+        if "--json" in args:
+            self.json_mode = True
+            args = [a for a in args if a != "--json"]
+            
+        base_commands = {
+            "init": self.cmd_init,
+            "create": self.cmd_create,
+            "update": self.cmd_update,
+            "doctor": self.cmd_doctor,
+            "benchmark": self.cmd_benchmark,
+            "publish": self.cmd_publish,
+            "workspace": self.cmd_workspace,
+            "profile": self.cmd_profile,
+            "config": self.cmd_config,
+            "validate": self.cmd_validate,
+            "help": self.cmd_help,
+            "uninstall": self.cmd_uninstall,
+            "memory": self.cmd_workspace,  # Stub for memory
+            "sync": self.cmd_workspace     # Stub for sync
+        }
+        
+        skill_commands = {
+            "search": self.cmd_search,
+            "install": self.cmd_install,
+            "remove": self.cmd_remove,
+            "enable": self.cmd_enable,
+            "disable": self.cmd_disable,
+            "info": self.cmd_search,       # Stub for info
+            "recommend": self.cmd_discover,
+            "list": self.cmd_workspace
         }
         
         if args:
@@ -296,28 +323,25 @@ class AIEOS_CLI:
                 self.cmd_help()
                 return True
             if first_arg in ["--version", "-v"]:
-                print("AIEOS CLI Platform v1.4.0")
+                print("AIEOS CLI Platform v2.0.0")
                 return True
-            if first_arg in legacy_commands:
-                commands = {
-                    "init": self.cmd_init,
-                    "create": self.cmd_create,
-                    "install": self.cmd_install,
-                    "remove": self.cmd_remove,
-                    "update": self.cmd_update,
-                    "doctor": self.cmd_doctor,
-                    "benchmark": self.cmd_benchmark,
-                    "publish": self.cmd_publish,
-                    "search": self.cmd_search,
-                    "workspace": self.cmd_workspace,
-                    "profile": self.cmd_profile,
-                    "config": self.cmd_config,
-                    "validate": self.cmd_validate,
-                    "help": self.cmd_help,
-                    "uninstall": self.cmd_uninstall,
-                    "discover": self.cmd_discover
-                }
-                return commands[first_arg](args[1:])
+                
+            if first_arg == "skill":
+                if len(args) > 1 and args[1].lower() in skill_commands:
+                    return skill_commands[args[1].lower()](args[2:])
+                else:
+                    print("Usage: aieos skill <search|install|remove|enable|disable|info|recommend|list>")
+                    return False
+                    
+            if first_arg == "mode":
+                return self.cmd_mode(args[1:])
+                
+            if first_arg in base_commands:
+                return base_commands[first_arg](args[1:])
+                
+            # Fallback legacy routing for smooth transition
+            if first_arg in skill_commands:
+                return skill_commands[first_arg](args[1:])
                 
         return self.cmd_installer(args)
 
@@ -789,8 +813,18 @@ class AIEOS_CLI:
         return success
 
     def get_profile_instructions(self, behavior):
+        integration_prompt = """
+# AIEOS CLI Integration
+You are augmented by the AIEOS execution framework. 
+When the user types a command starting with `/skill`, `/mode`, or `/aieos`, you MUST natively execute it in the terminal using `npx @q28i/aieos`.
+- `/skill <cmd>` -> `npx @q28i/aieos skill <cmd>` (e.g. `npx @q28i/aieos skill search trading`)
+- `/mode <cmd>` -> `npx @q28i/aieos mode <cmd>` (e.g. `npx @q28i/aieos mode startup`)
+- `/aieos <cmd>` -> `npx @q28i/aieos <cmd>`
+
+After running the command, read the output and summarize the result or take the next logical step based on the output. Do NOT ask for permission to run these commands if the user explicitly invoked them via the slash command.
+"""
         if behavior == "decision-os":
-            return """# AIEOS Human Intelligence Amplification Rules
+            base = """# AIEOS Human Intelligence Amplification Rules
 # Version: 1.4.0
 
 # 1. User Agency Principle
@@ -802,7 +836,7 @@ Highlight uncertainties, gaps in evidence, and the cost of being wrong.
 Constructively challenge user assumptions if evidence suggests alternative views.
 """
         elif behavior == "architect":
-            return """# AIEOS Human Intelligence Amplification Rules
+            base = """# AIEOS Human Intelligence Amplification Rules
 # Version: 1.4.0
 
 # 1. Architect Behavior Profile
@@ -812,7 +846,7 @@ Focus on loose coupling, interfaces, and single responsibility principles.
 Insist on clear system diagrams and data flow specifications.
 """
         elif behavior == "mentor":
-            return """# AIEOS Human Intelligence Amplification Rules
+            base = """# AIEOS Human Intelligence Amplification Rules
 # Version: 1.4.0
 
 # 1. Mentor Behavior Profile
@@ -822,7 +856,7 @@ Explain underlying concepts, patterns, and security risks in detail.
 Promotes independent learning and clean code habits.
 """
         elif behavior == "reviewer":
-            return """# AIEOS Human Intelligence Amplification Rules
+            base = """# AIEOS Human Intelligence Amplification Rules
 # Version: 1.4.0
 
 # 1. Reviewer Behavior Profile
@@ -832,11 +866,12 @@ Enforce test coverage (unit, integration, regression) for every feature.
 Evaluate compliance with security baselines (auth, inputs, sanitization).
 """
         else:
-            return """# AIEOS Human Intelligence Amplification Rules
+            base = """# AIEOS Human Intelligence Amplification Rules
 # Version: 1.4.0
 - Responds directly to requests with optimal suggestions.
 - Maintains high standard of styling, code correctness, and clarity.
 """
+        return base + "\n" + integration_prompt
 
     def scaffold_project_layout(self, target_dir, profile_inst):
         os.makedirs(target_dir, exist_ok=True)
@@ -956,27 +991,32 @@ Evaluate compliance with security baselines (auth, inputs, sanitization).
 
     def cmd_help(self, args=None):
         print("""
-AIEOS Platform Command-Line Interface v1.4.0
+AIEOS Capability OS Command-Line Interface v1.4.0
 
-Usage:
+Usage (User CLI):
   aieos <command> [args]
+  /aieos <command> (IDE Slash Command support)
 
 Options:
   -h, --help       - Display command usage guidelines.
   -v, --version    - Display AIEOS version.
 
-Commands:
+Core Commands:
+  recommend        - Intelligent capability recommendation engine scan.
+  install <package>- Install a capability package (e.g. @aieos/research, Git URL).
+  remove <package> - Remove an installed capability package.
+  enable <package> - Enable a capability in the active workspace.
+  disable <package>- Disable a capability in the active workspace.
+  list             - List installed capabilities and workspace status.
+  update           - Update all installed capability packages.
+
+Developer Commands:
   init <name>       - Initialize a production AIEOS workspace structure.
-  create package <name> [cat] - Create a capability package template.
-  install <package> - Install a capability package (e.g. @aieos/research, Git URL, local directory).
-  remove <package>  - Remove an installed capability package from the workspace.
-  update            - Update all installed capability packages (runs git pull).
+  create package    - Create a capability package template.
   doctor            - Audit workspace integrity and diagnostic health parameters.
-  benchmark         - Run longitudinal collaborative benchmarks (LLM vs. AIEOS).
+  benchmark         - Run longitudinal collaborative benchmarks.
   publish <package> - Package a capability folder into local dist/ as tarball.
   search <query>    - Search remote registry endpoints for capabilities.
-  discover          - Intelligent capability recommendation engine scan.
-  workspace         - Print detailed status of the active workspace.
   profile <name>    - Activate or view cognitive profiles.
   config            - View and update local options.
   validate <dir>    - Run schema and contract checks on a local directory.
@@ -1017,7 +1057,7 @@ Commands:
         # Write config/settings.json
         config = {
             "name": name,
-            "version": "1.4.0",
+            "version": "2.0.0",
             "profiles_dir": ".aieos/project/profiles",
             "packages_dir": ".aieos/skills",
             "registries": ["https://registry.aieos.org"]
@@ -1025,7 +1065,7 @@ Commands:
         with open(os.path.join(aieos_dir, "config", "settings.json"), "w", encoding="utf-8") as f:
             json.dump(config, f, indent=2)
             
-        # Write workspace yaml
+        # Write legacy workspace.yaml for backwards compatibility
         workspace_yaml = {
             "active_profile": "StartupFounder",
             "active_capabilities": [
@@ -1039,6 +1079,36 @@ Commands:
         }
         with open(os.path.join(aieos_dir, "project", "workspace.yaml"), "w", encoding="utf-8") as f:
             f.write(write_yaml(workspace_yaml))
+            
+        # Write project.json
+        project_json = {
+            "name": name,
+            "status": "active",
+            "goals": ["Define goals here"],
+            "architecture": {}
+        }
+        with open(os.path.join(aieos_dir, "project.json"), "w", encoding="utf-8") as f:
+            json.dump(project_json, f, indent=2)
+            
+        # Write team.json
+        team_json = {
+            "active_mode": "default",
+            "members": [
+                {"role": "Architect", "active": True}
+            ]
+        }
+        with open(os.path.join(aieos_dir, "team.json"), "w", encoding="utf-8") as f:
+            json.dump(team_json, f, indent=2)
+            
+        # Write installed-skills.json
+        installed_skills = {
+            "capabilities": {
+                "Capability_BaseCognitive": {"version": "1.4.0", "enabled": True},
+                "Capability_Decision": {"version": "1.4.0", "enabled": True}
+            }
+        }
+        with open(os.path.join(aieos_dir, "installed-skills.json"), "w", encoding="utf-8") as f:
+            json.dump(installed_skills, f, indent=2)
             
         # Initialize memory db
         init_db(os.path.join(aieos_dir, "project", "memory", "aieos_local.db"))
@@ -1066,7 +1136,16 @@ Commands:
             print("Usage: aieos install <package_name | git_url | folder_path>")
             return False
             
-        target = args[0]
+        return self._install_recursive(args[0])
+        
+    def _install_recursive(self, target, visited=None):
+        if visited is None:
+            visited = set()
+            
+        if target in visited:
+            return True
+            
+        visited.add(target)
         print(f"Resolving dependency link for '{target}'...")
         
         # Check mock remote registry
@@ -1080,16 +1159,23 @@ Commands:
             os.makedirs(os.path.join(pkg_dir, "adapters"), exist_ok=True)
             
             # Write stub package files
-            for file_rel, content in pkg_data["files"].items():
+            for file_rel, content in pkg_data.get("files", {}).items():
                 p = os.path.join(pkg_dir, file_rel)
+                os.makedirs(os.path.dirname(p), exist_ok=True)
                 with open(p, "w", encoding="utf-8") as f:
                     f.write(content)
+                    
+            # If there's a skill.json mock, parse its requires array
+            deps = pkg_data.get("requires", [])
+            for dep in deps:
+                print(f"  Installing dependency '{dep}' for '{target}'...")
+                self._install_recursive(dep, visited)
                     
             # Insert into database registry
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             cursor.execute("INSERT OR REPLACE INTO registry VALUES (?, ?, ?, ?)",
-                           (pkg_name, target, pkg_data["version"], pkg_data["purpose"]))
+                           (pkg_name, target, pkg_data.get("version", "1.0"), pkg_data.get("purpose", "")))
             conn.commit()
             conn.close()
             
@@ -1102,6 +1188,17 @@ Commands:
                 w_data["active_capabilities"].append(pkg_name)
             with open(self.yaml_path, "w", encoding="utf-8") as f:
                 f.write(write_yaml(w_data))
+                
+            # Update installed-skills.json
+            installed_json_path = os.path.join(self.workspace_root, ".aieos", "installed-skills.json")
+            if os.path.exists(installed_json_path):
+                with open(installed_json_path, "r", encoding="utf-8") as f:
+                    installed_data = json.load(f)
+                if "capabilities" not in installed_data:
+                    installed_data["capabilities"] = {}
+                installed_data["capabilities"][pkg_name] = {"version": pkg_data.get("version", "1.0"), "enabled": True}
+                with open(installed_json_path, "w", encoding="utf-8") as f:
+                    json.dump(installed_data, f, indent=2)
                 
             print(f"Successfully installed package: {target} (v{pkg_data['version']}) [SUCCESS]")
             return True
@@ -1326,11 +1423,20 @@ Commands:
 
     def cmd_search(self, args):
         query = args[0].lower() if args else ""
-        print(f"Searching registry for: '{query}'...")
-        print("-" * 60)
+        results = []
         for key, val in MOCK_REMOTE_PACKAGES.items():
             if not query or query in key or query in val["purpose"].lower():
-                print(f"{key:<20} | Version: {val['version']} | Purpose: {val['purpose']}")
+                results.append({"name": key, "version": val['version'], "purpose": val['purpose']})
+                
+        if getattr(self, 'json_mode', False):
+            import json
+            print(json.dumps(results))
+            return True
+            
+        print(f"Searching registry for: '{query}'...")
+        print("-" * 60)
+        for r in results:
+            print(f"{r['name']:<20} | Version: {r['version']} | Purpose: {r['purpose']}")
         print("-" * 60)
         return True
 
@@ -1620,8 +1726,7 @@ Commands:
             
         print(f"Creating new capability package '{pkg_key}' under category '{category}'...")
         os.makedirs(pkg_dir, exist_ok=True)
-        os.makedirs(os.path.join(pkg_dir, "runtime"), exist_ok=True)
-        os.makedirs(os.path.join(pkg_dir, "adapters"), exist_ok=True)
+        os.makedirs(os.path.join(pkg_dir, "hooks"), exist_ok=True)
         
         # Write template files using SDK helper
         from doc_system.sdk import get_capability_templates
@@ -1633,4 +1738,91 @@ Commands:
                 f.write(content)
                 
         print(f"Capability package template created successfully at: {pkg_dir} [SUCCESS]")
+        return True
+
+    def cmd_enable(self, args):
+        if not self.is_workspace():
+            print("Error: Active workspace not detected.")
+            return False
+        if not args:
+            print("Usage: aieos enable <package_name>")
+            return False
+            
+        pkg = args[0]
+        with open(self.yaml_path, "r", encoding="utf-8") as f:
+            w_data = parse_yaml(f.read())
+            
+        if "active_capabilities" not in w_data:
+            w_data["active_capabilities"] = []
+            
+        if pkg not in w_data["active_capabilities"]:
+            w_data["active_capabilities"].append(pkg)
+            with open(self.yaml_path, "w", encoding="utf-8") as f:
+                f.write(write_yaml(w_data))
+            print(f"Capability '{pkg}' enabled successfully.")
+        else:
+            print(f"Capability '{pkg}' is already enabled.")
+        return True
+
+    def cmd_disable(self, args):
+        if not self.is_workspace():
+            print("Error: Active workspace not detected.")
+            return False
+        if not args:
+            print("Usage: aieos disable <package_name>")
+            return False
+            
+        pkg = args[0]
+        with open(self.yaml_path, "r", encoding="utf-8") as f:
+            w_data = parse_yaml(f.read())
+            
+        if "active_capabilities" in w_data and pkg in w_data["active_capabilities"]:
+            w_data["active_capabilities"].remove(pkg)
+            with open(self.yaml_path, "w", encoding="utf-8") as f:
+                f.write(write_yaml(w_data))
+            print(f"Capability '{pkg}' disabled successfully.")
+        else:
+            print(f"Capability '{pkg}' is not currently enabled.")
+        return True
+
+    def cmd_mode(self, args):
+        if not self.is_workspace():
+            print("Error: Active workspace not detected.")
+            return False
+            
+        if not args:
+            print("Usage: aieos mode <startup|trading|ecommerce|...>")
+            return False
+            
+        mode_type = args[0].lower()
+        print(f"Activating '{mode_type}' Execution Mode...")
+        
+        # Determine capabilities to load based on mode
+        to_enable = []
+        if mode_type == "startup":
+            to_enable = ["Capability_Planning", "Capability_Architecture", "Capability_Product"]
+        elif mode_type == "trading":
+            to_enable = ["Capability_Quant", "Capability_Risk", "Capability_Execution", "Capability_Research"]
+        elif mode_type == "ecommerce":
+            to_enable = ["Capability_Backend", "Capability_Payments", "Capability_Security"]
+        else:
+            print(f"Unknown mode '{mode_type}'. Defaulting to general Execution OS...")
+            to_enable = ["Capability_Planning", "Capability_Architecture"]
+            
+        with open(self.yaml_path, "r", encoding="utf-8") as f:
+            w_data = parse_yaml(f.read())
+            
+        if "active_capabilities" not in w_data:
+            w_data["active_capabilities"] = []
+            
+        enabled = 0
+        for cap in to_enable:
+            if cap not in w_data["active_capabilities"]:
+                w_data["active_capabilities"].append(cap)
+                enabled += 1
+                
+        with open(self.yaml_path, "w", encoding="utf-8") as f:
+            f.write(write_yaml(w_data))
+            
+        print(f"Mode activated. Loaded {enabled} new capabilities for {mode_type} team.")
         return True

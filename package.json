@@ -2,7 +2,7 @@
   "name": "@q28i/aieos",
   "version": "1.4.0",
   "description": "Human Intelligence Amplification Runtime",
-  "main": "doc_system/cli.py",
+  "main": "src/index.js",
   "bin": {
     "aieos": "bin/cli.js"
   },
