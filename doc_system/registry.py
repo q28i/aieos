@@ -1,6 +1,6 @@
 # doc_system/registry.py
 """
-Declarative definition of AIEOS v1.0.0-beta specifications.
+Declarative definition of AIEOS v1.0.0-beta.1-beta.1 specifications.
 Includes Constitutions, Capabilities, Profiles, and Engines.
 Pivoted completely into a Cognitive Operating System for Collaborative Intelligence.
 """
@@ -90,7 +90,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Base Cognitive Capability",
         "category": "Base",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Provide root cognitive mechanics including context parsing and structured reasoning loops.",
         "effects": [
@@ -126,7 +126,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "General Objective Planning",
         "category": "Cognitive",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Analyze requirements, map out tasks, identify dependencies, and manage risks.",
         "effects": [
@@ -164,7 +164,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "General Research Capability",
         "category": "Cognitive",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Analyze datasets, formulate statistical models, and validate trading hypotheses.",
         "effects": [
@@ -202,7 +202,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Decision Tracing Capability",
         "category": "Cognitive",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Document engineering choices, state evidence, evaluate tradeoffs, and assign reviews.",
         "effects": [
@@ -239,7 +239,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Knowledge Maintenance Capability",
         "category": "Cognitive",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Maintain hyperlinked, clean, and accurate system documentation.",
         "effects": [
@@ -276,7 +276,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Critical Thinking Capability",
         "category": "Cognitive",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Detect cognitive biases, identify hidden assumptions, and challenge decision frameworks.",
         "effects": [
@@ -314,7 +314,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Alternative Exploration Capability",
         "category": "Cognitive",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Map alternative paths, evaluate simpler/cheaper approaches, and avoid lock-in.",
         "effects": [
@@ -352,7 +352,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Cognitive Risk Analysis",
         "category": "Cognitive",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Map operational hazards, downside exposures, and single points of failure.",
         "effects": [
@@ -389,7 +389,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Cognitive Prediction Capability",
         "category": "Cognitive",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Forecast future system outcomes, bottlenecks, and technical debt accumulation.",
         "effects": [
@@ -426,7 +426,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Reflection & Learning Loop",
         "category": "Cognitive",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Audit closed project milestones, analyze deviations, and extract lessons learned.",
         "effects": [
@@ -466,7 +466,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "System Architecture Capability",
         "category": "Architecture",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Define subsystem modules, design decoupled interfaces, and rule on pattern choices.",
         "effects": [
@@ -503,7 +503,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Verification & Code Review Capability",
         "category": "Review",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Audit code quality, verify security practices, and ensure interface compliance.",
         "effects": [
@@ -540,7 +540,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Code Implementation Capability",
         "category": "Implementation",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Write structured, high-quality feature code complying with design systems.",
         "effects": [
@@ -577,7 +577,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Quality Testing Capability",
         "category": "Testing",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Verify functional correctness, run regressions, and prevent logic defects.",
         "effects": [
@@ -614,7 +614,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Security Hardening Capability",
         "category": "Security",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Model threat profiles, secure credential management, and validate inputs.",
         "effects": [
@@ -651,7 +651,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Evidence Verification Capability",
         "category": "Research",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Verify analytical assertions, trace data evidence, and score confidence.",
         "effects": [
@@ -688,7 +688,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Statistical Modeling Capability",
         "category": "Research",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Formulate mathematical models and calculate statistical confidence.",
         "effects": [
@@ -725,7 +725,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Data Analysis Capability",
         "category": "Research",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Analyze structured and unstructured datasets to identify trends.",
         "effects": [
@@ -762,7 +762,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Experiment Design Capability",
         "category": "Research",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Design controlled testing frameworks and isolate experiment variables.",
         "effects": [
@@ -799,7 +799,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Quality Validation Capability",
         "category": "Quality",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Production",
         "purpose": "Certify release candidates, audit standards, and verify quality gates compliance.",
         "effects": [
@@ -836,7 +836,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Business Strategy Capability",
         "category": "Business",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Analyze market fit, define business logic requirements, and map user flows.",
         "effects": [
@@ -873,7 +873,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Financial Modeling Capability",
         "category": "Finance",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Model unit economics, calculate budget paths, and track capital efficiency.",
         "effects": [
@@ -910,7 +910,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Negotiation Design Capability",
         "category": "Business",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Design transaction incentives, structure agreements, and evaluate trade-offs.",
         "effects": [
@@ -947,7 +947,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Operational Strategy Capability",
         "category": "Business",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Define operational milestones, map competitive positions, and track execution.",
         "effects": [
@@ -984,7 +984,7 @@ AIEOS_REGISTRY = {
         "type": "CAPABILITY",
         "name": "Risk Management Capability",
         "category": "Business",
-        "version": "1.0.0-beta",
+        "version": "1.0.0-beta.1",
         "maturity": "Validated",
         "purpose": "Identify operational hazards, set mitigation plans, and calculate downside exposures.",
         "effects": [
@@ -1018,7 +1018,7 @@ AIEOS_REGISTRY = {
     },
 
     # =========================================================================
-    # CORE SYSTEM MODULES (Services, Protocols, Policies - Frozen v1.0.0-beta)
+    # CORE SYSTEM MODULES (Services, Protocols, Policies - Frozen v1.0.0-beta.1-beta.1)
     # =========================================================================
     
     # --- TIER 1: CORE SERVICES ---

@@ -5,7 +5,7 @@ AIEOS SDK helper module for third-party package creators.
 
 def get_capability_templates(pkg_key, pkg_name, category):
     return {
-        "manifest.yaml": f"name: {pkg_key}\nversion: 1.0.0-beta\nmaturity: Draft\ncategory: {category}\n",
+        "manifest.yaml": f"name: {pkg_key}\nversion: 1.0.0-beta.1\nmaturity: Draft\ncategory: {category}\n",
         "Contract.md": f"# Capability Contract: {pkg_name}\n\n## Entry Requirements\n- Explicit inputs and target values.\n\n## Exit Requirements\n- Auditable outcome logs and verified outputs.\n",
         "Interfaces.md": f"# Interfaces: {pkg_name}\n\n- execute(payload: dict) -> dict\n",
         "Responsibilities.md": f"# Responsibilities: {pkg_name}\n\n- Define core functional logic.\n",

@@ -2,6 +2,12 @@
 
 All notable changes to AIEOS will be documented in this file.
 
+## [1.0.0-beta.1] - 2026-07-03
+
+### Changed
+- **Package Size Optimization**: Removed the compiled dynamic specification folder (`AIEOS/`) from the NPM distribution whitelist.
+- Excluded Python cache bytecodes and workspace temporary folders, reducing the NPM file count by 96% (from 454 files to 15 files) and reducing target unpacking size.
+
 ## [1.0.0-beta] - 2026-07-02
 
 ### Added
