@@ -1,6 +1,6 @@
 name: Quality Validation Capability
 category: Quality
-version: 1.0.0
+version: 1.0.1
 maturity: Production
 extends: Capability_BaseCognitive
 dependencies:

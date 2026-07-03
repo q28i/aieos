@@ -1,6 +1,6 @@
 name: Financial Modeling Capability
 category: Finance
-version: 1.0.0
+version: 1.0.1
 maturity: Validated
 extends: Capability_BaseCognitive
 dependencies:

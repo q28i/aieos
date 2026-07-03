@@ -1,6 +1,6 @@
 {
   "name": "aieos",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "profiles_dir": "profiles",
   "packages_dir": "packages",
   "registries": [

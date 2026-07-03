@@ -27,8 +27,10 @@ for (const candidate of candidates) {
 }
 
 if (!chosenPython) {
-    console.error('\x1b[31mError: Python 3.11+ is required.\x1b[0m');
-    console.error('Install from https://python.org');
+    console.error('\x1b[31mAIEOS requires Python 3.11 or newer.\x1b[0m\n');
+    console.error('Install Python:');
+    console.error('https://www.python.org/downloads/\n');
+    console.error('After installation, run the command again.');
     process.exit(1);
 }
 

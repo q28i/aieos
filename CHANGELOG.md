@@ -2,23 +2,20 @@
 
 All notable changes to AIEOS will be documented in this file.
 
+## [1.0.1] - 2026-07-03
+
+### Changed
+- **Python Missing Error Guidelines**: Updated the startup warning message in the Node binary wrapper `bin/cli.js` when Python `>= 3.11` is missing, guiding the user to standard downloads and next execution steps.
+
+## [1.0.0] - 2026-07-03
+
+### Added
+- **Audited CLI Commands**: Fully audited all CLI execution entries, removing placeholder login/logout steps and implementing functional git update pulls and local package publishing.
+- **Python 3.11+ Version Gate**: Added runtime and binary checks enforcing python version bounds.
+- **CLI Flags**: Standardized flags for `--help`, `--version`, and `--debug` to prevent Python trace logs on standard console exceptions.
+- **CI Workflows**: Added multi-OS GitHub Actions CI pipeline testing setups on Windows, Linux, and macOS.
+
 ## [1.0.0-beta.2] - 2026-07-03
 
 ### Removed
 - **Unused Files Purged**: Removed legacy `Feeling-Down.md` file from the package whitelist and workspace to keep target installations clean.
-
-## [1.0.0-beta.1] - 2026-07-03
-
-### Changed
-- **Package Size Optimization**: Removed the compiled dynamic specification folder (`AIEOS/`) from the NPM distribution whitelist.
-- Excluded Python cache bytecodes and workspace temporary folders, reducing the NPM file count by 96% (from 454 files to 15 files) and reducing target unpacking size.
-
-## [1.0.0-beta] - 2026-07-02
-
-### Added
-- **AIEOS CLI**: Pure-Python command-line execution engine supporting workspace initialization, packages validation, profiles activation, local telemetry diagnostic checks, and publisher adapters.
-- **Git Cloning Installer**: Added direct support for running subprocess `git clone` when installing remote GitHub package URLs (e.g. `aieos install github:owner/repo`).
-- **Cognitive Services, Protocols, and Policies**: Standardized specification layouts governing structured collaborative reasoning interfaces.
-- **Embedded Database Registry**: Integrated local SQLite schema initialization mapping node assets and decision structures.
-- **Programmatic SDK Package Creators**: Programmatic capability template builder.
-- **IDE Adapters**: Hook wrappers supporting external AI framework interactions.

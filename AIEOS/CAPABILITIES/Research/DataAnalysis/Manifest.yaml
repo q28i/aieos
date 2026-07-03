@@ -1,6 +1,6 @@
 name: Data Analysis Capability
 category: Research
-version: 1.0.0
+version: 1.0.1
 maturity: Validated
 extends: Capability_BaseCognitive
 dependencies:

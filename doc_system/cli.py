@@ -106,11 +106,11 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/research": {
         "name": "Capability_Research",
         "category": "Research",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "purpose": "General research capability package.",
         "dependencies": ["Capability_BaseCognitive"],
         "files": {
-            "manifest.yaml": "name: Capability_Research\nversion: 1.0.0\nmaturity: Validated\ncategory: Research\n",
+            "manifest.yaml": "name: Capability_Research\nversion: 1.0.1\nmaturity: Validated\ncategory: Research\n",
             "Contract.md": "# Capability Contract: Research\n## Entry requirements\n- Factual inputs\n## Exit requirements\n- Verification references\n",
             "Interfaces.md": "# Interfaces\n- execute(query)\n",
             "Responsibilities.md": "# Responsibilities\n- Query factual data sources\n",
@@ -125,11 +125,11 @@ MOCK_REMOTE_PACKAGES = {
     "@aieos/testing": {
         "name": "Capability_Testing",
         "category": "Quality",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "purpose": "QA execution and validation capabilities.",
         "dependencies": ["Capability_BaseCognitive"],
         "files": {
-            "manifest.yaml": "name: Capability_Testing\nversion: 1.0.0\nmaturity: Production\ncategory: Quality\n",
+            "manifest.yaml": "name: Capability_Testing\nversion: 1.0.1\nmaturity: Production\ncategory: Quality\n",
             "Contract.md": "# Capability Contract: Testing\n## Entry requirements\n- Executable tests\n## Exit requirements\n- Test run outcomes\n",
             "Interfaces.md": "# Interfaces\n- execute(test_suite)\n",
             "Responsibilities.md": "# Responsibilities\n- Run testing verification\n",
@@ -164,7 +164,7 @@ class AIEOS_CLI:
             self.cmd_help()
             return True
         if first_arg in ["--version", "-v"]:
-            print("AIEOS CLI Platform v1.0.0")
+            print("AIEOS CLI Platform v1.0.1")
             return True
             
         cmd = first_arg
@@ -195,7 +195,7 @@ class AIEOS_CLI:
 
     def cmd_help(self, args=None):
         print("""
-AIEOS Platform Command-Line Interface v1.0.0
+AIEOS Platform Command-Line Interface v1.0.1
 
 Usage:
   aieos <command> [args]
@@ -238,7 +238,7 @@ Commands:
         # Write config
         config = {
             "name": name,
-            "version": "1.0.0",
+            "version": "1.0.1",
             "profiles_dir": "profiles",
             "packages_dir": "packages",
             "registries": ["https://registry.aieos.org"]
@@ -481,7 +481,7 @@ Commands:
         print("  - Critical Flaws Avoided : 0%")
         print("  - Final Decision Quality : Low")
         print("")
-        print("AIEOS Collaborative Performance (v1.0.0):")
+        print("AIEOS Collaborative Performance (v1.0.1):")
         print("  - Assumptions Discovered : 4 (Type-1/Type-2)")
         print("  - Critical Flaws Avoided : 100%")
         print("  - Final Decision Quality : High (Evidence-calibrated)")
