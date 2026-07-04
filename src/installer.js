@@ -1,6 +1,7 @@
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
+const WrapperGenerator = require('./runtime/wrapper_generator');
 
 /**
  * Renders the installer title and welcome message.
@@ -105,10 +106,40 @@ async function runWizard() {
 
         console.log('\n\x1b[38;2;120;120;120m────────────────────────────\x1b[0m\n');
 
-        console.log('\x1b[32m✔ Configuration locked.\x1b[0m Writing runtime files...\n');
+        console.log('\x1b[32m✔ Configuration locked.\x1b[0m Writing thin wrapper rules...\n');
         
-        // Simulating deployment success
-        console.log('\x1b[32m[SUCCESS]\x1b[0m AIEOS Core SDK & Capabilities deployed successfully.');
+        // Define active capabilities based on choices
+        let profileName = 'decision-os';
+        let skills = ['research'];
+        if (profileChoice === '2') {
+            skills = ['research', 'trading', 'risk'];
+        } else if (profileChoice === '3') {
+            skills = ['research', 'trading', 'risk', 'testing', 'security', 'datapipeline', 'performance', 'docs', 'memory'];
+        }
+
+        const generator = new WrapperGenerator();
+        const options = {
+            profile: profileName,
+            activeSkills: skills,
+            executionLevel: 2
+        };
+
+        const platformsToInstall = [];
+        if (targetChoice === '1') platformsToInstall.push('claude');
+        if (targetChoice === '2') platformsToInstall.push('cursor');
+        if (targetChoice === '3') platformsToInstall.push('antigravity');
+        if (targetChoice === '4') platformsToInstall.push('claude', 'cursor', 'antigravity');
+
+        for (const platform of platformsToInstall) {
+            try {
+                const pathWritten = generator.generate(platform, options);
+                console.log(`  * Generated thin wrapper for \x1b[33m${platform.toUpperCase()}\x1b[0m at: ${pathWritten}`);
+            } catch (err) {
+                console.error(`  * \x1b[31mError writing to ${platform}:\x1b[0m ${err.message}`);
+            }
+        }
+        
+        console.log('\n\x1b[32m[SUCCESS]\x1b[0m AIEOS Core thin wrappers generated and deployed successfully.');
         console.log('\nRun "/aieos status" or "npx @q28i/aieos status" to verify your setup.');
 
     } finally {

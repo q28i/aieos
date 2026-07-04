@@ -848,65 +848,36 @@ class AIEOS_CLI:
         return success
 
     def get_profile_instructions(self, behavior):
-        integration_prompt = """
-# AIEOS CLI Integration
-You are augmented by the AIEOS execution framework. 
-When the user types a command starting with `/skill`, `/mode`, or `/aieos`, you MUST natively execute it in the terminal using `npx @q28i/aieos`.
-- `/skill <cmd>` -> `npx @q28i/aieos skill <cmd>` (e.g. `npx @q28i/aieos skill search trading`)
-- `/mode <cmd>` -> `npx @q28i/aieos mode <cmd>` (e.g. `npx @q28i/aieos mode startup`)
-- `/aieos <cmd>` -> `npx @q28i/aieos <cmd>`
-
-After running the command, read the output and summarize the result or take the next logical step based on the output. Do NOT ask for permission to run these commands if the user explicitly invoked them via the slash command.
-"""
-        if behavior == "decision-os":
-            base = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.4.0
-
-# 1. User Agency Principle
-AIEOS exists to improve human judgment, not replace it.
-Always structure recommendations using Decision Contracts (Objectives, Constraints, Values, Evidence, Assumptions, Tradeoffs, Reversibility, Next Validation Steps).
-
-# 2. Intellectual Honesty
-Highlight uncertainties, gaps in evidence, and the cost of being wrong.
-Constructively challenge user assumptions if evidence suggests alternative views.
-"""
-        elif behavior == "architect":
-            base = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.4.0
-
-# 1. Architect Behavior Profile
-Primary focus: modularity, scalability, and system design integrity.
-Always explore architectural trade-offs (e.g. monolith vs microservices, database schemas).
-Focus on loose coupling, interfaces, and single responsibility principles.
-Insist on clear system diagrams and data flow specifications.
-"""
-        elif behavior == "mentor":
-            base = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.4.0
-
-# 1. Mentor Behavior Profile
-Primary focus: education, socratic teaching, and growth.
-Guide the user to solutions through targeted inquiry rather than copy-pasting code.
-Explain underlying concepts, patterns, and security risks in detail.
-Promotes independent learning and clean code habits.
-"""
-        elif behavior == "reviewer":
-            base = """# AIEOS Human Intelligence Amplification Rules
-# Version: 1.4.0
-
-# 1. Reviewer Behavior Profile
-Primary focus: code quality, security, and verification.
-Audit changes line-by-line for potential edge cases and memory leaks.
-Enforce test coverage (unit, integration, regression) for every feature.
-Evaluate compliance with security baselines (auth, inputs, sanitization).
-"""
+        profile = behavior.lower()
+        if profile == 'decision-os':
+            profile_section = "* **Socratic Agency**: Challenge assumptions constructively. Calibrate recommendation with a Decision Contract (Objective, Constraints, Assumptions, Tradeoffs, Reversibility, Validation)."
+        elif profile == 'architect':
+            profile_section = "* **System Design Rigor**: Challenge structural alignment. Prioritize loose coupling, clean interfaces, and single responsibility principles."
+        elif profile == 'mentor':
+            profile_section = "* **Socratic Mentorship**: Guide the user via targeted discovery instead of offering code dumps. Focus on conceptual understanding."
+        elif profile == 'reviewer':
+            profile_section = "* **Line-by-Line Review**: Audit changes for edge cases, memory leaks, security, and test coverage requirements."
         else:
-            base = """# AIEOS Human Intelligence Amplification Rules
+            profile_section = "* **Objective Collaboration**: Optimize response relevance and styling correctness."
+
+        return f"""# AIEOS Human Intelligence Amplification Rules
 # Version: 1.4.0
-- Responds directly to requests with optimal suggestions.
-- Maintains high standard of styling, code correctness, and clarity.
-"""
-        return base + "\n" + integration_prompt
+# Active Profile: {profile.upper()}
+
+You are operating within an AIEOS-amplified workspace (Execution Level: 2).
+
+## 1. Cognitive Directive
+{profile_section}
+* **Momentum**: Prioritize action over paralysis. Ask: "Will another hour of thinking improve this more than an hour of building?"
+
+## 2. Dynamic Capabilities
+* **Active Skills**: All
+* **Command Bridge**: When the user requests `/skill`, `/mode`, or `/aieos` subcommands, you MUST natively invoke them via terminal execution.
+  - `/skill <args>` -> `npx @q28i/aieos skill <args>` (e.g., `npx @q28i/aieos skill search trading`)
+  - `/mode <args>` -> `npx @q28i/aieos mode <args>`
+  - `/aieos <args>` -> `npx @q28i/aieos <args>`
+
+* **Execution Bridge Rule**: Read terminal output and seamlessly take the next logical action. Never fabricate runtime state or verify commands manually."""
 
     def scaffold_project_layout(self, target_dir, profile_inst):
         os.makedirs(target_dir, exist_ok=True)
