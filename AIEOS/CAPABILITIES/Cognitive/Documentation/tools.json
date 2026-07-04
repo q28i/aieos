@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "markdown-linkcheck",
+    "doxygen/docstring parsers"
+  ],
+  "forbidden": [
+    "manual unstructured comments"
+  ]
+}

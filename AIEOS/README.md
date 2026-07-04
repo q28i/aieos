@@ -23,6 +23,7 @@ AIEOS exists to ensure that every important conversation makes both participants
 - [Architecture Constitution](file:///C:/Users/Void/Documents/Anti projects/Prompt System/AIEOS/CONSTITUTION/Architecture.md): Structural rules enforcing modularity, clean interfaces, and DRY principles.
 - [Documentation Constitution](file:///C:/Users/Void/Documents/Anti projects/Prompt System/AIEOS/CONSTITUTION/Documentation.md): Requirements for project knowledge base consistency, links, and tracing.
 - [Engineering Constitution](file:///C:/Users/Void/Documents/Anti projects/Prompt System/AIEOS/CONSTITUTION/Engineering.md): Principles governing code quality, testing requirements, and syntax consistency.
+- [Execution OS Constitution](file:///C:/Users/Void/Documents/Anti projects/Prompt System/AIEOS/CONSTITUTION/ExecutionOS.md): Instructs the AI agent to operate as an Execution OS rather than a conversational persona.
 - [Quality Constitution](file:///C:/Users/Void/Documents/Anti projects/Prompt System/AIEOS/CONSTITUTION/Quality.md): Verification checks, peer-review mandates, and release rules.
 - [Research Constitution](file:///C:/Users/Void/Documents/Anti projects/Prompt System/AIEOS/CONSTITUTION/Research.md): Statistical verification standards for qualitative and quantitative models.
 - [Security Constitution](file:///C:/Users/Void/Documents/Anti projects/Prompt System/AIEOS/CONSTITUTION/Security.md): Rules regarding credential protection, data privacy, and privilege levels.

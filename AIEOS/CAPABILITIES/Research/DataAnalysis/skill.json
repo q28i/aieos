@@ -1,0 +1,17 @@
+{
+  "name": "Data Analysis Capability",
+  "category": "Research",
+  "version": "1.4.0",
+  "maturity": "Validated",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Research"
+  ],
+  "effects": [
+    "analysis.outlier_detection +4",
+    "analysis.trend_visualization +3"
+  ],
+  "related_capabilities": [
+    "Capability_Research"
+  ]
+}

@@ -16,9 +16,9 @@ DEFAULT_OUTPUT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "AI
 
 # Simulated Github repository packages for marketplace testing
 MOCK_GITHUB_REGISTRY = {
-    "Capability_ArmisticeQuant": {
+    "Capability_FintechQuant": {
         "type": "CAPABILITY",
-        "name": "Armistice Quant Suite",
+        "name": "Fintech Quant Suite",
         "category": "Research",
         "version": "3.2.0",
         "maturity": "Production",
@@ -54,7 +54,7 @@ Commands:
               Examples:
                 python doc_manager.py install software-engineer
                 python doc_manager.py install Capability_Testing
-                python doc_manager.py install github:armistice/quant-suite
+                python doc_manager.py install github:aieos/quant-suite
   search    - Searches the registry for capabilities or profiles matching a query.
               Example: python doc_manager.py search testing
   publish   - Runs pre-flight checks, structures, lint checks, and publishes a local capability to the registry.
@@ -88,10 +88,10 @@ def install_profile_or_capability(target_name):
         print("Cloning main branch spec registry...")
         time.sleep(0.5)
         print("Found package manifest in repository: manifest.yaml")
-        print("Registering capability 'Capability_ArmisticeQuant' from remote package into memory...")
+        print("Registering capability 'Capability_FintechQuant' from remote package into memory...")
         # Register mock github capability
         AIEOS_REGISTRY.update(MOCK_GITHUB_REGISTRY)
-        target_name = "Capability_ArmisticeQuant"
+        target_name = "Capability_FintechQuant"
 
     # Normalize name to resolve profiles or capabilities
     norm = target_name.lower().replace("-", "").replace("_", "").replace("capability", "").replace("profile", "")

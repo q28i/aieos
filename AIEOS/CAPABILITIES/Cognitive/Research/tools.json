@@ -1,0 +1,8 @@
+{
+  "allowed": [
+    "pandas",
+    "numpy",
+    "scipy"
+  ],
+  "forbidden": []
+}

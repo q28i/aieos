@@ -1,6 +1,6 @@
 # AIEOS Design Principles (v1.0.0)
 
-This document establishes the eight immutable design tenets of the Artificial Intelligence Capability Operating System. All architectural proposals, feature designs, and codebase refactoring must align with these principles.
+This document establishes the eight immutable design tenets of the Artificial Intelligence Execution Operating System. All architectural proposals, feature designs, and codebase refactoring must align with these principles.
 
 ---
 

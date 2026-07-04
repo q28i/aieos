@@ -1,0 +1,17 @@
+{
+  "name": "Decision Tracing Capability",
+  "category": "Cognitive",
+  "version": "1.4.0",
+  "maturity": "Validated",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Documentation"
+  ],
+  "effects": [
+    "decision.transparency +5",
+    "decision.tradeoff_analysis +4"
+  ],
+  "related_capabilities": [
+    "Capability_Architecture"
+  ]
+}

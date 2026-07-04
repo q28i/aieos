@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "risk registers",
+    "exposure matrices"
+  ],
+  "forbidden": [
+    "ignoring flagged risks without review audit sign-off"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Base Cognitive Capability",
+  "category": "Base",
+  "version": "1.4.0",
+  "maturity": "Production",
+  "extends": null,
+  "requires": [],
+  "effects": [
+    "reasoning.depth +2",
+    "context.filtering +2"
+  ],
+  "related_capabilities": []
+}

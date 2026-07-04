@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "spreadsheets",
+    "financial calculators"
+  ],
+  "forbidden": [
+    "introducing unsourced cost estimates in models"
+  ]
+}

@@ -8,9 +8,9 @@
 
 <h1>AIEOS</h1>
 
-<h3>AIEOS exists to maximize the quality of human decisions and project execution by giving any AI the capabilities, memory, structure, and workflows of a high-performing multidisciplinary engineering organization.</h3>
+<h3>AIEOS exists to turn ideas into professionally executed projects by ensuring AI researches, plans, validates, questions assumptions, and builds with the discipline of a real multidisciplinary team instead of improvising.</h3>
 
-<p><i>The AI Capability Operating System</i></p>
+<p><i>The AI Execution Operating System</i></p>
 
 <br />
 
@@ -38,9 +38,16 @@ npx @q28i/aieos
 
 ## ✨ What is AIEOS?
 
-**AIEOS is an AI Capability Operating System that transforms general-purpose AI assistants into project-aware execution partners through installable capabilities, structured reasoning, persistent project intelligence, and professional execution workflows.**
+**AIEOS is an AI Execution Operating System that transforms ideas into professionally executed projects by giving AI the knowledge acquisition, structured reasoning, multidisciplinary expertise, and execution workflows that individuals often lack at the beginning of ambitious projects.**
 
-Instead of treating AI as a simple conversational persona, AIEOS structures collaboration around a professional **Execution OS**. The AI doesn't ask *"What prompt should I use?"* — it asks *"Which capabilities does this project need?"* and dynamically assembles an execution team (e.g., CTO + Quant + Risk) based on the specific project.
+### The Problem
+Ideas fail because execution lacks expertise. Current AI answers questions. It rarely behaves like a professional team that researches, validates assumptions, learns the domain, and systematically executes a project. **AIEOS exists to bridge that gap.**
+
+### The Four Pillars
+1. **Vision** ("I have an idea."): Deconstructing raw intent into clear success criteria.
+2. **Knowledge** ("What already exists?"): Enforcing domain research, standards lookups, regulations checks, and architectural review before coding.
+3. **Judgment** ("What should we build?"): Evaluating alternatives, trade-offs, and critical assumptions under uncertainty.
+4. **Execution** ("Build it correctly."): Enforcing test coverage, security boundaries, and modular decoupling.
 
 ### 🧠 Levels of AI
 

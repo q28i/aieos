@@ -1,0 +1,17 @@
+{
+  "name": "Negotiation Design Capability",
+  "category": "Business",
+  "version": "1.4.0",
+  "maturity": "Validated",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Quality"
+  ],
+  "effects": [
+    "negotiation.incentive_balance +4",
+    "negotiation.tradeoff_resolution +3"
+  ],
+  "related_capabilities": [
+    "Capability_Decision"
+  ]
+}

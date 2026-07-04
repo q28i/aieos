@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "decision matrix sheets",
+    "ADR templates"
+  ],
+  "forbidden": [
+    "arbitrary overrides lacking evidence"
+  ]
+}

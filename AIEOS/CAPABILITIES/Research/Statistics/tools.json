@@ -1,0 +1,10 @@
+{
+  "allowed": [
+    "scipy",
+    "statsmodels",
+    "R"
+  ],
+  "forbidden": [
+    "arbitrary parameter manual overrides"
+  ]
+}

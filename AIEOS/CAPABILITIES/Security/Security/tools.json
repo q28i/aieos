@@ -1,0 +1,10 @@
+{
+  "allowed": [
+    "bandit",
+    "owasp dependency check",
+    "git leaks"
+  ],
+  "forbidden": [
+    "exposing environment keys"
+  ]
+}

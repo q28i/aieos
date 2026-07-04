@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "flowchart editors",
+    "requirements matrices"
+  ],
+  "forbidden": [
+    "assuming specifications without user feedback verification"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "allowed": [
+    "python",
+    "js",
+    "html",
+    "css"
+  ],
+  "forbidden": [
+    "live deployment shell commands"
+  ]
+}

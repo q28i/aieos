@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "empirical checks",
+    "data tracers"
+  ],
+  "forbidden": [
+    "assuming correlations without validation records"
+  ]
+}

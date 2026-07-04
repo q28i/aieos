@@ -1,0 +1,10 @@
+{
+  "allowed": [
+    "pylint",
+    "flake8",
+    "bandit"
+  ],
+  "forbidden": [
+    "manual override variables without logs"
+  ]
+}

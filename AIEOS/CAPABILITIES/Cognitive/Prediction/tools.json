@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "simulation engines",
+    "scalability equations"
+  ],
+  "forbidden": [
+    "assuming linear scaling parameters without validation"
+  ]
+}

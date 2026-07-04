@@ -1,0 +1,17 @@
+{
+  "name": "Evidence Verification Capability",
+  "category": "Research",
+  "version": "1.4.0",
+  "maturity": "Validated",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Research"
+  ],
+  "effects": [
+    "evidence.sufficiency +4",
+    "evidence.contradiction_detection +4"
+  ],
+  "related_capabilities": [
+    "Capability_Research"
+  ]
+}

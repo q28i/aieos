@@ -1,0 +1,10 @@
+{
+  "allowed": [
+    "pytest",
+    "unittest",
+    "coverage.py"
+  ],
+  "forbidden": [
+    "force override parameters"
+  ]
+}

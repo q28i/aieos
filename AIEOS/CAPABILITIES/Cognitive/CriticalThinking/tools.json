@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "logic audit sheets",
+    "heuristic catalogs"
+  ],
+  "forbidden": [
+    "accepting dogmatic statements without empirical references"
+  ]
+}

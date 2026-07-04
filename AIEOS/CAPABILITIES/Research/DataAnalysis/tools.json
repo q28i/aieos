@@ -1,0 +1,10 @@
+{
+  "allowed": [
+    "pandas",
+    "matplotlib",
+    "seaborn"
+  ],
+  "forbidden": [
+    "modifying baseline dataset values manually"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Verification & Code Review Capability",
+  "category": "Review",
+  "version": "1.4.0",
+  "maturity": "Production",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Security",
+    "Constitution_Quality"
+  ],
+  "effects": [
+    "review.strictness +4",
+    "review.defect_detection +4"
+  ],
+  "related_capabilities": [
+    "Capability_Architecture"
+  ]
+}

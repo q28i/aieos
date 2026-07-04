@@ -1,0 +1,6 @@
+{
+  "triggers": [
+    "Maintain execution token alignments.",
+    "Route reasoning trace to outputs."
+  ]
+}

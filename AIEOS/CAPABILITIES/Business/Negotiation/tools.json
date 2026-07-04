@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "game theory models",
+    "decision matrices"
+  ],
+  "forbidden": [
+    "committing to binding terms without review validation"
+  ]
+}

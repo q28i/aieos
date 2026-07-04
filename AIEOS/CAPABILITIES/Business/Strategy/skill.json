@@ -1,0 +1,17 @@
+{
+  "name": "Operational Strategy Capability",
+  "category": "Business",
+  "version": "1.4.0",
+  "maturity": "Validated",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Documentation"
+  ],
+  "effects": [
+    "strategy.milestone_tracking +4",
+    "strategy.competitive_positioning +3"
+  ],
+  "related_capabilities": [
+    "Capability_Planning"
+  ]
+}

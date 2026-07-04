@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "mermaid.js",
+    "markdown syntax templates"
+  ],
+  "forbidden": [
+    "direct code editors (write-only code)"
+  ]
+}

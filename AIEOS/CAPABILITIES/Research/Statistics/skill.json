@@ -1,0 +1,17 @@
+{
+  "name": "Statistical Modeling Capability",
+  "category": "Research",
+  "version": "1.4.0",
+  "maturity": "Validated",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Research"
+  ],
+  "effects": [
+    "statistics.confidence_calibration +4",
+    "statistics.overfitting_prevention +5"
+  ],
+  "related_capabilities": [
+    "Capability_Research"
+  ]
+}

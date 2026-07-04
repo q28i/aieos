@@ -1,0 +1,18 @@
+{
+  "name": "Security Hardening Capability",
+  "category": "Security",
+  "version": "1.4.0",
+  "maturity": "Production",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Security"
+  ],
+  "effects": [
+    "security.strictness +5",
+    "security.leak_prevention +5"
+  ],
+  "related_capabilities": [
+    "Capability_Review",
+    "Capability_Architecture"
+  ]
+}

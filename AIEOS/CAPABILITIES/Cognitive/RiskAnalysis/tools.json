@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "FMEA matrices",
+    "probabilistic exposure charts"
+  ],
+  "forbidden": [
+    "glossing over high-impact low-probability events"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "A/B testing calculators",
+    "blocking systems"
+  ],
+  "forbidden": [
+    "changing environment parameters during active trials"
+  ]
+}

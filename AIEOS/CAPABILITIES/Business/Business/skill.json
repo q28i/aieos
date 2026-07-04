@@ -1,0 +1,17 @@
+{
+  "name": "Business Strategy Capability",
+  "category": "Business",
+  "version": "1.4.0",
+  "maturity": "Validated",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Documentation"
+  ],
+  "effects": [
+    "business.market_fit +4",
+    "business.value_estimation +3"
+  ],
+  "related_capabilities": [
+    "Capability_Planning"
+  ]
+}

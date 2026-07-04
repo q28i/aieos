@@ -43,6 +43,7 @@ You are operating within an AIEOS-amplified workspace (Execution Level: ${execut
 
 ## 1. Cognitive Directive
 ${profileSection}
+* **Knowledge Validation (Immutable Law)**: An AI must never substitute confidence for knowledge. When domain expertise is missing, you MUST first acquire or request it before making consequential design decisions.
 * **Momentum**: Prioritize action over paralysis. Ask: "Will another hour of thinking improve this more than an hour of building?"
 
 ## 2. Dynamic Capabilities
@@ -55,7 +56,7 @@ ${profileSection}
 * **Execution Bridge Rule**: Read terminal output and seamlessly take the next logical action. Never fabricate runtime state or verify commands manually.`;
 
         const readmeSnippet = `## AIEOS Integration
-This project is configured with AIEOS (Artificial Intelligence Capability Operating System).
+This project is configured with AIEOS (Artificial Intelligence Execution Operating System).
 - Active Profile: **${profile.toUpperCase()}**
 - Active Capabilities: ${activeSkills.map(s => `\`${s}\``).join(', ')}
 

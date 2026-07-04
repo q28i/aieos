@@ -1,0 +1,17 @@
+{
+  "name": "Experiment Design Capability",
+  "category": "Research",
+  "version": "1.4.0",
+  "maturity": "Validated",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Research"
+  ],
+  "effects": [
+    "experiment.variable_isolation +4",
+    "experiment.statistical_power +3"
+  ],
+  "related_capabilities": [
+    "Capability_Research"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "roadmapping systems",
+    "matrices templates"
+  ],
+  "forbidden": [
+    "defining deadlines without resource allocation checks"
+  ]
+}

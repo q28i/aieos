@@ -1,0 +1,17 @@
+{
+  "name": "Financial Modeling Capability",
+  "category": "Finance",
+  "version": "1.4.0",
+  "maturity": "Validated",
+  "extends": "Capability_BaseCognitive",
+  "requires": [
+    "Constitution_Research"
+  ],
+  "effects": [
+    "finance.economic_modeling +4",
+    "finance.capital_efficiency +3"
+  ],
+  "related_capabilities": [
+    "Capability_Decision"
+  ]
+}

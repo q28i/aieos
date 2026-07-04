@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "uml diagram generators",
+    "architecture checklists"
+  ],
+  "forbidden": [
+    "inline feature implementation scripts"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Cognitive Prediction Capability",
+  "category": "Cognitive",
+  "version": "1.4.0",
+  "maturity": "Validated",
+  "extends": "Capability_BaseCognitive",
+  "requires": [],
+  "effects": [
+    "prediction.horizon +5",
+    "debt.prevention +4"
+  ],
+  "related_capabilities": [
+    "Capability_RiskAnalysis"
+  ]
+}

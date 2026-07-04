@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "quality dashboards",
+    "compliance checks"
+  ],
+  "forbidden": [
+    "bypassing quality gates for releases"
+  ]
+}

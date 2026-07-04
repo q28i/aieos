@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "root cause analysis trees",
+    "post-mortem templates"
+  ],
+  "forbidden": [
+    "blaming external variables without checking internal assumptions"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "decoupling models",
+    "feasibility grids"
+  ],
+  "forbidden": [
+    "defaulting to the first proposed solution"
+  ]
+}
