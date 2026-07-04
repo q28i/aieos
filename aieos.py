@@ -3,13 +3,13 @@
 Primary entrypoint wrapper for the AIEOS Command Line Interface.
 """
 import sys
-from doc_system.cli import AIEOS_CLI
+from marketplace.doc_system.cli import AIEOS_CLI
 
 def main():
     debug_mode = "--debug" in sys.argv or "-d" in sys.argv
     argv = [arg for arg in sys.argv[1:] if arg not in ["--debug", "-d"]]
     
-    from doc_system.cli import AIEOS_CLI
+    from marketplace.doc_system.cli import AIEOS_CLI
     cli = AIEOS_CLI()
     
     try:

@@ -1,0 +1,25 @@
+{
+  "name": "Capability_Trading",
+  "version": "1.4.0",
+  "description": "Autonomous trading engine and simulation tools.",
+  "category": "Finance",
+  "requires": [
+    "Capability_Research",
+    "Capability_Risk"
+  ],
+  "tags": [
+    "trading",
+    "quant",
+    "exchange",
+    "portfolio"
+  ],
+  "supports": [
+    "execution",
+    "research"
+  ],
+  "project_types": [
+    "trading_bot",
+    "fintech"
+  ],
+  "maturity": "Validated"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Capability_Compiler",
+  "version": "1.4.0",
+  "description": "AST traversal, parsers, and custom code generation capabilities.",
+  "category": "Development",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "compiler",
+    "ast",
+    "parser",
+    "codegen"
+  ],
+  "supports": [
+    "architecture",
+    "implementation"
+  ],
+  "project_types": [
+    "compiler",
+    "library"
+  ],
+  "maturity": "Validated"
+}

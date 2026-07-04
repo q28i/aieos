@@ -1,0 +1,8 @@
+{
+  "triggers": [
+    "trading",
+    "quant",
+    "exchange",
+    "portfolio"
+  ]
+}

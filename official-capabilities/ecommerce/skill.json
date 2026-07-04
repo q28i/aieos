@@ -1,0 +1,24 @@
+{
+  "name": "Capability_Ecommerce",
+  "version": "1.4.0",
+  "description": "Cart flows, payment integrations, and catalog management.",
+  "category": "Business",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "ecommerce",
+    "payments",
+    "cart",
+    "business"
+  ],
+  "supports": [
+    "execution",
+    "business"
+  ],
+  "project_types": [
+    "saas",
+    "ecommerce"
+  ],
+  "maturity": "Validated"
+}

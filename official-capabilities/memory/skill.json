@@ -1,0 +1,25 @@
+{
+  "name": "Capability_Memory",
+  "version": "1.4.0",
+  "description": "Context graph database memory adapter.",
+  "category": "Memory",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "memory",
+    "graph",
+    "sqlite",
+    "context"
+  ],
+  "supports": [
+    "data",
+    "planning"
+  ],
+  "project_types": [
+    "saas",
+    "ai_agent",
+    "computation_engine"
+  ],
+  "maturity": "Validated"
+}

@@ -1,0 +1,9 @@
+{
+  "triggers": [
+    "database",
+    "postgres",
+    "sql",
+    "ingest",
+    "pipeline"
+  ]
+}

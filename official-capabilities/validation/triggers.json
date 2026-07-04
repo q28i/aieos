@@ -1,0 +1,8 @@
+{
+  "triggers": [
+    "validation",
+    "constraints",
+    "audit",
+    "compliance"
+  ]
+}

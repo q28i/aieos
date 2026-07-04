@@ -1,0 +1,23 @@
+{
+  "name": "Capability_Docs",
+  "version": "1.4.0",
+  "description": "Documentation and standards compile helper.",
+  "category": "Documentation",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "docs",
+    "standards",
+    "compile"
+  ],
+  "supports": [
+    "documentation"
+  ],
+  "project_types": [
+    "saas",
+    "library",
+    "ai_agent"
+  ],
+  "maturity": "Validated"
+}

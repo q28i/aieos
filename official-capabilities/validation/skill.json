@@ -1,0 +1,24 @@
+{
+  "name": "Capability_Validation",
+  "version": "1.4.0",
+  "description": "Validation and compliance gate checks.",
+  "category": "Quality",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "validation",
+    "constraints",
+    "audit",
+    "compliance"
+  ],
+  "supports": [
+    "planning",
+    "execution"
+  ],
+  "project_types": [
+    "computation_engine",
+    "data_science"
+  ],
+  "maturity": "Validated"
+}

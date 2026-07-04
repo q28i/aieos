@@ -1,0 +1,26 @@
+{
+  "name": "Capability_Datapipeline",
+  "version": "1.4.0",
+  "description": "Data pipeline and database streams management.",
+  "category": "Data",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "database",
+    "postgres",
+    "sql",
+    "ingest",
+    "pipeline"
+  ],
+  "supports": [
+    "data",
+    "architecture"
+  ],
+  "project_types": [
+    "computation_engine",
+    "saas",
+    "backend"
+  ],
+  "maturity": "Validated"
+}

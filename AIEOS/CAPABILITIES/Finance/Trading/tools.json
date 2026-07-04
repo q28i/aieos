@@ -1,0 +1,9 @@
+{
+  "allowed": [
+    "backtest platforms",
+    "order simulations"
+  ],
+  "forbidden": [
+    "live trading testing without sandbox verification"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Capability_Research",
+  "version": "1.4.0",
+  "description": "General research and statistical analysis capability package.",
+  "category": "Research",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "research",
+    "analytics",
+    "analysis"
+  ],
+  "supports": [
+    "research",
+    "planning"
+  ],
+  "project_types": [
+    "computation_engine",
+    "data_science",
+    "saas",
+    "library"
+  ],
+  "maturity": "Validated"
+}

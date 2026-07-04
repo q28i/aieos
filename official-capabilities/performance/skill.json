@@ -1,0 +1,24 @@
+{
+  "name": "Capability_Performance",
+  "version": "1.4.0",
+  "description": "Performance audit and caching optimization mechanisms.",
+  "category": "Performance",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "performance",
+    "bottleneck",
+    "cache",
+    "indexing"
+  ],
+  "supports": [
+    "architecture",
+    "verification"
+  ],
+  "project_types": [
+    "saas",
+    "backend"
+  ],
+  "maturity": "Validated"
+}

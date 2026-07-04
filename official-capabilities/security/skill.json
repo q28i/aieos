@@ -1,0 +1,25 @@
+{
+  "name": "Capability_Security",
+  "version": "1.4.0",
+  "description": "Auditing and credential security rules.",
+  "category": "Security",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "security",
+    "auth",
+    "jwt",
+    "rate-limiting"
+  ],
+  "supports": [
+    "auditing",
+    "verification"
+  ],
+  "project_types": [
+    "saas",
+    "backend",
+    "computation_engine"
+  ],
+  "maturity": "Validated"
+}

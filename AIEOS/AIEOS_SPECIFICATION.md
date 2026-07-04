@@ -85,6 +85,17 @@ Prompt ──> AI ──> Output
 Intent ──> AIEOS Runtime ──> Vision Discovery ──> Knowledge Expansion ──> Clarification ──> Cognitive Modules ──> AI Collaboration ──> Reflection ──> Amplified Outcome
 ```
 
+### 1.15 AIEOS Project Lifecycle Stages
+AIEOS separates the project lifecycle into 8 distinct sequential phases to prevent premature execution:
+- **Phase 0: Discovery**: Socratic intent extraction. Discovers what the user wants to build from a messy description, scoring confidence and mapping info gaps.
+- **Phase 1: Research**: Literature searches, API audits, and competitor analysis.
+- **Phase 2: Architecture**: Design modular, decoupled system modules and contracts.
+- **Phase 3: Planning**: Construct component-level checklists and Quality Gate assertions.
+- **Phase 4: Execution**: Write clean, professional code incrementally.
+- **Phase 5: Validation**: Execute test suites, audit safety bounds, and audit security metrics.
+- **Phase 6: Deployment**: Setup container builds, CI workflows, and staging profiles.
+- **Phase 7: Evolution**: Log post-mortems, calculate slippage stats, and update the knowledge graph.
+
 ---
 
 ## 2. Terminology & Definitions
@@ -200,7 +211,7 @@ The **Kernel** serves as the central operating system registry. All services, pr
 
 ---
 
-## 7. Resource Manager & Trust System
+## 7. Resource Manager & Research Engine
 
 ### 7.1 Resource Manager
 Optimizes execution costs across available resources:
@@ -208,17 +219,22 @@ Optimizes execution costs across available resources:
 - **API Budgets**: Tracks usage cost and rate-limits requests.
 - **Time Limits**: Sets execution time bounds per task.
 
-### 7.2 Trust System & Confidence Framework
-Every recommendation or output must include a structured confidence profile:
-- **Confidence Rating**: Derived from evidence score and unknowns counts.
-- **Evidence Strength**: High / Medium / Low.
-- **Research Coverage**: Percentage of the design space researched.
-- **Unknowns Count**: Number of unverified variables.
-- **Assumptions Count**: Number of active dogmatic premises.
-- **Contradictions**: List of detected design conflicts.
-- **Ways to Improve Confidence**: Direct actionable recommendations to strengthen the plan.
+### 7.2 Research & Decision Framework (Evidence-Based Scoring)
+Every recommendation or workspace audit must include a structured evidence score profile across five dimensions:
+- **Evidence Score**: Source trust level derived from audited specifications, RFCs, and academic journals.
+- **Knowledge Coverage**: Extent to which target requirements are mapped to known domain solutions.
+- **Research Depth**: Coverage of existing GitHub repositories, security advisories, and package registries.
+- **Architecture Confidence**: Structural decoupling verification, scaling suitability, and decision records alignment.
+- **Execution Readiness**: Automated test suite utility, credentials security scanning, and deployment configuration health.
 
-### 7.3 Knowledge Trust Levels
+### 7.3 Project Intelligence Directories
+AIEOS workspace indexes project intelligence in standard files under:
+- **AIEOS/RESEARCH/RESEARCH_DATABASE.md**: Consolidates external papers, RFCs, GitHub repos, and official API documentations.
+- **AIEOS/RESEARCH/KNOWLEDGE_MAP.md**: Houses visual domain graphs, interface maps, and standards.
+- **AIEOS/DECISIONS/TRADEOFFS.md**: Compares design approaches (decoupled vs monolithic, libraries vs custom code).
+- **AIEOS/DECISIONS/DECISION_RECORDS.md**: Commits ADRs (Architecture Decision Records) detailing chosen designs and rationales.
+
+### 7.4 Knowledge Trust Levels
 All information is classified into trust levels:
 - **Official Documentation**: Verified developer specifications.
 - **Peer-Reviewed Paper**: Rigorous academic evaluations.

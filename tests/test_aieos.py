@@ -7,7 +7,7 @@ import tempfile
 import shutil
 import os
 import sqlite3
-from doc_system.cli import AIEOS_CLI
+from marketplace.doc_system.cli import AIEOS_CLI
 
 class TestAIEOSCLI(unittest.TestCase):
     def setUp(self):
@@ -108,9 +108,27 @@ class TestAIEOSCLI(unittest.TestCase):
 
     def test_discover_recommendations(self):
         self.cli.execute(["init"])
-        # Discover mock computation suggestions
-        success = self.cli.execute(["skill", "recommend", "computation"])
+        # Discover mock trading suggestions
+        success = self.cli.execute(["skill", "recommend", "trading"])
         self.assertTrue(success)
+
+    def test_discover_interactive_cli(self):
+        self.cli.execute(["init"])
+        # Run discover with args to simulate messy idea input
+        success = self.cli.execute(["discover", "I want an AI that trades with $1 and does perpetual swaps on testnet"])
+        self.assertTrue(success)
+
+    def test_inspect_workspace(self):
+        self.cli.execute(["init"])
+        # Add a mock README.md to test inspect score checks
+        with open("README.md", "w", encoding="utf-8") as f:
+            f.write("AIEOS test workspace project description. It has some text words here for validation purposes.")
+        
+        success = self.cli.execute(["inspect"])
+        self.assertTrue(success)
+        
+        success_audit = self.cli.execute(["audit"])
+        self.assertTrue(success_audit)
 
 if __name__ == "__main__":
     unittest.main()

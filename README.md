@@ -115,6 +115,8 @@ Once AIEOS is installed, you can invoke it manually, or **your AI can invoke the
 ### Layer 1: User Slash Commands (IDE Support)
 You can directly command your agent to manage its capabilities using slash-command syntax.
 
+- `/aieos discover` - Runs the Socratic project discovery engine (intent extraction, gap analysis, reality checks).
+- `/aieos inspect` / `/aieos audit` - Scores project health metrics, lists top blockers, and recommends the Next Best Action.
 - `/aieos recommend` - Scans your current project (dependencies, directories, code) and recommends capabilities.
 - `/aieos install <capability>` - Installs a specific capability into your workspace.
 - `/aieos enable <capability>` - Enables a locally installed capability.
@@ -124,7 +126,8 @@ You can directly command your agent to manage its capabilities using slash-comma
 ### Layer 2: CLI Equivalents
 Under the hood, these map to the AIEOS CLI:
 ```bash
-npx @q28i/aieos recommend
+npx @q28i/aieos discover
+npx @q28i/aieos inspect
 npx @q28i/aieos install @aieos/research
 npx @q28i/aieos list
 ```
@@ -136,14 +139,14 @@ npx @q28i/aieos list
 ```text
 aieos/
 ├─ 📂 AIEOS/                     # Dynamic system specifications & schemas
-├─ 📂 bin/                       # Node.js binary wrappers & environment gates
-├─ 📂 doc_system/                # Core Python modules & engines
-│   ├─ cli.py                    # CLI installer & route manager
-│   ├─ doctor.py                 # Workspace integrity diagnostics
-│   ├─ generator.py              # Package scaffolding generator
-│   └─ registry.py               # Capability database mappings
+├─ 📂 core/                      # Core JS runtime, installer, & compiler engine
+├─ 📂 adapters/                  # Adapter SDK for Claude, Cursor, Gemini, & Antigravity
+├─ 📂 official-capabilities/     # Core capability packages (skills) stored as files on disk
+├─ 📂 marketplace/               # Package registry & specifications builder
+│   ├─ doc_manager.py            # Spec build manager
+│   └─ 📂 doc_system/            # Python CLI & diagnostic engines
+├─ 📂 bin/                       # Node.js binary wrapper
 ├─ 📂 tests/                     # Core integration unit tests
-├─ 🗂️ aieos.json                 # Project registry settings
 ├─ 📜 LICENSE                    # MIT License
 └─ 📖 README.md
 ```

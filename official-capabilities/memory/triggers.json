@@ -1,0 +1,8 @@
+{
+  "triggers": [
+    "memory",
+    "graph",
+    "sqlite",
+    "context"
+  ]
+}

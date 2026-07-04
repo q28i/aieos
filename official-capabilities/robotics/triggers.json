@@ -1,0 +1,8 @@
+{
+  "triggers": [
+    "robotics",
+    "kinematics",
+    "driver",
+    "hardware"
+  ]
+}

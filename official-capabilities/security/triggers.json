@@ -1,0 +1,8 @@
+{
+  "triggers": [
+    "security",
+    "auth",
+    "jwt",
+    "rate-limiting"
+  ]
+}

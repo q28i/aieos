@@ -4,7 +4,7 @@ const { execSync, spawn } = require('child_process');
 const path = require('path');
 
 const cliPath = path.join(__dirname, '../aieos.py');
-const { runCli, runWizard } = require('../src/installer');
+const { runCli, runWizard } = require('../core/installer');
 const args = process.argv.slice(2);
 
 const isInstallCmd = args.length > 0 && (

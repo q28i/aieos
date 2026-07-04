@@ -1,0 +1,8 @@
+{
+  "triggers": [
+    "ecommerce",
+    "payments",
+    "cart",
+    "business"
+  ]
+}

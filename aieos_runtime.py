@@ -6,7 +6,7 @@ Freezed Specification Edition (v3.2.0).
 """
 import sys
 import time
-from doc_system.registry import AIEOS_REGISTRY
+from marketplace.doc_system.registry import AIEOS_REGISTRY
 
 def print_separator(char="=", length=75):
     print(char * length)

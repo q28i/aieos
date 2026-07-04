@@ -2,7 +2,7 @@
   "name": "@q28i/aieos",
   "version": "1.4.0",
   "description": "Human Intelligence Amplification Runtime",
-  "main": "src/index.js",
+  "main": "core/index.js",
   "bin": {
     "aieos": "bin/cli.js"
   },
@@ -20,11 +20,13 @@
   "license": "MIT",
   "files": [
     "bin",
-    "doc_system",
+    "core",
+    "adapters",
+    "marketplace",
+    "official-capabilities",
     "AIEOS",
     "aieos.py",
     "aieos_runtime.py",
-    "doc_manager.py",
     "README.md",
     "LICENSE"
   ]

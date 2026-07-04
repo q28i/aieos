@@ -1,0 +1,7 @@
+{
+  "triggers": [
+    "Formulate order routing execution logic.",
+    "Verify exchange gateway connectivity and queues.",
+    "Enforce position sizing and risk limit checks at the execution layer."
+  ]
+}

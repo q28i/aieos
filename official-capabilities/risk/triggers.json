@@ -1,0 +1,8 @@
+{
+  "triggers": [
+    "risk",
+    "drawdown",
+    "exposure",
+    "position-sizing"
+  ]
+}

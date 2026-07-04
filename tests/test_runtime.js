@@ -1,4 +1,4 @@
-const { AIEOSRuntime, eventBus, ClaudeAieosAdapter } = require('../src/index');
+const { AIEOSRuntime, eventBus, ClaudeAieosAdapter } = require('../core/index');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
@@ -51,7 +51,7 @@ async function runTests() {
         executionContext.permissions.filesystem = 'write';
         executionContext.userIntent = "Install computation tools please";
         const result = await runtime.execute({
-            command: "/skill install @aieos/performance",
+            command: "/skill install @aieos/trading",
             context: executionContext
         });
 

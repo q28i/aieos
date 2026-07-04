@@ -1,0 +1,7 @@
+{
+  "allowed": [
+    "python",
+    "bash"
+  ],
+  "forbidden": []
+}

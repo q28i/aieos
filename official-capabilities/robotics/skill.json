@@ -1,0 +1,24 @@
+{
+  "name": "Capability_Robotics",
+  "version": "1.4.0",
+  "description": "Robotics control, kinematic solvers, and driver interfaces.",
+  "category": "Hardware",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "robotics",
+    "kinematics",
+    "driver",
+    "hardware"
+  ],
+  "supports": [
+    "execution",
+    "planning"
+  ],
+  "project_types": [
+    "robotics",
+    "embedded"
+  ],
+  "maturity": "Validated"
+}

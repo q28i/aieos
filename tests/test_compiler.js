@@ -1,4 +1,4 @@
-const AIEOSCompiler = require('../src/runtime/compiler');
+const AIEOSCompiler = require('../core/compiler');
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert');

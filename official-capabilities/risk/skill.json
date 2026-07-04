@@ -1,0 +1,24 @@
+{
+  "name": "Capability_Risk",
+  "version": "1.4.0",
+  "description": "Exposure monitoring and risk controllers.",
+  "category": "Risk",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "risk",
+    "drawdown",
+    "exposure",
+    "position-sizing"
+  ],
+  "supports": [
+    "planning",
+    "execution"
+  ],
+  "project_types": [
+    "trading_bot",
+    "fintech"
+  ],
+  "maturity": "Validated"
+}

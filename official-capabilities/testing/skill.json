@@ -1,0 +1,24 @@
+{
+  "name": "Capability_Testing",
+  "version": "1.4.0",
+  "description": "QA execution and validation capabilities.",
+  "category": "Quality",
+  "requires": [
+    "Capability_BaseCognitive"
+  ],
+  "tags": [
+    "testing",
+    "quality",
+    "ci/cd"
+  ],
+  "supports": [
+    "verification",
+    "validation"
+  ],
+  "project_types": [
+    "saas",
+    "library",
+    "backend"
+  ],
+  "maturity": "Validated"
+}
