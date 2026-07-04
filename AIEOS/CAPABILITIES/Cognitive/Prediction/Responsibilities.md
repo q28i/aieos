@@ -1,5 +1,0 @@
-# Cognitive Prediction Capability Responsibilities
-
-- Forecast scalability boundaries at 6-month and 2-year horizons.
-- Identify compounding complexity hotspots in active plans.
-- Estimate migration and maintenance footprint cost ranges.

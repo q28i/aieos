@@ -1,5 +1,0 @@
-# Reflection & Learning Loop Responsibilities
-
-- Compare actual milestone outcomes with initial planning estimates.
-- Isolate the root causes of plan slippage or defects.
-- Update permanent AIEOS knowledge libraries with lessons learned.

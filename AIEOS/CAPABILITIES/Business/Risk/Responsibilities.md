@@ -1,5 +1,0 @@
-# Risk Management Capability Responsibilities
-
-- Identify potential operational risks.
-- Design mitigation protocols for high-impact items.
-- Calculate potential downsides.

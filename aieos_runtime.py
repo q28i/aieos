@@ -21,7 +21,7 @@ def run_simulation():
     print("Available Profiles for Arming:")
     print("  [1] Startup Founder Profile")
     print("  [2] Software Engineer Profile")
-    print("  [3] Quantitative Researcher Profile")
+    print("  [3] Data Scientist Profile")
     print("  [4] Psychologist Profile")
     print("")
     
@@ -32,7 +32,7 @@ def run_simulation():
     profile_keys = {
         "1": "Profile_StartupFounder",
         "2": "Profile_SoftwareEngineer",
-        "3": "Profile_QuantitativeResearcher",
+        "3": "Profile_DataScientist",
         "4": "Profile_Psychologist"
     }
     
@@ -93,7 +93,7 @@ def run_simulation():
     print("Press ENTER to run the Conversation Benchmark (Standard LLM vs AIEOS)...")
     input()
     
-    user_query = "I want to build a trading bot using SQLite in Python. Let's write the code."
+    user_query = "I want to build a concurrent web scraper log database using SQLite in Python. Let's write the code."
     
     print_separator("=")
     print(f"USER INPUT: '{user_query}'")
@@ -103,14 +103,14 @@ def run_simulation():
     print("SIMULATION 1: STANDARD REACTIVE LLM ASSISTANT")
     print_separator("-")
     print("Response:")
-    print("  'Sure! I can help you write a trading bot using SQLite in Python.")
-    print("   Here is the complete script utilizing the ccxt library and an SQLite database.")
+    print("  'Sure! I can help you write a web scraper log database using SQLite in Python.")
+    print("   Here is the complete script utilizing the beautifulsoup4 library and an SQLite database.")
     print("   ```python")
     print("   import sqlite3")
-    print("   import ccxt")
+    print("   import bs4")
     print("   # ... [Generates 150 lines of Python code with SQLite database table calls] ...")
     print("   ```")
-    print("   This bot connects to Binance, checks ticker prices, and writes orders to local SQLite.'")
+    print("   This scraper connects to web pages, checks titles, and writes scraper logs to local SQLite.'")
     print("Status: COMPLETE. Output generated immediately.")
     print_separator("-")
     
@@ -129,10 +129,10 @@ def run_simulation():
     print("[TRIPLE SOCRATIC INQUIRY]")
     print("  1. Core Decision Target:")
     print("     'What decision is this person actually trying to make?'")
-    print("     - Decision: How to persist tick streams and executions without introducing write locks.")
+    print("     - Decision: How to persist scraping streams and logs without introducing write locks.")
     print("  2. Cognitive Belief Target:")
     print("     'What belief, if changed, would most improve that decision?'")
-    print("     - Belief: 'SQLite handles high-speed concurrent trading loops natively.'")
+    print("     - Belief: 'SQLite handles high-speed concurrent scraping loops natively.'")
     print("  3. Value Priority Target:")
     print("     'What values or preferences are driving this decision choice?'")
     print("     - Value: User values 'low operational overhead' and 'rapid prototype learning'.")
@@ -140,7 +140,7 @@ def run_simulation():
     
     print("[PREFERENCE DISCOVERY PROTOCOL]")
     print("  * Preference Profile Map:")
-    print("    - Maximum Profit  : Weight [0.1] (User is not running institutional arbitrage).")
+    print("    - Maximum Throughput: Weight [0.1] (User is not running institutional crawlers).")
     print("    - Low Risk        : Weight [0.4] (Standard error checking is sufficient).")
     print("    - Learning Focus  : Weight [0.9] (Values simple local code readability).")
     print("    - Low Complexity  : Weight [0.9] (Wishes to avoid Postgres/Timescale database setup).")
@@ -149,9 +149,9 @@ def run_simulation():
     
     print("[DISAGREEMENT PROTOCOL]")
     print("  * Audit check: Should AIEOS disagree with SQLite usage?")
-    print("    - User assumption affects outcome? Yes (database write lock will freeze order loops).")
+    print("    - User assumption affects outcome? Yes (database write lock will freeze scraping loops).")
     print("    - Evidence strongly favors another path? Yes (in-memory queues prevent file write latencies).")
-    print("    - Cost of remaining silent? Significant (potential lost exchange connection/hang).")
+    print("    - Cost of remaining silent? Significant (potential scraper worker connection/hang).")
     print("    - Action: VETO silent execution. Initiate structured disagreement trace.")
     print("-" * 75)
     
@@ -164,14 +164,14 @@ def run_simulation():
     print("[COGNITIVE LOAD MANAGER (Knowledge Leverage)]")
     print("  * Pruning check: 'If I removed half of this explanation, would the user's decision become worse?'")
     print("  * AIEOS Pruned High-Leverage Output:")
-    print("    \"SQLite write locks will block strategy read calls under tick volume.")
+    print("    \"SQLite write locks will block scraping worker write calls under concurrent volume.")
     print("     Since you value low operational complexity (Postgres/Docker skipped),")
     print("     you should use an in-memory queue flush or local file buffer instead of direct DB writes.\"")
     print("-" * 75)
     
     print("[EVALUATING OPPORTUNITY COST & WRONGNESS SCALE]")
     print("  * Opportunity Cost: Researching SQLite parameters consumes 3 days vs building in-memory queues in 2 hours.")
-    print("  * Cost of Being Wrong: High (corrupt local files during trade triggers = loss of trade funds).")
+    print("  * Cost of Being Wrong: High (corrupt local files during scrape events = loss of log data).")
     print("-" * 75)
     
     print("[DECISION REVERSIBILITY (One-Way vs Two-Way Doors)]")
@@ -195,31 +195,31 @@ def run_simulation():
     print("[FAILURE RFC STATE MACHINE (Kill Criteria)]")
     print("  * Lifecycle Stage: Success --> Failure --> Recovery --> Pivot --> Termination")
     print("  * Configured Kill Criteria:")
-    print("    - Halt Strategy if: Tick queue latency exceeds 500ms on 10 consecutive ticks.")
-    print("    - Pivot Strategy if: User acquisition burn exceeds $500/week without order flow.")
+    print("    - Halt Scraper if: Log queue latency exceeds 500ms on 10 consecutive writes.")
+    print("    - Pivot Scraper if: User acquisition burn exceeds $500/week without scraper flow.")
     print("-" * 75)
 
     print("[AIEOS GENERATED DECISION CONTRACT]")
     print_separator("-")
     print("DECISION CONTRACT REGISTRY")
     print_separator("-")
-    print("  * Decision            : Database selection for local arbitrage tick logger.")
-    print("  * Objective           : Store ticker price ticks with zero strategy latency delay.")
-    print("  * Success Criteria    : Ingestion latency < 5ms under 100 ticks/sec concurrent streams.")
+    print("  * Decision            : Database selection for local concurrent log worker.")
+    print("  * Objective           : Store log records with zero worker latency delay.")
+    print("  * Success Criteria    : Ingestion latency < 5ms under 100 writes/sec concurrent streams.")
     print("  * Constraints         : Local laptop execution, python thread locks, no Docker ops.")
     print("  * Stated Values       : High learning value, simple operations setup.")
     print("  * Alternatives        : Postgres, SQLite file db, In-Memory queue buffer.")
     print("  * Core Evidence       : SQLite concurrent writes cause lock starvation delays up to 15ms.")
     print("  * Key Assumption      : SQLite can handle concurrent reads during hot WAL writes.")
-    print("  * Remaining Unknowns  : Max peak transaction tick volume rate.")
-    print("  * Cost of Being Wrong : High (lock starvation crashes active trading strategies).")
+    print("  * Remaining Unknowns  : Max peak transaction log volume rate.")
+    print("  * Cost of Being Wrong : High (lock starvation crashes concurrent web scraping workers).")
     print("  * Reversibility       : Type-1 (One-Way Door).")
     print("  * Recommendation      : Implement in-memory queue buffer. Flush to SQLite asynchronously.")
-    print("  * Next Validation Step: Benchmark write queues under 500 tick permutations.")
+    print("  * Next Validation Step: Benchmark write queues under 500 write permutations.")
     print_separator("-")
     
     print("[STEP 8/9] VISION MATURITY STARS BOARD")
-    print("  * Clear Objective        : [****-] (Target is automated profit, but success margins are unquantified)")
+    print("  * Clear Objective        : [****-] (Target is high scraper throughput, but success margins are unquantified)")
     print("  * Constraints Map        : [***--] (Operational complex bounds defined; latency missing)")
     print("  * Market Understanding   : [*----] (Fees and market regimes are not verified)")
     print("  * Technical Understanding : [****-] (Logic flows are clear, but db choice is weak)")

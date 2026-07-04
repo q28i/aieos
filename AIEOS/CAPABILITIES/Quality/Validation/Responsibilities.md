@@ -1,5 +1,0 @@
-# Quality Validation Capability Responsibilities
-
-- Evaluate release candidates against all constitutions.
-- Certify that all verification assertions are logged.
-- Audit performance and reliability reports.

@@ -16,27 +16,27 @@ DEFAULT_OUTPUT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "AI
 
 # Simulated Github repository packages for marketplace testing
 MOCK_GITHUB_REGISTRY = {
-    "Capability_FintechQuant": {
+    "Capability_MLSuite": {
         "type": "CAPABILITY",
-        "name": "Fintech Quant Suite",
+        "name": "Machine Learning Suite",
         "category": "Research",
         "version": "3.2.0",
         "maturity": "Production",
-        "purpose": "Simulate advanced market arbitrage algorithms and quantitative modeling.",
+        "purpose": "Simulate advanced machine learning models and predictive analytics.",
         "effects": [
-            "finance.economic_modeling +6",
-            "risk.exposure_mitigation +4",
+            "research.predictive_modeling +6",
+            "quality.accuracy +4",
             "research.factual_accuracy +3"
         ],
         "extends": "Capability_BaseCognitive",
-        "dependencies": ["Capability_Research", "Capability_Finance"],
+        "dependencies": ["Capability_Research", "Capability_Validation"],
         "related_capabilities": [],
         "quality_gates": {
-            "entry_requirements": "Valid tick historical data",
+            "entry_requirements": "Valid historical dataset",
             "required_context": "Constitution_Research",
-            "execution": "Execute arbitrage simulations",
-            "verification": "Zero model leaks, backtest output passes Sharpe threshold",
-            "exit_requirements": "Quant evaluation report"
+            "execution": "Execute predictive model training",
+            "verification": "Zero model overfitting, validation output passes F1-score threshold",
+            "exit_requirements": "Model evaluation report"
         }
     }
 }
@@ -52,9 +52,9 @@ Commands:
   install   - Resolves capability dependencies and simulates runtime installation for a profile,
               capability, or remote GitHub repository.
               Examples:
-                python doc_manager.py install software-engineer
-                python doc_manager.py install Capability_Testing
-                python doc_manager.py install github:aieos/quant-suite
+                 python doc_manager.py install software-engineer
+                 python doc_manager.py install Capability_Testing
+                 python doc_manager.py install github:aieos/ml-suite
   search    - Searches the registry for capabilities or profiles matching a query.
               Example: python doc_manager.py search testing
   publish   - Runs pre-flight checks, structures, lint checks, and publishes a local capability to the registry.
@@ -88,10 +88,10 @@ def install_profile_or_capability(target_name):
         print("Cloning main branch spec registry...")
         time.sleep(0.5)
         print("Found package manifest in repository: manifest.yaml")
-        print("Registering capability 'Capability_FintechQuant' from remote package into memory...")
+        print("Registering capability 'Capability_MLSuite' from remote package into memory...")
         # Register mock github capability
         AIEOS_REGISTRY.update(MOCK_GITHUB_REGISTRY)
-        target_name = "Capability_FintechQuant"
+        target_name = "Capability_MLSuite"
 
     # Normalize name to resolve profiles or capabilities
     norm = target_name.lower().replace("-", "").replace("_", "").replace("capability", "").replace("profile", "")

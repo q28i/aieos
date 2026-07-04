@@ -172,7 +172,7 @@ MOCK_REMOTE_PACKAGES = {
         "dependencies": ["Capability_BaseCognitive"],
         "tags": ["security", "auth", "jwt", "rate-limiting"],
         "supports": ["auditing", "verification"],
-        "project_types": ["saas", "backend", "trading_bot"],
+        "project_types": ["saas", "backend", "computation_engine"],
         "files": {
             "manifest.yaml": "name: Capability_Security\nversion: 1.4.0\ncategory: Security\n",
             "Contract.md": "# Security Contract\n",
@@ -189,7 +189,7 @@ MOCK_REMOTE_PACKAGES = {
         "dependencies": ["Capability_BaseCognitive"],
         "tags": ["database", "postgres", "sql", "ingest", "pipeline"],
         "supports": ["data", "architecture"],
-        "project_types": ["trading_bot", "saas", "backend"],
+        "project_types": ["computation_engine", "saas", "backend"],
         "files": {
             "manifest.yaml": "name: Capability_Datapipeline\nversion: 1.4.0\ncategory: Data\n",
             "Contract.md": "# Data Contract\n",
@@ -257,7 +257,7 @@ MOCK_REMOTE_PACKAGES = {
         "dependencies": ["Capability_BaseCognitive"],
         "tags": ["memory", "graph", "sqlite", "context"],
         "supports": ["data", "planning"],
-        "project_types": ["saas", "ai_agent", "trading_bot"],
+        "project_types": ["saas", "ai_agent", "computation_engine"],
         "files": {
             "manifest.yaml": "name: Capability_Memory\nversion: 1.4.0\ncategory: Memory\n",
             "Contract.md": "# Memory Contract\n",
@@ -430,7 +430,7 @@ You are operating within an AIEOS-amplified workspace (Execution Level: 2).
 ## 2. Dynamic Capabilities
 * **Active Skills**: All
 * **Command Bridge**: When the user requests `/skill`, `/mode`, or `/aieos` subcommands, you MUST natively invoke them via terminal execution.
-  - `/skill <args>` -> `npx @q28i/aieos skill <args>` (e.g., `npx @q28i/aieos skill search trading`)
+  - `/skill <args>` -> `npx @q28i/aieos skill <args>` (e.g., `npx @q28i/aieos skill search analysis`)
   - `/mode <args>` -> `npx @q28i/aieos mode <args>`
   - `/aieos <args>` -> `npx @q28i/aieos <args>`
 

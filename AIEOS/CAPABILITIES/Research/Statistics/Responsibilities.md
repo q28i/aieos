@@ -1,5 +1,0 @@
-# Statistical Modeling Capability Responsibilities
-
-- Verify data sample sizes.
-- Calculate confidence intervals and p-values.
-- Audit regression model parameters.

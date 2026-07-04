@@ -8,7 +8,7 @@ All notable changes to AIEOS will be documented in this file.
 - **Clean Non-Polluting Layout**: Scaffolds all workspace resources inside the `.aieos/` folder (`system/`, `project/`, `config/`, `skills/`, `state/`) to keep the root directory completely clean.
 - **Global vs Local Runtime Split**: Separated AIEOS runtime capabilities and global specifications (`~/.aieos/`) from local project-specific decision memory, contracts, and SQLite DBs.
 - **Clean Uninstall**: Added `uninstall` route and menu option to remove AI agent integrations while leaving project memory, decisions, and contracts intact.
-- **Project Template Selects**: Introduced SaaS, Trading Bot, Backend, Library, and AI Agent templates in the interactive installation wizard.
+- **Project Template Selects**: Introduced SaaS, Computation Engine, Backend, Library, and AI Agent templates in the interactive installation wizard.
 
 ## [1.2.0] - 2026-07-03
 
@@ -20,7 +20,7 @@ All notable changes to AIEOS will be documented in this file.
 
 ### Added
 - **Direct Platform Installer**: OVERHAULED the primary CLI execution. Running `npx @q28i/aieos` acts as an automated plug-and-play installer, accepting direct targets like `--claude`, `--cursor`, `--gemini`, `--codex`, `--antigravity`, `--opencode`, `--kiro`, or `--all`.
-- **Project Directory Targets**: Scaffold workspace environments on-demand by passing folders (e.g. `npx @q28i/aieos .` or `npx @q28i/aieos ../TradingBot`).
+- **Project Directory Targets**: Scaffold workspace environments on-demand by passing folders (e.g. `npx @q28i/aieos .` or `npx @q28i/aieos ../ScraperLog`).
 - **Whitelisted Templates**: Re-whitelisted `AIEOS` specifications inside the NPM distribution whitelist to ensure the installer copies full policies, protocols, and profiles directly from NPM caches.
 
 ## [1.0.2] - 2026-07-03
