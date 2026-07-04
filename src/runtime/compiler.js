@@ -1,23 +1,24 @@
 const fs = require('fs');
 const path = require('path');
 
-class WrapperGenerator {
+class AIEOSCompiler {
     constructor(workspaceRoot = process.cwd()) {
         this.workspaceRoot = workspaceRoot;
     }
 
     /**
-     * Compiles the dynamic thin wrapper instructions based on profile and active capabilities.
+     * Compiles raw runtime settings and active capability state into multiple target artifacts.
      * @param {Object} options - Compiler parameters:
      *   - profile: string ('architect', 'mentor', 'reviewer', 'decision-os')
      *   - activeSkills: Array<string>
      *   - executionLevel: number
-     * @returns {string} Compiled prompt wrapper
+     * @returns {Object} Target artifacts containing content and metadata
      */
     compile(options = {}) {
         const profile = options.profile || 'decision-os';
         const activeSkills = options.activeSkills || [];
         const executionLevel = options.executionLevel !== undefined ? options.executionLevel : 2;
+        const generatedAt = new Date().toISOString();
 
         let profileSection = '';
         if (profile === 'decision-os') {
@@ -34,7 +35,7 @@ class WrapperGenerator {
 
         const skillsStr = activeSkills.length > 0 ? activeSkills.join(', ') : 'None';
 
-        return `# AIEOS Human Intelligence Amplification Rules
+        const wrapperTemplate = `# AIEOS Human Intelligence Amplification Rules
 # Version: 1.4.0
 # Active Profile: ${profile.toUpperCase()}
 
@@ -52,46 +53,89 @@ ${profileSection}
   - \\\`/aieos <args>\\\` -> \\\`npx @q28i/aieos <args>\\\`
 
 * **Execution Bridge Rule**: Read terminal output and seamlessly take the next logical action. Never fabricate runtime state or verify commands manually.`;
+
+        const readmeSnippet = `## AIEOS Integration
+This project is configured with AIEOS (Artificial Intelligence Capability Operating System).
+- Active Profile: **${profile.toUpperCase()}**
+- Active Capabilities: ${activeSkills.map(s => `\`${s}\``).join(', ')}
+
+To run command operations, use:
+\`\`\`bash
+npx @q28i/aieos <command>
+\`\`\``;
+
+        const manifest = {
+            runtimeVersion: "1.4.0",
+            wrapperVersion: "1.0",
+            generatedAt,
+            activeProfile: profile,
+            capabilities: activeSkills,
+            executionLevel
+        };
+
+        return {
+            cursorrules: wrapperTemplate,
+            claude_bridge: wrapperTemplate,
+            antigravity_skill: `---\nname: aieos\ndescription: AIEOS Dynamic Cognition Bridge\n---\n${wrapperTemplate}`,
+            manifest,
+            readme: readmeSnippet
+        };
     }
 
     /**
-     * Generates and writes thin wrappers to the filesystem for target platforms.
+     * Compiles and writes the compiled artifacts to the specified platform paths.
      * @param {string} targetPlatform - 'cursor', 'claude', 'antigravity'
-     * @param {Object} options - Wrapper options
-     * @param {string} customPath - Optional target directory overrides
+     * @param {Object} options - Wrapper compiler options
+     * @param {string} customPath - Optional directory path override
+     * @returns {Object} Array of paths written
      */
-    generate(targetPlatform, options = {}, customPath = null) {
-        const wrapper = this.compile(options);
+    writeArtifacts(targetPlatform, options = {}, customPath = null) {
+        const artifacts = this.compile(options);
         const home = process.env.HOME || process.env.USERPROFILE || '';
-        
+        const pathsWritten = [];
+
         if (targetPlatform === 'cursor') {
             const destDir = customPath || this.workspaceRoot;
+            fs.mkdirSync(destDir, { recursive: true });
+
             const cursorrulesPath = path.join(destDir, '.cursorrules');
-            fs.writeFileSync(cursorrulesPath, wrapper, 'utf-8');
-            return cursorrulesPath;
+            fs.writeFileSync(cursorrulesPath, artifacts.cursorrules, 'utf-8');
+            pathsWritten.push(cursorrulesPath);
+
+            const manifestPath = path.join(destDir, 'aieos_manifest.json');
+            fs.writeFileSync(manifestPath, JSON.stringify(artifacts.manifest, null, 2), 'utf-8');
+            pathsWritten.push(manifestPath);
+
         } else if (targetPlatform === 'claude') {
             const destDir = customPath || path.join(home, '.claude', 'skills');
             fs.mkdirSync(destDir, { recursive: true });
+
             const bridgePath = path.join(destDir, 'aieos_bridge.md');
-            fs.writeFileSync(bridgePath, wrapper, 'utf-8');
-            return bridgePath;
+            fs.writeFileSync(bridgePath, artifacts.claude_bridge, 'utf-8');
+            pathsWritten.push(bridgePath);
+
+            const manifestPath = path.join(destDir, 'aieos_manifest.json');
+            fs.writeFileSync(manifestPath, JSON.stringify(artifacts.manifest, null, 2), 'utf-8');
+            pathsWritten.push(manifestPath);
+
         } else if (targetPlatform === 'antigravity') {
             const destDir = customPath || path.join(home, '.gemini', 'config', 'skills', 'aieos');
             fs.mkdirSync(destDir, { recursive: true });
+
             const skillPath = path.join(destDir, 'SKILL.md');
-            
-            // Add frontmatter for Antigravity skills
-            const frontmatter = `---
-name: aieos
-description: AIEOS Dynamic Cognition Bridge
----
-${wrapper}`;
-            fs.writeFileSync(skillPath, frontmatter, 'utf-8');
-            return skillPath;
+            fs.writeFileSync(skillPath, artifacts.antigravity_skill, 'utf-8');
+            pathsWritten.push(skillPath);
+
+            const manifestPath = path.join(destDir, 'aieos_manifest.json');
+            fs.writeFileSync(manifestPath, JSON.stringify(artifacts.manifest, null, 2), 'utf-8');
+            pathsWritten.push(manifestPath);
+
         } else {
-            throw new Error(`Unsupported target platform adapter: ${targetPlatform}`);
+            throw new Error(`Unsupported platform compilation target: ${targetPlatform}`);
         }
+
+        return pathsWritten;
     }
 }
 
-module.exports = WrapperGenerator;
+module.exports = AIEOSCompiler;

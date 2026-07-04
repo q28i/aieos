@@ -1,7 +1,7 @@
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
-const WrapperGenerator = require('./runtime/wrapper_generator');
+const AIEOSCompiler = require('./runtime/compiler');
 
 /**
  * Renders the installer title and welcome message.
@@ -106,7 +106,7 @@ async function runWizard() {
 
         console.log('\n\x1b[38;2;120;120;120m────────────────────────────\x1b[0m\n');
 
-        console.log('\x1b[32m✔ Configuration locked.\x1b[0m Writing thin wrapper rules...\n');
+        console.log('\x1b[32m✔ Configuration locked.\x1b[0m Writing thin wrapper rules & manifests...\n');
         
         // Define active capabilities based on choices
         let profileName = 'decision-os';
@@ -117,7 +117,7 @@ async function runWizard() {
             skills = ['research', 'trading', 'risk', 'testing', 'security', 'datapipeline', 'performance', 'docs', 'memory'];
         }
 
-        const generator = new WrapperGenerator();
+        const compiler = new AIEOSCompiler();
         const options = {
             profile: profileName,
             activeSkills: skills,
@@ -132,8 +132,11 @@ async function runWizard() {
 
         for (const platform of platformsToInstall) {
             try {
-                const pathWritten = generator.generate(platform, options);
-                console.log(`  * Generated thin wrapper for \x1b[33m${platform.toUpperCase()}\x1b[0m at: ${pathWritten}`);
+                const pathsWritten = compiler.writeArtifacts(platform, options);
+                console.log(`  * Generated thin wrapper & manifest for \x1b[33m${platform.toUpperCase()}\x1b[0m:`);
+                for (const p of pathsWritten) {
+                    console.log(`    - ${p}`);
+                }
             } catch (err) {
                 console.error(`  * \x1b[31mError writing to ${platform}:\x1b[0m ${err.message}`);
             }
@@ -147,8 +150,104 @@ async function runWizard() {
     }
 }
 
-if (require.main === module) {
-    runWizard();
+/**
+ * Non-interactive command line runner.
+ * @param {Array<string>} args - CLI arguments
+ */
+async function runCli(args) {
+    const targets = [];
+    let profile = 'decision-os';
+    let skills = ['research'];
+    let workspacePath = process.cwd();
+    let uninstallMode = false;
+
+    let i = 0;
+    while (i < args.length) {
+        const arg = args[i].toLowerCase();
+        if (arg === 'uninstall') {
+            uninstallMode = true;
+        } else if (arg === '--cursor') {
+            targets.push('cursor');
+        } else if (arg === '--claude') {
+            targets.push('claude');
+        } else if (arg === '--antigravity') {
+            targets.push('antigravity');
+        } else if (arg === '--all') {
+            targets.push('cursor', 'claude', 'antigravity');
+        } else if (arg === '--profile') {
+            if (i + 1 < args.length) {
+                profile = args[i + 1].toLowerCase();
+                i++;
+            }
+        } else if (arg === '--skills') {
+            if (i + 1 < args.length) {
+                skills = args[i + 1].split(',').map(s => s.trim().toLowerCase());
+                i++;
+            }
+        } else if (arg === '--project') {
+            if (i + 1 < args.length) {
+                workspacePath = path.resolve(args[i + 1]);
+                i++;
+            }
+        }
+        i++;
+    }
+
+    if (uninstallMode) {
+        console.log('Uninstalling AIEOS integrations...');
+        const home = process.env.HOME || process.env.USERPROFILE || '';
+        const cursorrulesPath = path.join(workspacePath, '.cursorrules');
+        const manifestCursor = path.join(workspacePath, 'aieos_manifest.json');
+        const claudeBridge = path.join(home, '.claude', 'skills', 'aieos_bridge.md');
+        const manifestClaude = path.join(home, '.claude', 'skills', 'aieos_manifest.json');
+        const antigravitySkill = path.join(home, '.gemini', 'config', 'skills', 'aieos', 'SKILL.md');
+        const manifestAntigravity = path.join(home, '.gemini', 'config', 'skills', 'aieos', 'aieos_manifest.json');
+
+        const filesToDelete = [cursorrulesPath, manifestCursor, claudeBridge, manifestClaude, antigravitySkill, manifestAntigravity];
+        for (const file of filesToDelete) {
+            if (fs.existsSync(file)) {
+                fs.unlinkSync(file);
+                console.log(`  * Removed: ${file}`);
+            }
+        }
+        console.log('\n\x1b[32m[SUCCESS]\x1b[0m AIEOS integrations uninstalled.');
+        return true;
+    }
+
+    if (targets.length === 0) {
+        return runWizard();
+    }
+
+    console.log(`\nCompiling and installing AIEOS wrappers (Profile: ${profile.toUpperCase()})...`);
+    const compiler = new AIEOSCompiler(workspacePath);
+    const options = {
+        profile,
+        activeSkills: skills,
+        executionLevel: 2
+    };
+
+    for (const platform of [...new Set(targets)]) {
+        try {
+            const pathsWritten = compiler.writeArtifacts(platform, options);
+            console.log(`  * Generated \x1b[33m${platform.toUpperCase()}\x1b[0m wrappers:`);
+            for (const p of pathsWritten) {
+                console.log(`    - ${p}`);
+            }
+        } catch (err) {
+            console.error(`  * \x1b[31mError writing to ${platform}:\x1b[0m ${err.message}`);
+        }
+    }
+    console.log('\n\x1b[32m[SUCCESS]\x1b[0m Installation complete.');
+    return true;
 }
 
-module.exports = { runWizard };
+if (require.main === module) {
+    const args = process.argv.slice(2);
+    if (args.length > 0) {
+        runCli(args);
+    } else {
+        runWizard();
+    }
+}
+
+module.exports = { runWizard, runCli };

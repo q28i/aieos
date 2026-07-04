@@ -4,11 +4,23 @@ const { execSync, spawn } = require('child_process');
 const path = require('path');
 
 const cliPath = path.join(__dirname, '../aieos.py');
+const { runCli, runWizard } = require('../src/installer');
 const args = process.argv.slice(2);
 
+const isInstallCmd = args.length > 0 && (
+    args[0] === 'install' || 
+    args[0] === 'uninstall' || 
+    args.some(a => ['--cursor', '--claude', '--antigravity', '--all'].includes(a))
+);
+
 if (args.length === 0) {
-    const { runWizard } = require('../src/installer');
     runWizard();
+    return;
+}
+
+if (isInstallCmd) {
+    const installArgs = args[0] === 'install' ? args.slice(1) : args;
+    runCli(installArgs);
     return;
 }
 
