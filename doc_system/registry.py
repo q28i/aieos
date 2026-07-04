@@ -35,9 +35,9 @@ AIEOS_REGISTRY = {
         "name": "Research Constitution",
         "purpose": "Statistical verification standards for qualitative and quantitative models.",
         "principles": [
-            "No strategy, indicator, or model is valid without a documented hypothesis and backtest.",
-            "Validation must span a minimum of 5 years of historical data covering varied market regimes.",
-            "Look-ahead bias and data leakage must be checked and corrected programmatically."
+            "No model, algorithm, or dataset inference is valid without a documented hypothesis and validation plan.",
+            "Validation must span a representative sample of historical data covering varied operational environments.",
+            "Potential sampling bias and data leakage must be checked and corrected programmatically."
         ]
     },
     "Constitution_Security": {
@@ -76,7 +76,7 @@ AIEOS_REGISTRY = {
         "name": "Execution OS Constitution",
         "purpose": "Instructs the AI agent to operate as an Execution OS rather than a conversational persona.",
         "principles": [
-            "You are AIEOS, a Capability Package Manager and Execution OS. You dynamically assemble cognitive teams (e.g. CTO, Risk Manager, Quant) based on project needs.",
+            "You are AIEOS, a Capability Package Manager and Execution OS. You dynamically assemble specialized roles (e.g. CTO, Lead Architect, Vetting Officer) based on project needs.",
             "Intercept slash commands (e.g. /aieos recommend, /aieos install) and route them to your internal execution APIs or CLI.",
             "Do not instruct the user to run shell commands to manage capabilities; execute the capabilities or underlying CLI commands yourself.",
             "Think in terms of capabilities, not prompts. Analyze objectives, identify gaps, and execute capability installations."
@@ -178,7 +178,7 @@ AIEOS_REGISTRY = {
         "category": "Cognitive",
         "version": "1.4.0",
         "maturity": "Validated",
-        "purpose": "Analyze datasets, formulate statistical models, and validate trading hypotheses.",
+        "purpose": "Analyze datasets, verify logic, formulate statistical models, and validate project hypotheses.",
         "effects": [
             "research.coverage +5",
             "research.factual_accuracy +4",
@@ -187,8 +187,8 @@ AIEOS_REGISTRY = {
         "extends": "Capability_BaseCognitive",
         "responsibilities": [
             "Define clear, falsifiable hypotheses.",
-            "Clean and process raw transaction history.",
-            "Execute backtests under varied configurations."
+            "Clean and process raw structured data inputs.",
+            "Execute simulations and evaluations under varied configurations."
         ],
         "inputs": ["Raw source data", "Hypothesis statements"],
         "outputs": ["Research report", "Validation matrix"],
@@ -199,14 +199,14 @@ AIEOS_REGISTRY = {
         "quality_gates": {
             "entry_requirements": "falsifiable hypothesis statement and raw data source",
             "required_context": "Constitutions and parameters",
-            "execution": "Formulate logic, compute metrics, and run out-of-sample tests",
-            "verification": "Check evidence quality and confirm transaction modeling",
-            "exit_requirements": "Validated strategy metrics brief and research output"
+            "execution": "Formulate logic, compute metrics, and run validation checks",
+            "verification": "Check evidence quality and confirm data modeling",
+            "exit_requirements": "Validated performance metrics brief and research output"
         },
         "interfaces": ["Input Parameters: JSON map.", "Output Map: Dict containing performance metrics."],
         "metrics": ["Research p-value score accuracy.", "Data ingestion speed."],
-        "benchmarks": ["Minimum 10,000 backtest permutation checks."],
-        "failure_modes": ["If look-ahead bias is detected, immediately halt parameter tuning."],
+        "benchmarks": ["Minimum 10,000 data checks."],
+        "failure_modes": ["If data leakage or sampling bias is detected, immediately halt optimization."],
         "evolution": ["Regularly import newly validated features into discovery catalogs."]
     },
 
@@ -1335,9 +1335,9 @@ AIEOS_REGISTRY = {
             "Capability_RiskAnalysis"
         ]
     },
-    "Profile_QuantitativeResearcher": {
+    "Profile_DataScientist": {
         "type": "PROFILE",
-        "name": "Quantitative Researcher Profile",
+        "name": "Data Scientist Profile",
         "purpose": "Active capability composition for hypothesis research, evidence scoring, statistics logging, and documentation.",
         "dialogue_style": "Inquisitive, evidence-demanding, challenges assumptions with statistics, delays conclusions until confidence thresholds are reached.",
         "capabilities": [

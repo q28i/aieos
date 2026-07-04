@@ -61,5 +61,5 @@ The generator reads the active workspace environment to build the wrapper:
 
 ### Compiler Input Variables
 - **Profile**: e.g., `architect`, `mentor`, `reviewer`, `decision-os`.
-- **Capability Schema Namespaces**: List of currently registered capabilities (e.g., `[research, trading, memory]`).
+- **Capability Schema Namespaces**: List of currently registered capabilities (e.g., `[research, database, memory]`).
 - **Permissions Context**: Current filesystem, network, and terminal execution privileges.

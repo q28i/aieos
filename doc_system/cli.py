@@ -109,9 +109,9 @@ MOCK_REMOTE_PACKAGES = {
         "version": "1.4.0",
         "purpose": "General research capability package.",
         "dependencies": ["Capability_BaseCognitive"],
-        "tags": ["research", "quant", "analysis"],
+        "tags": ["research", "analytics", "analysis"],
         "supports": ["research", "planning"],
-        "project_types": ["trading_bot", "fintech", "saas", "library"],
+        "project_types": ["computation_engine", "data_science", "saas", "library"],
         "files": {
             "manifest.yaml": "name: Capability_Research\nversion: 1.4.0\nmaturity: Validated\ncategory: Research\n",
             "Contract.md": "# Capability Contract: Research\n## Entry requirements\n- Factual inputs\n## Exit requirements\n- Verification references\n",
@@ -147,18 +147,18 @@ MOCK_REMOTE_PACKAGES = {
             "adapters/claude.py": "# Claude adapter\ndef adapt(): pass\n"
         }
     },
-    "@aieos/trading": {
-        "name": "Capability_Trading",
-        "category": "Finance",
+    "@aieos/computation": {
+        "name": "Capability_Computation",
+        "category": "Computation",
         "version": "1.4.0",
-        "purpose": "Autonomous trading engine and simulation tools.",
-        "dependencies": ["Capability_Research", "Capability_Risk"],
-        "tags": ["trading", "quant", "exchange", "portfolio"],
+        "purpose": "High-performance processing and computation tools.",
+        "dependencies": ["Capability_Research", "Capability_Validation"],
+        "tags": ["computation", "analytics", "concurrency", "performance"],
         "supports": ["execution", "research"],
-        "project_types": ["trading_bot", "fintech"],
+        "project_types": ["computation_engine", "data_science"],
         "files": {
-            "manifest.yaml": "name: Capability_Trading\nversion: 1.4.0\ncategory: Finance\n",
-            "Contract.md": "# Trading Contract\n",
+            "manifest.yaml": "name: Capability_Computation\nversion: 1.4.0\ncategory: Computation\n",
+            "Contract.md": "# Computation Contract\n",
             "Interfaces.md": "# Interfaces\n",
             "runtime/hooks.py": "def run_hook(): pass\n",
             "adapters/claude.py": "def adapt(): pass\n"
@@ -198,18 +198,18 @@ MOCK_REMOTE_PACKAGES = {
             "adapters/claude.py": "def adapt(): pass\n"
         }
     },
-    "@aieos/risk": {
-        "name": "Capability_Risk",
-        "category": "Risk",
+    "@aieos/validation": {
+        "name": "Capability_Validation",
+        "category": "Quality",
         "version": "1.4.0",
-        "purpose": "Exposure monitoring and risk controllers.",
+        "purpose": "Validation and compliance gate checks.",
         "dependencies": ["Capability_BaseCognitive"],
-        "tags": ["risk", "drawdown", "exposure", "position-sizing"],
+        "tags": ["validation", "constraints", "audit", "compliance"],
         "supports": ["planning", "execution"],
-        "project_types": ["trading_bot", "fintech"],
+        "project_types": ["computation_engine", "data_science"],
         "files": {
-            "manifest.yaml": "name: Capability_Risk\nversion: 1.4.0\ncategory: Risk\n",
-            "Contract.md": "# Risk Contract\n",
+            "manifest.yaml": "name: Capability_Validation\nversion: 1.4.0\ncategory: Quality\n",
+            "Contract.md": "# Validation Contract\n",
             "Interfaces.md": "# Interfaces\n",
             "runtime/hooks.py": "def run_hook(): pass\n",
             "adapters/claude.py": "def adapt(): pass\n"
@@ -1006,8 +1006,8 @@ Developer Commands:
                 
             for d in dirs:
                 dl = d.lower()
-                if dl in ["strategies", "backtests", "execution", "risk", "trading"]:
-                    matched_tags.extend(["trading", "quant", "finance"])
+                if dl in ["optimization", "computation", "simulation", "validation", "performance"]:
+                    matched_tags.extend(["computation", "analytics", "research"])
                 if dl in ["auth", "security", "jwt"]:
                     matched_tags.extend(["security", "auth"])
                 if dl in ["db", "sql", "migration", "pipeline"]:
@@ -1017,8 +1017,8 @@ Developer Commands:
                     
             for f in files:
                 fl = f.lower()
-                if "trade" in fl or "quant" in fl or "drawdown" in fl or "portfolio" in fl:
-                    matched_tags.extend(["trading", "quant", "finance"])
+                if "compute" in fl or "analytics" in fl or "optimize" in fl or "performance" in fl:
+                    matched_tags.extend(["computation", "analytics", "research"])
                 if "auth" in fl or "jwt" in fl or "crypto" in fl or "security" in fl:
                     matched_tags.extend(["security", "auth"])
                 if "db" in fl or "postgres" in fl or "sql" in fl or "pipeline" in fl:
@@ -1026,8 +1026,8 @@ Developer Commands:
                 if "test_" in fl or "_test" in fl:
                     matched_tags.extend(["testing", "quality"])
                     
-        if "trading" in desc or "quant" in desc or "algorithmic" in desc or "portfolio" in desc:
-            matched_tags.extend(["trading", "quant", "finance", "risk"])
+        if "compute" in desc or "analytics" in desc or "performance" in desc or "optimization" in desc:
+            matched_tags.extend(["computation", "analytics", "research", "validation"])
         if "saas" in desc or "web" in desc or "backend" in desc or "api" in desc:
             matched_tags.extend(["backend", "saas", "database", "security"])
         if "security" in desc or "auth" in desc or "login" in desc:
@@ -1047,7 +1047,7 @@ Developer Commands:
                     confidence += 30
                     matches += 1
             for pt in pkg_info.get("project_types", []):
-                if pt == "trading_bot" and ("trading" in matched_tags or "quant" in matched_tags):
+                if pt == "computation_engine" and ("computation" in matched_tags or "analytics" in matched_tags):
                     confidence += 40
                 if pt == "saas" and ("saas" in matched_tags or "backend" in matched_tags):
                     confidence += 40
@@ -1055,14 +1055,14 @@ Developer Commands:
             confidence = min(99, max(5, confidence))
             
             reason = pkg_info["purpose"]
-            if pkg_id == "@aieos/trading":
-                reason = "Quant trading platforms require exchange gateways, position sizing, and simulation tools."
-            elif pkg_id == "@aieos/risk":
-                reason = "Every trading platform needs drawdown protection, exposure limits, and position sizing rules."
+            if pkg_id == "@aieos/computation":
+                reason = "High-speed data computation requires performance optimization, caching, and concurrent queue processing."
+            elif pkg_id == "@aieos/validation":
+                reason = "Every large data application needs robust schema validation, constraint assertions, and regression check rules."
             elif pkg_id == "@aieos/security":
                 reason = "Required to audit credentials, securely store keys, and prevent unauthorized API queries."
             elif pkg_id == "@aieos/datapipeline":
-                reason = "Tick data storage and stream ingestion require highly robust database and index mappings."
+                reason = "Large data storage and stream ingestion require highly robust database and index mappings."
             elif pkg_id == "@aieos/memory":
                 reason = "Maintains persistent context-aware semantic graphs for conversational project states."
             elif pkg_id == "@aieos/docs":
@@ -1321,7 +1321,7 @@ Developer Commands:
             return False
             
         if not args:
-            print("Usage: aieos mode <startup|trading|ecommerce|...>")
+            print("Usage: aieos mode <startup|analysis|ecommerce|...>")
             return False
             
         mode_type = args[0].lower()
@@ -1331,8 +1331,8 @@ Developer Commands:
         to_enable = []
         if mode_type == "startup":
             to_enable = ["Capability_Planning", "Capability_Architecture", "Capability_Product"]
-        elif mode_type == "trading":
-            to_enable = ["Capability_Quant", "Capability_Risk", "Capability_Execution", "Capability_Research"]
+        elif mode_type == "analysis":
+            to_enable = ["Capability_Research", "Capability_Validation", "Capability_DataAnalysis"]
         elif mode_type == "ecommerce":
             to_enable = ["Capability_Backend", "Capability_Payments", "Capability_Security"]
         else:

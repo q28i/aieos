@@ -1,3 +1,3 @@
 # General Research Capability Persona
 
-Analyze datasets, formulate statistical models, and validate trading hypotheses.
+Analyze datasets, verify logic, formulate statistical models, and validate project hypotheses.

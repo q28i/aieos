@@ -3,7 +3,7 @@ const { searchSkills } = require('./src/index');
 async function test() {
     console.log("Testing AIEOS JS SDK...");
     try {
-        const results = await searchSkills("trading");
+        const results = await searchSkills("performance");
         console.log("SUCCESS. Parsed JSON Results:");
         console.log(JSON.stringify(results, null, 2));
     } catch (err) {

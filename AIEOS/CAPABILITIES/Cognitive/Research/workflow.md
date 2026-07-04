@@ -1,11 +1,11 @@
 # General Research Capability Contract
 
 ## Core Purpose
-Analyze datasets, formulate statistical models, and validate trading hypotheses.
+Analyze datasets, verify logic, formulate statistical models, and validate project hypotheses.
 
 ## Quality Gates
 - **Entry Preconditions**: falsifiable hypothesis statement and raw data source
 - **Required Context**: Constitutions and parameters
-- **Execution Instructions**: Formulate logic, compute metrics, and run out-of-sample tests
-- **Verification Assertions**: Check evidence quality and confirm transaction modeling
-- **Exit Requirements**: Validated strategy metrics brief and research output
+- **Execution Instructions**: Formulate logic, compute metrics, and run validation checks
+- **Verification Assertions**: Check evidence quality and confirm data modeling
+- **Exit Requirements**: Validated performance metrics brief and research output

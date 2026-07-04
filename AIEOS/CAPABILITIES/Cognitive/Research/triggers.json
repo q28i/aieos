@@ -1,7 +1,7 @@
 {
   "triggers": [
     "Define clear, falsifiable hypotheses.",
-    "Clean and process raw transaction history.",
-    "Execute backtests under varied configurations."
+    "Clean and process raw structured data inputs.",
+    "Execute simulations and evaluations under varied configurations."
   ]
 }

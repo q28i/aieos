@@ -49,7 +49,7 @@ ${profileSection}
 ## 2. Dynamic Capabilities
 * **Active Skills**: ${skillsStr}
 * **Command Bridge**: When the user requests \`/skill\`, \`/mode\`, or \`/aieos\` subcommands, you MUST natively invoke them via terminal execution.
-  - \\\`/skill <args>\\\` -> \\\`npx @q28i/aieos skill <args>\\\` (e.g., \\\`npx @q28i/aieos skill search trading\\\`)
+  - \\\`/skill <args>\\\` -> \\\`npx @q28i/aieos skill <args>\\\` (e.g., \\\`npx @q28i/aieos skill search analysis\\\`)
   - \\\`/mode <args>\\\` -> \\\`npx @q28i/aieos mode <args>\\\`
   - \\\`/aieos <args>\\\` -> \\\`npx @q28i/aieos <args>\\\`
 

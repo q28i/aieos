@@ -108,8 +108,8 @@ class TestAIEOSCLI(unittest.TestCase):
 
     def test_discover_recommendations(self):
         self.cli.execute(["init"])
-        # Discover mock trading bot suggestions
-        success = self.cli.execute(["skill", "recommend", "trading"])
+        # Discover mock computation suggestions
+        success = self.cli.execute(["skill", "recommend", "computation"])
         self.assertTrue(success)
 
 if __name__ == "__main__":

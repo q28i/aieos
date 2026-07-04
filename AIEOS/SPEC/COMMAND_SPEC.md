@@ -24,7 +24,7 @@ Configures active execution workflows and team assembly rules.
 | Slash Command | CLI Command | Arguments | Description |
 | --- | --- | --- | --- |
 | `/mode startup` | `aieos mode startup` | None | Emphasizes generalist founder workflows. |
-| `/mode trading` | `aieos mode trading` | None | Focuses on finance, quant, and risk management validation. |
+| `/mode analysis` | `aieos mode analysis` | None | Focuses on data modeling, statistics, and validation checks. |
 | `/mode research` | `aieos mode research` | None | Mounts advanced Socratic inquiry and literature checks. |
 | `/mode backend` | `aieos mode backend` | None | Triggers API engineering, database, and system specs. |
 

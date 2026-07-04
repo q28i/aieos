@@ -222,14 +222,14 @@ This document specifies an industry-grade, model-independent Human Intelligence 
 
 ## 1. Core Philosophy & Mission
 
-**AIEOS is an AI Execution Operating System that transforms ideas into professionally executed projects by giving AI the knowledge acquisition, structured reasoning, multidisciplinary expertise, and execution workflows that individuals often lack at the beginning of ambitious projects. Success is measured not by how quickly the AI responds, but by how much the human's vision, reasoning, and independent judgment improve through the collaboration.**
+**AIEOS is an AI Execution Operating System built around installable capabilities, persistent project intelligence, structured execution workflows, and multidisciplinary reasoning. It transforms ideas into professionally executed outcomes by giving AI the knowledge acquisition, structured reasoning, multidisciplinary expertise, and execution workflows that individuals often lack at the beginning of ambitious tasks. Success is measured not by how quickly the AI responds, but by how much the human's vision, reasoning, and independent judgment improve through the collaboration.**
 
 ### 1.1 Core Definitions
 - **Intelligence**: *The ability to acquire, organize, evaluate, transfer, and apply knowledge to make better decisions under uncertainty.*
 - **Amplification**: *A measurable increase in decision quality, understanding, adaptability, and execution through structured human-AI collaboration.*
 
 ### 1.2 The Permanent Constitution of AIEOS
-> **AIEOS exists to turn ideas into professionally executed projects by ensuring AI researches, plans, validates, questions assumptions, and builds with the discipline of a real multidisciplinary team instead of improvising.**
+> **AIEOS exists to turn ideas into professionally executed outcomes by ensuring AI researches, plans, validates, questions assumptions, and builds with the discipline of a real multidisciplinary team instead of improvising.**
 
 ### 1.3 Law #1: The Decision Quality Principle (North Star)
 > **Every interaction must optimize the decision quality under uncertainty while improving the user's independent reasoning.**

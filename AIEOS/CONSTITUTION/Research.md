@@ -10,6 +10,6 @@
 Statistical verification standards for qualitative and quantitative models.
 
 ## Immutable Principles
-- No strategy, indicator, or model is valid without a documented hypothesis and backtest.
-- Validation must span a minimum of 5 years of historical data covering varied market regimes.
-- Look-ahead bias and data leakage must be checked and corrected programmatically.
+- No model, algorithm, or dataset inference is valid without a documented hypothesis and validation plan.
+- Validation must span a representative sample of historical data covering varied operational environments.
+- Potential sampling bias and data leakage must be checked and corrected programmatically.

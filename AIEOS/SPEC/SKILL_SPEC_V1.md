@@ -33,15 +33,15 @@ The `skill.json` file is the central contract of the package. It defines identit
 
 ```json
 {
-  "id": "quant-research",
-  "name": "Quantitative Research",
+  "id": "data-analysis",
+  "name": "Data Analysis",
   "version": "1.0.0",
   "author": "q28i",
-  "description": "Formulates hypotheses and executes statistical tests on market datasets.",
-  "category": "finance",
+  "description": "Formulates hypotheses and executes statistical tests on structured datasets.",
+  "category": "research",
   "requires": [
     "statistics",
-    "risk-management"
+    "data-validation"
   ],
   "compatible": [
     "claude",
@@ -49,8 +49,8 @@ The `skill.json` file is the central contract of the package. It defines identit
     "antigravity"
   ],
   "loadsWhen": [
-    "trading",
-    "backtest"
+    "analysis",
+    "experiment"
   ],
   "permissions": {
     "filesystem": "read",

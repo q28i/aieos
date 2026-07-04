@@ -31,7 +31,7 @@ AIEOS classifies host AI behavior and capability compliance into three distinct 
 - **Behavior**: The AI does not look at project state or ADR databases. It writes code immediately based on its pre-trained knowledge, frequently leading to architectural drift, styling inconsistency, and regression bugs.
 
 ### 2.2 Level 1: Capability-Aware AI
-- **Behavior**: The AI reads the `.aieos/installed-skills.json` configuration and loads the respective capability text modules (e.g. `CTO`, `QuantResearcher`). It uses these prompts to guide its persona and structure its answers.
+- **Behavior**: The AI reads the `.aieos/installed-skills.json` configuration and loads the respective capability text modules (e.g. `CTO`, `Architect`). It uses these prompts to guide its persona and structure its answers.
 
 ### 2.3 Level 2: Execution OS (Full Compliance)
 - **Behavior**: 

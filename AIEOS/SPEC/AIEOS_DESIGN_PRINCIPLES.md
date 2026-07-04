@@ -5,7 +5,7 @@ This document establishes the eight immutable design tenets of the Artificial In
 ---
 
 ## 1. Composable Capabilities over Monolithic Prompts
-AIEOS rejects single-file "mega-prompts" or massive persona files. Intelligence must be broken down into discrete, modular, and versioned **Capability Packages** (skills) that specialize in specific domains (e.g., quant research, security, documentation). This ensures scalability and makes testing cognitive logic predictable.
+AIEOS rejects single-file "mega-prompts" or massive persona files. Intelligence must be broken down into discrete, modular, and versioned **Capability Packages** (skills) that specialize in specific domains (e.g., data analysis, security, documentation). This ensures scalability and makes testing cognitive logic predictable.
 
 ## 2. Project State over Chat Context
 A chat session is transient and lossy. AIEOS anchors the host AI's understanding in **persistent project state** stored locally (`.aieos/project/`). Goals, previous decisions, capability graphs, and active team contracts survive chat session resets and model changes.

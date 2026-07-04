@@ -96,7 +96,7 @@ async function runWizard() {
         // Step 3: Behavior Capabilities
         console.log('3. Select Initial Capability Profile:\n');
         console.log('   [1] General Research (Core Socratic reasoning)');
-        console.log('   [2] Algorithmic Trading (Quant + Risk + API tools)');
+        console.log('   [2] Data Science & Optimization (Computation + Validation + Performance)');
         console.log('   [3] Full Suite (All capabilities)\n');
 
         let profileChoice = '';
@@ -112,9 +112,9 @@ async function runWizard() {
         let profileName = 'decision-os';
         let skills = ['research'];
         if (profileChoice === '2') {
-            skills = ['research', 'trading', 'risk'];
+            skills = ['research', 'computation', 'validation'];
         } else if (profileChoice === '3') {
-            skills = ['research', 'trading', 'risk', 'testing', 'security', 'datapipeline', 'performance', 'docs', 'memory'];
+            skills = ['research', 'computation', 'validation', 'testing', 'security', 'datapipeline', 'performance', 'docs', 'memory'];
         }
 
         const compiler = new AIEOSCompiler();

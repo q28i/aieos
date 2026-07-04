@@ -12,20 +12,20 @@ In the capability graph:
   - `depends_on`: Strict runtime prerequisite.
   - `enhances`: Dynamically injects extra rules/prompts into another skill if both are loaded.
   - `conflicts_with`: Blocks loading if the conflicting skill is active.
-  - `replaces`: Obsoletes/shadows another skill (e.g. `@aieos/quant-research-v2` replaces `v1`).
+  - `replaces`: Obsoletes/shadows another skill (e.g. `@aieos/data-analytics-v2` replaces `v1`).
   - `recommends`: Suggests secondary skills to install.
   - `inherits`: Imports structural behaviors or base definitions from a parent.
   - `loads_after` / `loads_before`: Enforces execution sequencing for hooks.
 
 ```text
     ┌────────────────┐
-    │  @aieos/trading│ (Finance Domain)
+    │  @aieos/webapp │ (Application Domain)
     └──────┬──────┬──┘
            │      │
            │      └─────────────────┐
            ▼                        ▼
   ┌─────────────────┐      ┌────────────────┐
-  │ @aieos/research │      │  @aieos/risk   │
+  │ @aieos/database │      │  @aieos/auth   │
   └────────┬────────┘      └────────┬───────┘
            │                        │
            └──────────┐  ┌──────────┘
@@ -39,19 +39,19 @@ In the capability graph:
 
 ```json
 {
-  "id": "@aieos/trading",
-  "domain": "finance",
-  "dependencies": ["@aieos/research", "@aieos/risk"],
+  "id": "@aieos/webapp",
+  "domain": "application",
+  "dependencies": ["@aieos/database", "@aieos/auth"],
   "relationships": [
     { "type": "depends_on", "target": "@aieos/basecognitive" },
-    { "type": "recommends", "target": "@aieos/backtesting" },
-    { "type": "enhances", "target": "@aieos/logging" },
-    { "type": "conflicts_with", "target": "@aieos/paper-trading" }
+    { "type": "recommends", "target": "@aieos/logging" },
+    { "type": "enhances", "target": "@aieos/caching" },
+    { "type": "conflicts_with", "target": "@aieos/legacy-web" }
   ],
   "triggers": {
-    "file_patterns": ["*.py", "*.csv"],
-    "dependencies_detected": ["pandas", "numpy"],
-    "keywords": ["backtest", "trade", "portfolio"]
+    "file_patterns": ["*.js", "*.json"],
+    "dependencies_detected": ["express", "mongodb"],
+    "keywords": ["server", "route", "database"]
   },
   "execution_priority": 100
 }
@@ -63,7 +63,7 @@ In the capability graph:
 
 ### 2.1 Dependency Resolution (Topological Sort)
 When installing or loading a capability, the runtime parses the capability nodes and runs a **topological sort** to resolve loading orders.
-- In the graph above, `basecognitive` is loaded first, followed by `research` and `risk`, and finally `trading`.
+- In the graph above, `basecognitive` is loaded first, followed by `database` and `auth`, and finally `webapp`.
 - If a circular dependency is detected (e.g., Node A requires B, and B requires A), the runtime rejects compilation and raises an installation fault.
 
 ### 2.2 Recommending via Graph Traversal

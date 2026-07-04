@@ -101,7 +101,7 @@ def install_profile_or_capability(target_name):
     for key, spec in AIEOS_REGISTRY.items():
         if spec["type"] == "PROFILE":
             profile_key_norm = key.lower().replace("profile_", "").replace("_", "").replace("-", "")
-            if profile_key_norm == norm or (norm == "researcher" and profile_key_norm == "quantitativeresearcher"):
+            if profile_key_norm == norm or (norm == "researcher" and profile_key_norm == "datascientist"):
                 target_key = key
                 break
 
@@ -116,7 +116,7 @@ def install_profile_or_capability(target_name):
 
     if not target_key:
         print(f"Error: Target '{target_name}' not found in registry.")
-        print("Available profiles: software-engineer, quantitative-researcher, startup-founder, psychologist")
+        print("Available profiles: software-engineer, data-scientist, startup-founder, psychologist")
         print("Available capabilities: planning, architecture, implementation, testing, review, security, research, etc.")
         return False
         

@@ -49,9 +49,9 @@ async function runTests() {
         console.log("\n--- 4. Testing runtime.execute() for '/skill install' ---");
         // Grant permissions for the test
         executionContext.permissions.filesystem = 'write';
-        executionContext.userIntent = "Install quant tools please";
+        executionContext.userIntent = "Install computation tools please";
         const result = await runtime.execute({
-            command: "/skill install @aieos/trading",
+            command: "/skill install @aieos/performance",
             context: executionContext
         });
 

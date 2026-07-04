@@ -8,7 +8,7 @@
 
 <h1>AIEOS</h1>
 
-<h3>AIEOS exists to turn ideas into professionally executed projects by ensuring AI researches, plans, validates, questions assumptions, and builds with the discipline of a real multidisciplinary team instead of improvising.</h3>
+<h3>AIEOS exists to turn ideas into professionally executed outcomes by ensuring AI researches, plans, validates, questions assumptions, and builds with the discipline of a real multidisciplinary team instead of improvising.</h3>
 
 <p><i>The AI Execution Operating System</i></p>
 
@@ -38,10 +38,12 @@ npx @q28i/aieos
 
 ## ✨ What is AIEOS?
 
-**AIEOS is an AI Execution Operating System that transforms ideas into professionally executed projects by giving AI the knowledge acquisition, structured reasoning, multidisciplinary expertise, and execution workflows that individuals often lack at the beginning of ambitious projects.**
+**AIEOS is an AI Execution Operating System built around installable capabilities, persistent project intelligence, structured execution workflows, and multidisciplinary reasoning.**
 
-### The Problem
-Ideas fail because execution lacks expertise. Current AI answers questions. It rarely behaves like a professional team that researches, validates assumptions, learns the domain, and systematically executes a project. **AIEOS exists to bridge that gap.**
+### The Motivation
+Modern AI is excellent at generating responses but often lacks the structured execution process required for complex work. It may skip research, fail to identify domain-specific best practices, overlook existing solutions, or proceed with unwarranted confidence despite missing knowledge.
+
+**AIEOS exists to address that gap by providing an execution operating system that acquires relevant knowledge, organizes multidisciplinary expertise, applies structured planning and validation, and maintains persistent project intelligence before and during execution.**
 
 ### The Four Pillars
 1. **Vision** ("I have an idea."): Deconstructing raw intent into clear success criteria.
@@ -99,10 +101,10 @@ AIEOS shifts the execution paradigm from raw task processing to a values-aligned
 
 ### Dynamic Team Assembly
 
-When AIEOS scans a project (e.g., an algorithmic trading bot), it doesn't just act as a "Trading Persona." Instead, it executes the **AIEOS Decision Protocol** and loads an execution team:
-- **CTO**: Handles architecture, technical debt, and system boundaries.
-- **Quant Researcher**: Formulates hypotheses, runs statistical tests, and checks look-ahead biases.
-- **Risk Manager**: Defines exposure limits and position-sizing guardrails.
+When AIEOS scans a workspace (e.g., a complex data ingestion application), it executes the **AIEOS Decision Protocol** and loads specialized roles:
+- **Lead Architect**: Handles decoupling, technical debt, and system boundaries.
+- **Domain Specialist**: Formulates assumptions, checks edge cases, and verifies domain rules.
+- **Vetting Officer**: Defines constraints, validates security boundaries, and verifies dependency risks.
 
 ---
 

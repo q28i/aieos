@@ -34,10 +34,10 @@ All emitted events must conform to the following schema:
 
 #### `ModeChanged`
 - **Source**: Planning Engine
-- **Trigger**: The user or AI changes the active execution mode (e.g. `/mode trading`).
+- **Trigger**: The user or AI changes the active execution mode (e.g. `/mode analysis`).
 - **Payload**:
   ```json
-  { "from": "default", "to": "trading" }
+  { "from": "default", "to": "analysis" }
   ```
 
 ---
@@ -93,7 +93,7 @@ All emitted events must conform to the following schema:
 - **Trigger**: The host AI starts parsing and executing the prompt payload.
 - **Payload**:
   ```json
-  { "task_id": "task_482", "mode": "trading" }
+  { "task_id": "task_482", "mode": "analysis" }
   ```
 
 #### `ExecutionFinished`

@@ -20,7 +20,7 @@ export interface ExecutionContext {
     activeSkills: string[];     // List of skill IDs loaded for this specific request
 
     // Active Modes
-    currentMode: string;        // e.g. "default", "trading", "backend"
+    currentMode: string;        // e.g. "default", "analysis", "backend"
 
     // Context & Memory State
     memory: {
